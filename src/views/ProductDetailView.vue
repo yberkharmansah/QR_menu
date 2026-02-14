@@ -8,8 +8,8 @@
 
     <main class="content">
       <section class="card">
-        <div class="heroImageWrap" :class="{ empty: !product?.imageUrl }">
-          <img v-if="product?.imageUrl" :src="product.imageUrl" alt="" class="heroImage" />
+        <div class="heroImageWrap" :class="{ empty: !optimizedImageUrl }">
+          <img v-if="optimizedImageUrl" :src="optimizedImageUrl" alt="" class="heroImage" />
         </div>
 
         <h2 class="name">{{ product?.title ?? "-" }}</h2>
@@ -24,11 +24,13 @@ import { computed } from "vue";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import { getCategoryById, getLocalizedProductById } from "../data/menu";
+import { optimizeCloudinaryImage } from "../lib/cloudinary";
 import { appStore, t } from "../store/appStore";
 
 const props = defineProps<{ productId: string }>();
 
 const product = computed(() => getLocalizedProductById(props.productId, appStore.locale));
+const optimizedImageUrl = computed(() => optimizeCloudinaryImage(product.value?.imageUrl, "detail"));
 const backTo = computed(() => {
   const categoryId = product.value?.categoryId;
   if (!categoryId) return "/categories";
@@ -77,7 +79,7 @@ const backTo = computed(() => {
 .heroImage {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   display: block;
 }

@@ -23,3 +23,19 @@ export async function uploadImageToCloudinary(file: File) {
   const payload = await response.json();
   return payload.secure_url as string;
 }
+
+export function optimizeCloudinaryImage(
+  sourceUrl: string | undefined,
+  variant: "thumb" | "detail" = "detail"
+) {
+  if (!sourceUrl) return "";
+  if (!sourceUrl.includes("/image/upload/")) return sourceUrl;
+  if (!sourceUrl.includes("res.cloudinary.com")) return sourceUrl;
+
+  const transformation =
+    variant === "thumb"
+      ? "c_fill,g_auto,w_128,h_128,f_auto,q_auto"
+      : "c_fill,g_auto,ar_4:3,f_auto,q_auto";
+
+  return sourceUrl.replace("/image/upload/", `/image/upload/${transformation}/`);
+}

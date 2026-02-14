@@ -1,7 +1,7 @@
 <template>
   <button class="card" @click="$emit('open')">
-    <div class="thumbWrap" :class="{ empty: !imageUrl }">
-      <img v-if="imageUrl" :src="imageUrl" alt="" class="thumb" />
+    <div class="thumbWrap" :class="{ empty: !optimizedImageUrl }">
+      <img v-if="optimizedImageUrl" :src="optimizedImageUrl" alt="" class="thumb" />
     </div>
 
     <div class="left">
@@ -22,13 +22,18 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from "vue";
+import { optimizeCloudinaryImage } from "../lib/cloudinary";
+
+const props = defineProps<{
   title: string;
   description: string;
   price: number;
   imageUrl?: string;
   tags?: string[];
 }>();
+
+const optimizedImageUrl = computed(() => optimizeCloudinaryImage(props.imageUrl, "thumb"));
 
 defineEmits<{
   (e: "open"): void;
