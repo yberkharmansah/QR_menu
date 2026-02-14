@@ -1,21 +1,31 @@
 ﻿Kategori,Urun,Fiyat (TL)
 Caylar,Bitki Caylari,60
-Caylar,Cay,35
-Frozen,Frozen Ananas,140
-Frozen,Frozen Carkifelek,145
-Frozen,Frozen Cilek,140
-Frozen,Frozen Mango,140
-Frozen,Frozen Mango-Ananas,145
+Caylar,Cay,25
+Caylar,Fincan Çay,40
+Frozen,Frozen Ananas,150
+Frozen,Frozen Carkifelek,150
+Frozen,Frozen Cilek,150
+Frozen,Frozen Mango,150
+Frozen,Frozen Mango-Ananas,150
 Kokteyl,Cremore Kokteyl,140
 Kokteyl,Cremore Mojito,140
 Kokteyl,Klasik Mojito,130
 Kokteyl,Ocean Prime,170
-Mesrubatlar,Gazoz,50
-Mesrubatlar,Kola,55
-Mesrubatlar,Soda,35
+Mesrubatlar,Ayran,25
+Mesrubatlar,Cappy Vişne,80
+Mesrubatlar,Cappy Şeftali,80
+Mesrubatlar,Coca Cola Zero,80
+Mesrubatlar,Elmalı Soda,40
+Mesrubatlar,Fanta,80
+Mesrubatlar,Karpuz Çilek Soda,40
+Mesrubatlar,Kola,80
+Mesrubatlar,Limonlu Soda,40
+Mesrubatlar,Soda,30
 Mesrubatlar,Soguk Cay,80
-Milkshake,Milkshake Cilek,145
-Milkshake,Milkshake Karamel,145
+Mesrubatlar,Sprite,80
+Mesrubatlar,Su,15
+Milkshake,Milkshake Cilek,150
+Milkshake,Milkshake Karamel,150
 Sicak Icecekler,Sahlep,100
 Sicak Icecekler,Sicak Cikolata,100
 Sicak Kahveler,Americano,90
@@ -36,5 +46,5 @@ Sicak Kahveler,Turk Kahvesi,70
 Sicak Kahveler,Vanilya Latte,140
 Sicak Kahveler,White Chocolate Mocha,140
 Sicak Kahveler,Zebra,140
-Sikma Meyve Sulari,Atom,100
-Sikma Meyve Sulari,Taze Sikilmis Portakal Suyu,80
+Sıkma Meyve Suları,Atom,100
+Sıkma Meyve Suları,Taze Sıkılmıs Portakal Suyu,80
