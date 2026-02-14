@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="page">
-    <AppHeader :title="t('menu')" :subtitle="t('categories')">
+    <AppHeader :title="group?.title ?? t('categories')" :subtitle="group?.description" backTo="/categories">
       <template #right>
         <HeaderActions />
       </template>
@@ -13,12 +13,12 @@
 
       <div class="grid">
         <CategoryCard
-          v-for="group in filtered"
-          :key="group.id"
-          :title="group.title"
-          :description="group.description"
-          :emoji="group.emoji"
-          @open="openGroup(group.id)"
+          v-for="category in filtered"
+          :key="category.id"
+          :title="category.title"
+          :description="category.description"
+          :emoji="category.emoji"
+          @open="openCategory(category.id)"
         />
       </div>
     </main>
@@ -32,24 +32,26 @@ import { appStore, t } from "../store/appStore";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import CategoryCard from "../components/CategoryCard.vue";
-import { getLocalizedGroups, type MenuGroupId } from "../data/menu";
+import { getLocalizedCategoriesByGroup, getLocalizedGroupById, type MenuGroupId } from "../data/menu";
 
+const props = defineProps<{ groupId: MenuGroupId }>();
 const router = useRouter();
 const q = ref("");
 
-const localizedGroups = computed(() => getLocalizedGroups(appStore.locale));
+const group = computed(() => getLocalizedGroupById(props.groupId, appStore.locale));
+const categories = computed(() => getLocalizedCategoriesByGroup(props.groupId, appStore.locale));
 
 const filtered = computed(() => {
   const search = q.value.trim().toLowerCase();
-  if (!search) return localizedGroups.value;
+  if (!search) return categories.value;
 
-  return localizedGroups.value.filter((group) => {
-    return group.title.toLowerCase().includes(search) || group.description.toLowerCase().includes(search);
+  return categories.value.filter((category) => {
+    return category.title.toLowerCase().includes(search) || category.description.toLowerCase().includes(search);
   });
 });
 
-function openGroup(groupId: MenuGroupId) {
-  router.push(`/categories/${groupId}`);
+function openCategory(categoryId: string) {
+  router.push(`/categories/${props.groupId}/${categoryId}`);
 }
 </script>
 

@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="page">
-    <AppHeader :title="category?.title ?? t('menu')" :subtitle="category?.description" backTo="/categories">
+    <AppHeader :title="category?.title ?? t('menu')" :subtitle="category?.description" :backTo="`/categories/${groupId}`">
       <template #right>
         <HeaderActions />
       </template>
@@ -38,12 +38,13 @@ import HeaderActions from "../components/HeaderActions.vue";
 import ProductCard from "../components/ProductCard.vue";
 import { getLocalizedCategoryById, getLocalizedProductsByCategory } from "../data/menu";
 
-const props = defineProps<{ categoryId: string }>();
+const props = defineProps<{ groupId: string; categoryId: string }>();
 
 const router = useRouter();
 const q = ref("");
 const sortByPrice = ref(false);
 
+const groupId = computed(() => props.groupId);
 const category = computed(() => getLocalizedCategoryById(props.categoryId, appStore.locale));
 
 const filtered = computed(() => {

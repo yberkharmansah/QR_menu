@@ -37,7 +37,7 @@ import { useRouter } from "vue-router";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import UiButton from "../components/UiButton.vue";
-import { getLocalizedProductById } from "../data/menu";
+import { getCategoryById, getLocalizedProductById } from "../data/menu";
 import { addToCart, appStore, t } from "../store/appStore";
 
 const props = defineProps<{ productId: string }>();
@@ -46,7 +46,11 @@ const router = useRouter();
 const product = computed(() => getLocalizedProductById(props.productId, appStore.locale));
 const backTo = computed(() => {
   const categoryId = product.value?.categoryId;
-  return categoryId ? `/categories/${categoryId}` : "/categories";
+  if (!categoryId) return "/categories";
+
+  const category = getCategoryById(categoryId);
+  if (!category) return "/categories";
+  return `/categories/${category.groupId}/${categoryId}`;
 });
 
 const toast = ref("");
