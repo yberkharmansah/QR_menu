@@ -629,6 +629,8 @@ async function updateProduct() {
 async function removeProduct() {
   clearMessages();
   if (!selectedProductId.value) return;
+  const approved = window.confirm("Bu urunu silmek istedigine emin misin?");
+  if (!approved) return;
 
   try {
     loading.value = true;
