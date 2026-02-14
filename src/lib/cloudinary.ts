@@ -35,7 +35,7 @@ export function optimizeCloudinaryImage(
   const transformation =
     variant === "thumb"
       ? "c_fill,g_auto,w_128,h_128,f_auto,q_auto"
-      : "c_fill,g_auto,ar_4:3,f_auto,q_auto";
+      : "c_pad,ar_4:3,b_auto,f_auto,q_auto";
 
   return sourceUrl.replace("/image/upload/", `/image/upload/${transformation}/`);
 }
