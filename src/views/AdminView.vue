@@ -89,7 +89,7 @@
             </div>
 
             <div class="field">
-              <label class="label">Urun Resmi</label>
+              <label class="label">Urun Resmi (opsiyonel)</label>
               <input class="input" type="file" accept="image/*" @change="onCreateFileChange" />
             </div>
 
@@ -390,7 +390,6 @@ const canCreateProduct = computed(() => {
       productCreateForm.nameEn.trim() &&
       productCreateForm.descriptionTr.trim() &&
       productCreateForm.descriptionEn.trim() &&
-      createFile.value &&
       productCreateForm.price >= 0
   );
 });
@@ -571,11 +570,11 @@ function resetCreateCategoryForm() {
 
 async function createProduct() {
   clearMessages();
-  if (!canCreateProduct.value || !createFile.value) return;
+  if (!canCreateProduct.value) return;
 
   try {
     loading.value = true;
-    const imageUrl = await uploadImageToCloudinary(createFile.value);
+    const imageUrl = createFile.value ? await uploadImageToCloudinary(createFile.value) : "";
 
     await createAdminProduct({
       categoryId: productCreateForm.categoryId,

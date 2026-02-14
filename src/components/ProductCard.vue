@@ -1,6 +1,8 @@
-﻿<template>
+<template>
   <button class="card" @click="$emit('open')">
-    <img v-if="imageUrl" :src="imageUrl" alt="" class="thumb" />
+    <div class="thumbWrap" :class="{ empty: !imageUrl }">
+      <img v-if="imageUrl" :src="imageUrl" alt="" class="thumb" />
+    </div>
 
     <div class="left">
       <div class="titleRow">
@@ -49,12 +51,25 @@ defineEmits<{
   cursor: pointer;
 }
 
-.thumb {
+.thumbWrap {
   width: 64px;
   height: 64px;
   border-radius: 12px;
-  object-fit: cover;
   border: 1px solid var(--stroke);
+  overflow: hidden;
+}
+
+.thumbWrap.empty {
+  border-style: dashed;
+  background: transparent;
+  opacity: 0.55;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .titleRow {
