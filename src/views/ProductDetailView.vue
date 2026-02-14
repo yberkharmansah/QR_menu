@@ -62,25 +62,23 @@ const backTo = computed(() => {
 .heroImageWrap {
   border-radius: 18px;
   border: 1px solid var(--stroke);
-  padding: 0;
+  aspect-ratio: 4 / 3;
   background: transparent;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .heroImageWrap.empty {
-  min-height: 220px;
   border-style: dashed;
   opacity: 0.55;
 }
 
-.heroImageWrap:not(.empty) {
-  overflow: hidden;
-}
-
 .heroImage {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
