@@ -841,7 +841,8 @@ async function seedDatabase() {
 .preview {
   width: 100%;
   max-height: 220px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 

@@ -80,7 +80,8 @@ const backTo = computed(() => {
 .heroImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
