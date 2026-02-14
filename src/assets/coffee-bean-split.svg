@@ -1,0 +1,27 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="beanLeft" x1="25" y1="35" x2="86" y2="126" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6E4724"/>
+      <stop offset="1" stop-color="#3C2410"/>
+    </linearGradient>
+    <linearGradient id="beanRight" x1="74" y1="34" x2="136" y2="126" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#85562D"/>
+      <stop offset="1" stop-color="#4B2C14"/>
+    </linearGradient>
+    <radialGradient id="beanGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(80 80) rotate(90) scale(70)">
+      <stop stop-color="#E6B26A" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#E6B26A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="80" cy="80" r="70" fill="url(#beanGlow)"/>
+
+  <path d="M72 27C44 30 24 57 26 86C28 114 49 136 76 133C65 119 60 100 58 82C56 63 60 43 72 27Z" fill="url(#beanLeft)"/>
+  <path d="M88 27C116 30 136 57 134 86C132 114 111 136 84 133C95 119 100 100 102 82C104 63 100 43 88 27Z" fill="url(#beanRight)"/>
+
+  <path d="M77 39C69 52 67 66 68 80C69 95 74 109 82 121" stroke="#B48249" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M83 39C91 52 93 66 92 80C91 95 86 109 78 121" stroke="#9A6938" stroke-width="4.5" stroke-linecap="round"/>
+
+  <path d="M52 53C45 64 43 79 45 93" stroke="#B98A58" stroke-opacity="0.45" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M108 53C115 64 117 79 115 93" stroke="#D0A06C" stroke-opacity="0.45" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
