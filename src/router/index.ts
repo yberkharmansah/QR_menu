@@ -4,6 +4,7 @@ import CategoriesView from "../views/CategoriesView.vue";
 import GroupCategoriesView from "../views/GroupCategoriesView.vue";
 import ProductsView from "../views/ProductsView.vue";
 import ProductDetailView from "../views/ProductDetailView.vue";
+import AdminView from "../views/AdminView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -18,6 +19,7 @@ const router = createRouter({
       props: true,
     },
     { path: "/product/:productId", name: "productDetail", component: ProductDetailView, props: true },
+    { path: "/admin", name: "admin", component: AdminView },
   ],
   scrollBehavior() {
     return { top: 0 };

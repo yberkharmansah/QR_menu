@@ -33,6 +33,7 @@ export type Product = {
   title: LocalizedText;
   description: LocalizedText;
   price: number;
+  imageUrl?: string;
   tags?: LocalizedTags;
 };
 
@@ -57,6 +58,7 @@ export type LocalizedProduct = {
   title: string;
   description: string;
   price: number;
+  imageUrl?: string;
   tags?: string[];
 };
 
@@ -80,7 +82,7 @@ export const menuGroups: MenuGroup[] = [
   },
 ];
 
-export const categories: Category[] = [
+export const seedCategories: Category[] = [
   { id: "hot-coffee", groupId: "drinks", emoji: "☕", title: { tr: "Sicak Kahveler", en: "Hot Coffees" }, description: { tr: "Espresso bazli kahveler", en: "Espresso based coffees" } },
   { id: "hot-drinks", groupId: "drinks", emoji: "🍫", title: { tr: "Sicak Icecekler", en: "Hot Drinks" }, description: { tr: "Kahve disi sicak lezzetler", en: "Warm non-coffee drinks" } },
   { id: "teas", groupId: "drinks", emoji: "🍵", title: { tr: "Caylar", en: "Teas" }, description: { tr: "Demleme ve bitki caylari", en: "Brewed and herbal teas" } },
@@ -105,7 +107,7 @@ export const categories: Category[] = [
   { id: "desserts", groupId: "foods", emoji: "🍰", title: { tr: "Tatlilar", en: "Desserts" }, description: { tr: "Gunluk tatli cesitleri", en: "Daily dessert options" } },
 ];
 
-export const products: Product[] = [
+export const seedProducts: Product[] = [
   { id: "espresso-double", categoryId: "hot-coffee", title: { tr: "Espresso Double", en: "Espresso Double" }, description: { tr: "Yogun cift shot espresso", en: "Intense double shot espresso" }, price: 95, tags: { tr: ["Sicak"], en: ["Hot"] } },
   { id: "espresso-single", categoryId: "hot-coffee", title: { tr: "Espresso Single", en: "Espresso Single" }, description: { tr: "Tek shot klasik espresso", en: "Single shot classic espresso" }, price: 80, tags: { tr: ["Sicak"], en: ["Hot"] } },
   { id: "cafe-latte", categoryId: "hot-coffee", title: { tr: "Cafe Latte", en: "Cafe Latte" }, description: { tr: "Espresso ve ipeksi sut kopugu", en: "Espresso with silky milk foam" }, price: 120, tags: { tr: ["Sicak"], en: ["Hot"] } },
@@ -217,6 +219,9 @@ export const products: Product[] = [
   { id: "brownie", categoryId: "desserts", title: { tr: "Brownie", en: "Brownie" }, description: { tr: "Yogun cikolata", en: "Rich chocolate brownie" }, price: 150 },
 ];
 
+let runtimeCategories: Category[] = [];
+let runtimeProducts: Product[] = [];
+
 function localizeText(text: LocalizedText, locale: MenuLocale) {
   return text[locale];
 }
@@ -251,6 +256,7 @@ export function localizeProduct(product: Product, locale: MenuLocale): Localized
     title: localizeText(product.title, locale),
     description: localizeText(product.description, locale),
     price: product.price,
+    imageUrl: product.imageUrl,
     tags: localizeTags(product.tags, locale),
   };
 }
@@ -260,19 +266,31 @@ export function getGroupById(id: MenuGroupId) {
 }
 
 export function getCategoryById(id: string) {
-  return categories.find((category) => category.id === id);
+  return runtimeCategories.find((category) => category.id === id);
 }
 
 export function getProductById(id: string) {
-  return products.find((product) => product.id === id);
+  return runtimeProducts.find((product) => product.id === id);
 }
 
 export function getCategoriesByGroup(groupId: MenuGroupId) {
-  return categories.filter((category) => category.groupId === groupId);
+  return runtimeCategories.filter((category) => category.groupId === groupId);
 }
 
 export function getProductsByCategory(categoryId: string) {
-  return products.filter((product) => product.categoryId === categoryId);
+  return runtimeProducts.filter((product) => product.categoryId === categoryId);
+}
+
+export function getAllProducts() {
+  return runtimeProducts;
+}
+
+export function setProducts(products: Product[]) {
+  runtimeProducts = products;
+}
+
+export function resetProductsToFallback() {
+  runtimeProducts = [];
 }
 
 export function getLocalizedGroups(locale: MenuLocale) {
@@ -285,11 +303,19 @@ export function getLocalizedGroupById(id: MenuGroupId, locale: MenuLocale) {
 }
 
 export function getLocalizedCategories(locale: MenuLocale) {
-  return categories.map((category) => localizeCategory(category, locale));
+  return runtimeCategories.map((category) => localizeCategory(category, locale));
 }
 
 export function getLocalizedCategoriesByGroup(groupId: MenuGroupId, locale: MenuLocale) {
   return getCategoriesByGroup(groupId).map((category) => localizeCategory(category, locale));
+}
+
+export function setCategories(categories: Category[]) {
+  runtimeCategories = categories;
+}
+
+export function resetCategoriesToFallback() {
+  runtimeCategories = [];
 }
 
 export function getLocalizedCategoryById(id: string, locale: MenuLocale) {

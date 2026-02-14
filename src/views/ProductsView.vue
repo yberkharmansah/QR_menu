@@ -21,6 +21,7 @@
           :title="product.title"
           :description="product.description"
           :price="product.price"
+          :image-url="product.imageUrl"
           :tags="product.tags"
           @open="openProduct(product.id)"
         />

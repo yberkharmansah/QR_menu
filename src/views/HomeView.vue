@@ -21,10 +21,6 @@
 
       <div class="actions">
         <UiButton @click="goMenu" :disabled="isTransitioning">{{ t('menu') }}</UiButton>
-
-        <div class="hint">
-          <span>Tip:</span> {{ t('flowHint') }}
-        </div>
       </div>
     </main>
 
@@ -146,17 +142,6 @@ onBeforeUnmount(() => {
   display: grid;
   gap: 10px;
   padding-top: 4px;
-}
-
-.hint {
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-}
-
-.hint span {
-  font-weight: 800;
 }
 
 .menuTransition {

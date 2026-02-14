@@ -1,5 +1,7 @@
 ﻿<template>
   <button class="card" @click="$emit('open')">
+    <img v-if="imageUrl" :src="imageUrl" alt="" class="thumb" />
+
     <div class="left">
       <div class="titleRow">
         <div class="title">{{ title }}</div>
@@ -22,6 +24,7 @@ defineProps<{
   title: string;
   description: string;
   price: number;
+  imageUrl?: string;
   tags?: string[];
 }>();
 
@@ -34,7 +37,7 @@ defineEmits<{
 .card {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 20px;
+  grid-template-columns: auto 1fr 20px;
   gap: 12px;
   align-items: center;
   text-align: left;
@@ -44,6 +47,14 @@ defineEmits<{
   background: var(--card);
   color: var(--text);
   cursor: pointer;
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--stroke);
 }
 
 .titleRow {
