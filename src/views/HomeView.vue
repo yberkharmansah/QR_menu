@@ -88,9 +88,15 @@ function goMenu() {
 
 function openInstagram() {
   const username = "cremorecoffee";
-  const appUrl = `instagram://user?username=${username}`;
   const webUrl = `https://www.instagram.com/${username}/`;
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isMobile = isIOS || isAndroid;
+  const iosAppUrl = `instagram://user?username=${username}`;
+  const androidIntentUrl =
+    `intent://instagram.com/_u/${username}` +
+    "#Intent;package=com.instagram.android;scheme=https;" +
+    `S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
 
   if (!isMobile) {
     window.open(webUrl, "_blank", "noopener,noreferrer");
@@ -117,7 +123,7 @@ function openInstagram() {
     }
   }, 1100);
 
-  window.location.href = appUrl;
+  window.location.href = isAndroid ? androidIntentUrl : iosAppUrl;
 }
 
 onBeforeUnmount(() => {

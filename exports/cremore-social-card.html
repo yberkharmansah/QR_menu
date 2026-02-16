@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cremore Social Card</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(1200px 500px at 20% 0%, #f2fff7 0%, transparent 55%),
+        radial-gradient(900px 500px at 80% 100%, #e2f4e8 0%, transparent 58%),
+        linear-gradient(160deg, #edf8f2 0%, #dcefe4 100%);
+      color: #0b4c33;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .print-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 20;
+      border: 1px solid #0f6a46;
+      border-radius: 999px;
+      padding: 9px 14px;
+      background: #ffffff;
+      color: #0f6a46;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .card {
+      width: min(calc(210mm - 20mm), 100%);
+      min-height: calc(297mm - 20mm);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.96)),
+        #fff;
+      border: 1px solid #5da984;
+      border-radius: 30px;
+      box-shadow:
+        0 30px 60px rgba(10, 73, 49, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      padding: 26px 30px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(600px 140px at 10% 0%, rgba(56, 148, 102, 0.12), transparent 70%),
+        radial-gradient(500px 120px at 90% 100%, rgba(56, 148, 102, 0.1), transparent 75%);
+      pointer-events: none;
+    }
+
+    .head {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-badge {
+      width: 92px;
+      height: 92px;
+      border-radius: 22px;
+      border: 2px solid #2c8d5f;
+      background: #fff;
+      padding: 6px;
+      box-shadow: 0 14px 28px rgba(13, 88, 59, 0.15);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .title {
+      margin: 0;
+      text-align: center;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      color: #0e603f;
+      line-height: 1.05;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .sub {
+      margin: 2px auto 0;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1c7652;
+      max-width: 700px;
+      line-height: 1.42;
+    }
+
+    .qr-grid {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .qr-box {
+      border: 1px solid #9dcbb2;
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 255, 249, 0.95));
+      padding: 16px 14px;
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      align-content: start;
+      box-shadow: 0 10px 18px rgba(15, 96, 65, 0.08);
+    }
+
+    .icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid #99c9ae;
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      color: #0f6a46;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .icon {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .channel {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+      color: #0f6a46;
+    }
+
+    .qr-placeholder {
+      width: min(100%, 260px);
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 2px dashed #66a584;
+      background:
+        linear-gradient(45deg, rgba(15, 106, 70, 0.04) 25%, transparent 25%) -10px 0/20px 20px,
+        linear-gradient(-45deg, rgba(15, 106, 70, 0.04) 25%, transparent 25%) -10px 0/20px 20px,
+        linear-gradient(45deg, transparent 75%, rgba(15, 106, 70, 0.04) 75%) -10px 0/20px 20px,
+        linear-gradient(-45deg, transparent 75%, rgba(15, 106, 70, 0.04) 75%) -10px 0/20px 20px,
+        #fff;
+      display: grid;
+      place-items: center;
+      color: #2e8a61;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .qr-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    @media (max-width: 760px) {
+      .card {
+        padding: 24px 16px 20px;
+        min-height: auto;
+      }
+
+      .title {
+        font-size: 33px;
+      }
+
+      .sub {
+        font-size: 16px;
+      }
+
+      .qr-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+
+      .print-btn {
+        display: none;
+      }
+
+      .card {
+        width: 100%;
+        min-height: 100%;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Yazdır</button>
+
+  <main class="card">
+    <header class="head">
+      <div class="logo-badge">
+        <img src="../src/assets/cremore-logo.jpg" alt="Cremore Logo" />
+      </div>
+      <h1 class="title">Cremore Coffee</h1>
+      <p class="sub">Sosyal medya hesaplarımızdan bizi takip etmeyi unutmayın. Yorumlarınızı bekliyoruz.</p>
+    </header>
+
+    <section class="qr-grid">
+      <article class="qr-box">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="icon">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5.5" ry="5.5"></rect>
+            <circle cx="12" cy="12" r="4.1"></circle>
+            <circle cx="17.3" cy="6.8" r="1.1"></circle>
+          </svg>
+        </div>
+        <h2 class="channel">Instagram</h2>
+        <div class="qr-placeholder">
+          <img src="./instagram-qr.png" alt="Instagram QR Kod" class="qr-image" />
+        </div>
+      </article>
+
+      <article class="qr-box">
+        <div class="icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M12 21c-3.9-4.6-6-7.5-6-10a6 6 0 1 1 12 0c0 2.5-2.1 5.4-6 10z"></path>
+            <circle cx="12" cy="11" r="2.2"></circle>
+          </svg>
+        </div>
+        <h2 class="channel">Google Maps</h2>
+        <div class="qr-placeholder">
+          <img src="./maps-qr.png" alt="Google Maps QR Kod" class="qr-image" />
+        </div>
+      </article>
+    </section>
+
+  </main>
+</body>
+</html>
