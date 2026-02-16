@@ -22,12 +22,12 @@
       <div class="socialPanel">
         <div class="socialTitle">{{ t("socialAccounts") }}</div>
         <div class="socials">
-          <a
-            class="socialLink"
-            href="https://www.instagram.com/cremorecoffee?igsh=MWlwNmd0NmZhaHIzYQ=="
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
+            <a
+              class="socialLink"
+              href="https://www.instagram.com/cremorecoffee"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
           >
             <svg viewBox="0 0 24 24" class="socialSvg" aria-hidden="true">
               <rect x="3.5" y="3.5" width="17" height="17" rx="5.5" ry="5.5" />
