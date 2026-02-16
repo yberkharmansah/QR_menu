@@ -107,12 +107,28 @@
 
             <div class="field">
               <label class="label">Urun Sec</label>
-              <select v-model="selectedProductId" class="input">
-                <option disabled value="">Urun sec</option>
-                <option v-for="item in adminProducts" :key="item.id" :value="item.id">
-                  {{ item.nameTr }} / {{ item.nameEn }}
-                </option>
-              </select>
+              <div ref="productSearchWrap" class="searchSelect">
+                <input
+                  v-model="productSearch"
+                  class="input"
+                  type="text"
+                  placeholder="Urun ara..."
+                  @focus="isProductSearchOpen = true"
+                  @input="isProductSearchOpen = true"
+                />
+                <div v-if="isProductSearchOpen" class="searchList">
+                  <button
+                    v-for="item in filteredProducts"
+                    :key="item.id"
+                    type="button"
+                    class="searchItem"
+                    @click="selectProductForEdit(item.id)"
+                  >
+                    {{ item.nameTr }} / {{ item.nameEn }}
+                  </button>
+                  <div v-if="filteredProducts.length === 0" class="searchEmpty">Sonuc bulunamadi.</div>
+                </div>
+              </div>
             </div>
 
             <template v-if="selectedProductId">
@@ -335,6 +351,9 @@ const error = ref("");
 const success = ref("");
 const selectedProductId = ref("");
 const selectedCategoryId = ref("");
+const productSearch = ref("");
+const isProductSearchOpen = ref(false);
+const productSearchWrap = ref<HTMLElement | null>(null);
 const createFile = ref<File | null>(null);
 const editFile = ref<File | null>(null);
 const createPreviewUrl = ref("");
@@ -382,6 +401,14 @@ const categoryEditForm = reactive({
 
 const localizedCategories = computed(() => getLocalizedCategories(appStore.locale));
 const allCategories = computed(() => [...drinkCategories.value, ...foodCategories.value]);
+const filteredProducts = computed(() => {
+  const q = productSearch.value.trim().toLowerCase();
+  if (!q) return adminProducts.value;
+  return adminProducts.value.filter((item) => {
+    const label = `${item.nameTr} ${item.nameEn}`.toLowerCase();
+    return label.includes(q);
+  });
+});
 
 const canCreateProduct = computed(() => {
   return Boolean(
@@ -434,7 +461,10 @@ let stopFoodCategories: (() => void) | null = null;
 
 watch(selectedProductId, (nextId) => {
   const product = adminProducts.value.find((item) => item.id === nextId);
-  if (!product) return;
+  if (!product) {
+    productSearch.value = "";
+    return;
+  }
 
   productEditForm.categoryId = product.categoryId;
   productEditForm.nameTr = product.nameTr;
@@ -443,6 +473,7 @@ watch(selectedProductId, (nextId) => {
   productEditForm.descriptionEn = product.descriptionEn;
   productEditForm.price = product.price;
   productEditForm.imageUrl = product.imageUrl || "";
+  productSearch.value = `${product.nameTr} / ${product.nameEn}`;
   clearEditFileState();
 });
 
@@ -485,6 +516,8 @@ onMounted(() => {
       selectedCategoryId.value = "";
     }
   });
+
+  document.addEventListener("mousedown", onProductSearchOutside);
 });
 
 onBeforeUnmount(() => {
@@ -492,6 +525,7 @@ onBeforeUnmount(() => {
   if (stopProducts) stopProducts();
   if (stopDrinkCategories) stopDrinkCategories();
   if (stopFoodCategories) stopFoodCategories();
+  document.removeEventListener("mousedown", onProductSearchOutside);
   clearCreateFileState();
   clearEditFileState();
 });
@@ -499,6 +533,17 @@ onBeforeUnmount(() => {
 function clearMessages() {
   error.value = "";
   success.value = "";
+}
+
+function onProductSearchOutside(event: MouseEvent) {
+  if (!productSearchWrap.value) return;
+  if (productSearchWrap.value.contains(event.target as Node)) return;
+  isProductSearchOpen.value = false;
+}
+
+function selectProductForEdit(productId: string) {
+  selectedProductId.value = productId;
+  isProductSearchOpen.value = false;
 }
 
 function clearCreateFileState() {
@@ -811,6 +856,48 @@ async function seedDatabase() {
 .field {
   display: grid;
   gap: 6px;
+}
+
+.searchSelect {
+  position: relative;
+}
+
+.searchList {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow: auto;
+  z-index: 20;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: var(--card);
+  padding: 6px;
+  display: grid;
+  gap: 4px;
+}
+
+.searchItem {
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.searchItem:hover {
+  border-color: var(--stroke);
+  background: var(--input);
+}
+
+.searchEmpty {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 8px 10px;
 }
 
 .label {
