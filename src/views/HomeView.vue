@@ -22,11 +22,12 @@
       <div class="socialPanel">
         <div class="socialTitle">{{ t("socialAccounts") }}</div>
         <div class="socials">
-            <a
-              class="socialLink"
-              href="https://instagram.com/_u/cremorecoffee"
-              aria-label="Instagram"
-            >
+          <a
+            class="socialLink"
+            href="https://www.instagram.com/cremorecoffee/"
+            aria-label="Instagram"
+            @click.prevent="openInstagram"
+          >
             <svg viewBox="0 0 24 24" class="socialSvg" aria-hidden="true">
               <rect x="3.5" y="3.5" width="17" height="17" rx="5.5" ry="5.5" />
               <circle cx="12" cy="12" r="4.1" />
@@ -83,6 +84,40 @@ function goMenu() {
   navigateTimer = setTimeout(() => {
     router.push("/categories");
   }, transitionMs);
+}
+
+function openInstagram() {
+  const username = "cremorecoffee";
+  const appUrl = `instagram://user?username=${username}`;
+  const webUrl = `https://www.instagram.com/${username}/`;
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (!isMobile) {
+    window.open(webUrl, "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  let didHide = false;
+  const clear = () => {
+    window.removeEventListener("pagehide", onHide);
+    window.removeEventListener("blur", onHide);
+  };
+  const onHide = () => {
+    didHide = true;
+    clear();
+  };
+
+  window.addEventListener("pagehide", onHide, { once: true });
+  window.addEventListener("blur", onHide, { once: true });
+
+  setTimeout(() => {
+    clear();
+    if (!didHide) {
+      window.location.href = webUrl;
+    }
+  }, 1100);
+
+  window.location.href = appUrl;
 }
 
 onBeforeUnmount(() => {
