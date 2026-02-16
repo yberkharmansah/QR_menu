@@ -1,12 +1,12 @@
 ﻿import { computed, reactive } from "vue";
 import { getLocalizedProductById, getProductById } from "../data/menu";
 
-export type Theme = "forest" | "ivory" | "royal";
+export type Theme = "dark" | "light";
 type Locale = "tr" | "en";
 
 type CartItem = { productId: string; qty: number };
 
-export const THEMES: Theme[] = ["forest", "ivory", "royal"];
+export const THEMES: Theme[] = ["dark", "light"];
 
 const dict = {
   tr: {
@@ -42,6 +42,7 @@ const dict = {
     themeIvoryDesc: "Acik ve premium gorunum. Sicak krem tonlari.",
     themeRoyal: "Midnight Gold",
     themeRoyalDesc: "Luks gece hissi. Lacivert ve altin detaylar.",
+    socialAccounts: "Sosyal Medya Hesaplarımız",
   },
   en: {
     menu: "Menu",
@@ -76,14 +77,15 @@ const dict = {
     themeIvoryDesc: "Bright premium style with warm ivory tones.",
     themeRoyal: "Midnight Gold",
     themeRoyalDesc: "Luxury night mode with navy and gold contrast.",
+    socialAccounts: "Our Social Media Accounts",
   },
 } as const;
 
 function normalizeTheme(raw: string | null): Theme {
-  if (raw === "forest" || raw === "ivory" || raw === "royal") return raw;
-  if (raw === "dark") return "forest";
-  if (raw === "light") return "ivory";
-  return "forest";
+  if (raw === "dark" || raw === "light") return raw;
+  if (raw === "forest" || raw === "royal") return "dark";
+  if (raw === "ivory") return "light";
+  return "dark";
 }
 
 export const appStore = reactive({
@@ -109,9 +111,7 @@ export function setTheme(theme: Theme) {
 }
 
 export function cycleTheme() {
-  const currentIndex = THEMES.indexOf(appStore.theme);
-  const nextIndex = (currentIndex + 1) % THEMES.length;
-  setTheme(THEMES[nextIndex]);
+  setTheme(appStore.theme === "dark" ? "light" : "dark");
 }
 
 export function toggleCart(open?: boolean) {

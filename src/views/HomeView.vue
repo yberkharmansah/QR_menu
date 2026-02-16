@@ -19,6 +19,37 @@
         </div>
       </section>
 
+      <div class="socialPanel">
+        <div class="socialTitle">{{ t("socialAccounts") }}</div>
+        <div class="socials">
+          <a
+            class="socialLink"
+            href="https://www.instagram.com/cremorecoffee?igsh=MWlwNmd0NmZhaHIzYQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <svg viewBox="0 0 24 24" class="socialSvg" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="5.5" ry="5.5" />
+              <circle cx="12" cy="12" r="4.1" />
+              <circle cx="17.3" cy="6.8" r="1.1" />
+            </svg>
+          </a>
+          <a
+            class="socialLink"
+            href="https://maps.app.goo.gl/JLmKKqqZGSRHe8r7A"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Google Maps"
+          >
+            <svg viewBox="0 0 24 24" class="socialSvg" aria-hidden="true">
+              <path d="M12 21c-3.9-4.6-6-7.5-6-10a6 6 0 1 1 12 0c0 2.5-2.1 5.4-6 10z" />
+              <circle cx="12" cy="11" r="2.2" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
       <div class="actions">
         <UiButton @click="goMenu" :disabled="isTransitioning">{{ t('menu') }}</UiButton>
       </div>
@@ -142,6 +173,60 @@ onBeforeUnmount(() => {
   display: grid;
   gap: 10px;
   padding-top: 4px;
+}
+
+.socialPanel {
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 10px 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.socialTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.socialLink {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: var(--card);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.socialLink:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.socialSvg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .menuTransition {

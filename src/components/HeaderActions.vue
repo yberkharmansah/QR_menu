@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="wrap">
     <button class="chip" @click="toggleLocale" :title="t('language')">
       {{ appStore.locale.toUpperCase() }}
@@ -7,22 +7,15 @@
     <button class="chip" @click="cycleTheme" :title="t('theme')">
       {{ themeBadge }}
     </button>
-
-    <button class="chip cart" @click="toggleCart(true)" :title="t('cart')">
-      {{ t('cart') }}
-      <span v-if="cartCount" class="badge">{{ cartCount }}</span>
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { appStore, cartCount, cycleTheme, setLocale, toggleCart, t } from "../store/appStore";
+import { appStore, cycleTheme, setLocale, t } from "../store/appStore";
 
 const themeBadge = computed(() => {
-  if (appStore.theme === "forest") return "F1";
-  if (appStore.theme === "ivory") return "F2";
-  return "F3";
+  return appStore.theme === "dark" ? "\u{1F319}" : "\u2600\uFE0F";
 });
 
 function toggleLocale() {
@@ -48,26 +41,5 @@ function toggleLocale() {
   cursor: pointer;
   font-weight: 800;
   font-size: 12px;
-}
-
-.cart {
-  position: relative;
-  padding: 0 12px;
-}
-
-.badge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  height: 18px;
-  min-width: 18px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  color: #fff;
-  font-size: 11px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 </style>
