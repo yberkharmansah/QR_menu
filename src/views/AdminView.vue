@@ -872,7 +872,8 @@ async function seedDatabase() {
   z-index: 20;
   border-radius: 12px;
   border: 1px solid var(--stroke);
-  background: var(--card);
+  background: #10281f;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   padding: 6px;
   display: grid;
   gap: 4px;
