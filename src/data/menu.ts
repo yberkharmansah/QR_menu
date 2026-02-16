@@ -71,7 +71,7 @@ export const menuGroups: MenuGroup[] = [
   {
     id: "drinks",
     emoji: "🥤",
-    title: { tr: "Icecekler", en: "Drinks" },
+    title: { tr: "İçecekler", en: "Drinks" },
     description: { tr: "Sicak, soguk ve ozel icecekler", en: "Hot, cold and signature beverages" },
   },
   {

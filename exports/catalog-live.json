@@ -2,51 +2,48 @@
   "categories": [
     {
       "id": "appetizers",
-      "descriptionEn": "Snack and sharing plates",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Atistirmalik tabaklar",
-      "groupId": "foods",
-      "emoji": "🍟",
       "titleEn": "Appetizers",
-      "titleTr": "Aperatifler"
+      "titleTr": "Aperatifler",
+      "descriptionEn": "Snack and sharing plates",
+      "groupId": "foods",
+      "descriptionTr": "Atistirmalik tabaklar",
+      "emoji": "🍟"
     },
     {
       "id": "breakfast",
+      "titleEn": "Breakfast",
+      "emoji": "🍳",
+      "descriptionEn": "Breakfast plates and omelets",
+      "descriptionTr": "Serpme ve omlet cesitleri",
+      "groupId": "foods",
+      "titleTr": "Kahvalti",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "descriptionTr": "Serpme ve omlet cesitleri",
-      "emoji": "🍳",
-      "titleTr": "Kahvalti",
-      "titleEn": "Breakfast",
-      "groupId": "foods",
-      "descriptionEn": "Breakfast plates and omelets"
+      }
     },
     {
       "id": "burgers",
-      "descriptionTr": "Cremore burger secimi",
+      "titleEn": "Burgers",
+      "descriptionEn": "Cremore burger selection",
       "groupId": "foods",
-      "emoji": "🍔",
-      "titleTr": "Hamburger",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Cremore burger selection",
-      "titleEn": "Burgers"
+      "descriptionTr": "Cremore burger secimi",
+      "titleTr": "Hamburger",
+      "emoji": "🍔"
     },
     {
       "id": "cocktails",
-      "emoji": "🍹",
-      "titleEn": "Cocktails",
-      "descriptionTr": "Cremore imza kokteyller",
       "groupId": "drinks",
       "titleTr": "Kokteyl",
       "createdAt": {
@@ -54,7 +51,10 @@
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Cremore signature cocktails"
+      "descriptionEn": "Cremore signature cocktails",
+      "titleEn": "Cocktails",
+      "emoji": "🍹",
+      "descriptionTr": "Cremore imza kokteyller"
     },
     {
       "id": "desserts",
@@ -64,367 +64,427 @@
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "titleEn": "Desserts",
-      "groupId": "foods",
-      "descriptionTr": "Gunluk tatli cesitleri",
+      "titleTr": "Tatlilar",
       "descriptionEn": "Daily dessert options",
-      "titleTr": "Tatlilar"
+      "groupId": "foods",
+      "titleEn": "Desserts",
+      "descriptionTr": "Gunluk tatli cesitleri"
     },
     {
       "id": "fix",
       "emoji": "🍛",
+      "groupId": "foods",
+      "titleTr": "Fix",
+      "descriptionTr": "Secimli tabaklar",
+      "descriptionEn": "Choice based set plates",
       "titleEn": "Fix Menu",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "descriptionTr": "Secimli tabaklar",
-      "groupId": "foods",
-      "descriptionEn": "Choice based set plates",
-      "titleTr": "Fix"
+      }
     },
     {
       "id": "fresh-juices",
-      "titleTr": "Sıkma Meyve Suları",
-      "descriptionEn": "Freshly squeezed options",
-      "groupId": "drinks",
-      "titleEn": "Fresh Juices",
       "emoji": "🍊",
+      "titleEn": "Fresh Juices",
+      "titleTr": "Sıkma Meyve Suları",
+      "descriptionTr": "Taze sıkım secenekler",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Taze sıkım secenekler"
+      "groupId": "drinks",
+      "descriptionEn": "Freshly squeezed options"
     },
     {
       "id": "frozen",
       "groupId": "drinks",
       "titleEn": "Frozen",
+      "titleTr": "Frozen",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Icy fruit based drinks",
       "descriptionTr": "Meyveli buzlu icecekler",
       "emoji": "❄️",
-      "titleTr": "Frozen"
+      "descriptionEn": "Icy fruit based drinks"
     },
     {
       "id": "gozleme",
+      "titleTr": "Gozlemeler",
+      "titleEn": "Gozleme",
+      "emoji": "🫓",
+      "descriptionEn": "Freshly prepared gozleme options",
+      "descriptionTr": "Taze hazirlanan gozleme cesitleri",
+      "groupId": "foods",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "descriptionEn": "Freshly prepared gozleme options",
-      "titleTr": "Gozlemeler",
-      "descriptionTr": "Taze hazirlanan gozleme cesitleri",
-      "emoji": "🫓",
-      "titleEn": "Gozleme",
-      "groupId": "foods"
+      }
     },
     {
       "id": "hot-coffee",
-      "descriptionEn": "Espresso based coffees",
-      "titleTr": "Sicak Kahveler",
-      "titleEn": "Hot Coffees",
       "emoji": "☕",
       "groupId": "drinks",
+      "descriptionEn": "Espresso based coffees",
       "descriptionTr": "Espresso bazli kahveler",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "titleEn": "Hot Coffees",
+      "titleTr": "Sıcak Kahveler"
     },
     {
       "id": "hot-drinks",
+      "descriptionTr": "Kahve disi sicak lezzetler",
+      "groupId": "drinks",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Kahve disi sicak lezzetler",
-      "groupId": "drinks",
+      "titleTr": "Sıcak Icecekler",
       "titleEn": "Hot Drinks",
-      "emoji": "🍫",
       "descriptionEn": "Warm non-coffee drinks",
-      "titleTr": "Sicak Icecekler"
+      "emoji": "🍫"
     },
     {
       "id": "mains",
-      "descriptionTr": "Et ve tavuk ana yemekler",
-      "titleTr": "Ana Yemekler",
       "descriptionEn": "Meat and chicken mains",
-      "titleEn": "Main Courses",
-      "groupId": "foods",
-      "emoji": "🥩",
+      "descriptionTr": "Et ve tavuk ana yemekler",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "titleTr": "Ana Yemekler",
+      "emoji": "🥩",
+      "titleEn": "Main Courses",
+      "groupId": "foods"
     },
     {
       "id": "milkshake",
+      "titleEn": "Milkshake",
+      "descriptionTr": "Yogun sutlu icecekler",
+      "emoji": "🥛",
+      "groupId": "drinks",
+      "titleTr": "Milkshake",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "titleTr": "Milkshake",
-      "emoji": "🥛",
-      "descriptionEn": "Rich milk based shakes",
-      "titleEn": "Milkshake",
-      "groupId": "drinks",
-      "descriptionTr": "Yogun sutlu icecekler"
+      "descriptionEn": "Rich milk based shakes"
     },
     {
       "id": "pastas",
-      "titleTr": "Makarnalar",
+      "descriptionTr": "Makarna ve noodle cesitleri",
+      "descriptionEn": "Pasta and noodle dishes",
       "emoji": "🍝",
+      "titleTr": "Makarnalar",
+      "titleEn": "Pastas",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Makarna ve noodle cesitleri",
-      "descriptionEn": "Pasta and noodle dishes",
-      "groupId": "foods",
-      "titleEn": "Pastas"
+      "groupId": "foods"
     },
     {
       "id": "pizzas",
-      "descriptionTr": "Orta ve buyuk boy pizzalar",
-      "groupId": "foods",
-      "emoji": "🍕",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Medium and large pizzas",
+      "emoji": "🍕",
+      "groupId": "foods",
       "titleEn": "Pizzas",
-      "titleTr": "Pizzalar"
+      "descriptionEn": "Medium and large pizzas",
+      "titleTr": "Pizzalar",
+      "descriptionTr": "Orta ve buyuk boy pizzalar"
     },
     {
       "id": "salads-bowls",
+      "titleEn": "Salads and Bowls",
       "titleTr": "Salatalar ve Bowl",
-      "groupId": "foods",
       "emoji": "🥗",
-      "descriptionEn": "Light and filling options",
+      "groupId": "foods",
+      "descriptionTr": "Hafif ve doyurucu secenekler",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "titleEn": "Salads and Bowls",
-      "descriptionTr": "Hafif ve doyurucu secenekler"
+      "descriptionEn": "Light and filling options"
     },
     {
       "id": "soft-drinks",
       "groupId": "drinks",
       "titleEn": "Soft Drinks",
-      "descriptionTr": "Klasik soguk icecekler",
       "emoji": "🥤",
       "descriptionEn": "Classic cold beverages",
+      "titleTr": "Mesrubatlar",
+      "descriptionTr": "Klasik soguk icecekler",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "titleTr": "Mesrubatlar"
+      }
     },
     {
       "id": "soups",
-      "titleTr": "Corba",
-      "emoji": "🍲",
-      "titleEn": "Soup",
-      "groupId": "foods",
+      "descriptionTr": "Gunun corbasi",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "descriptionEn": "Soup of the day",
-      "descriptionTr": "Gunun corbasi"
+      "emoji": "🍲",
+      "titleEn": "Soup",
+      "titleTr": "Corba",
+      "groupId": "foods"
     },
     {
       "id": "teas",
+      "descriptionEn": "Brewed and herbal teas",
+      "groupId": "drinks",
+      "titleEn": "Teas",
+      "descriptionTr": "Demleme ve bitki caylari",
       "emoji": "🍵",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "titleTr": "Caylar",
-      "titleEn": "Teas",
-      "groupId": "drinks",
-      "descriptionTr": "Demleme ve bitki caylari",
-      "descriptionEn": "Brewed and herbal teas"
+      "titleTr": "Caylar"
     },
     {
       "id": "toasts",
-      "descriptionEn": "Bazlama and classic toasts",
-      "titleTr": "Tostlar",
-      "titleEn": "Toasts",
-      "descriptionTr": "Bazlama ve klasik tostlar",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "descriptionEn": "Bazlama and classic toasts",
       "emoji": "🥪",
+      "descriptionTr": "Bazlama ve klasik tostlar",
+      "titleTr": "Tostlar",
+      "titleEn": "Toasts",
       "groupId": "foods"
     },
     {
       "id": "wraps",
-      "emoji": "🌯",
-      "groupId": "foods",
-      "descriptionTr": "Tavuk ve antrikot wrap secenekleri",
       "descriptionEn": "Chicken and steak wrap options",
+      "descriptionTr": "Tavuk ve antrikot wrap secenekleri",
+      "emoji": "🌯",
       "titleTr": "Wrap",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "groupId": "foods",
       "titleEn": "Wrap"
     }
   ],
   "products": [
     {
+      "id": "1L3YxY6wuQyyOP9hnx3B",
+      "descriptionTr": "El Yapımı Çarkıfelek Aromalı Ice Tea",
+      "descriptionEn": "Handmade Passion Fruit Ice Tea",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771074413,
+        "nanoseconds": 298000000
+      },
+      "categoryId": "cocktails",
+      "nameTr": "İce Tea Çarkıfelek",
+      "price": 80,
+      "nameEn": "İce Tea Passion Fruit",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771074642/uk7apj4lu3sfzhanavyp.png"
+    },
+    {
       "id": "72sAhdtecbsZggW7SVJB",
-      "descriptionTr": "330 ml",
+      "descriptionEn": "330 ml",
       "nameEn": "Coca Cola Zero",
-      "imageUrl": "",
+      "nameTr": "Coca Cola Zero",
+      "categoryId": "soft-drinks",
+      "price": 80,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060827,
         "nanoseconds": 400000000
       },
-      "descriptionEn": "330 ml",
-      "nameTr": "Coca Cola Zero",
-      "categoryId": "soft-drinks",
-      "price": 80
+      "imageUrl": "",
+      "descriptionTr": "330 ml"
+    },
+    {
+      "id": "HYbciQq91fhF8R56WQsL",
+      "categoryId": "cocktails",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771074251,
+        "nanoseconds": 466000000
+      },
+      "nameTr": "İce Tea Ananas",
+      "descriptionTr": "El Yapımı Ananaslı İce Tea",
+      "descriptionEn": "Handmade Pineapple İce Tea",
+      "price": 80,
+      "nameEn": "İce Tea PineApple",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771074590/ceopcui2rypdyfkqeuou.jpg"
     },
     {
       "id": "MyLgkMoqLLq3fJPd5chV",
-      "descriptionTr": "Ayran",
-      "nameTr": "Ayran",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060854,
         "nanoseconds": 761000000
       },
-      "nameEn": "Ayran",
-      "imageUrl": "",
+      "descriptionTr": "Ayran",
       "categoryId": "soft-drinks",
-      "descriptionEn": "Ayran",
-      "price": 25
+      "nameEn": "Ayran",
+      "nameTr": "Ayran",
+      "imageUrl": "",
+      "price": 25,
+      "descriptionEn": "Ayran"
+    },
+    {
+      "id": "NKNlnucwrPeJAllZ2GeQ",
+      "nameEn": "Ice Tea Mango Ananas",
+      "price": 80,
+      "categoryId": "cocktails",
+      "imageUrl": "",
+      "nameTr": "Ice Tea Mango Ananas",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771074470,
+        "nanoseconds": 385000000
+      },
+      "descriptionEn": "Handmade Mango and Pineapple Ice Tea",
+      "descriptionTr": "El Yapımı Mango ve Ananas aromalı Ice Tea"
     },
     {
       "id": "ORww7dwCk6yqeaOUkZD0",
-      "imageUrl": "",
-      "nameTr": "Fanta",
-      "descriptionEn": "330 ml",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060389,
         "nanoseconds": 525000000
       },
-      "nameEn": "Fanta",
       "descriptionTr": "330 ml",
+      "categoryId": "soft-drinks",
+      "nameEn": "Fanta",
+      "descriptionEn": "330 ml",
       "price": 80,
-      "categoryId": "soft-drinks"
+      "imageUrl": "",
+      "nameTr": "Fanta"
     },
     {
       "id": "PL1Dj4YLggEBKkX3X7wb",
-      "descriptionEn": "Apple Flavored Soda",
-      "descriptionTr": "Elma Aromalı Soda",
       "imageUrl": "",
-      "price": 40,
       "categoryId": "soft-drinks",
-      "nameEn": "Apple Soda",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060549,
         "nanoseconds": 615000000
       },
-      "nameTr": "Elmalı Soda"
+      "descriptionEn": "Apple Flavored Soda",
+      "nameEn": "Apple Soda",
+      "nameTr": "Elmalı Soda",
+      "descriptionTr": "Elma Aromalı Soda",
+      "price": 40
     },
     {
       "id": "SiSi0TbnOCYtJrreWI6Q",
-      "descriptionEn": "330 ml",
+      "imageUrl": "",
+      "nameEn": "Sprite",
       "price": 80,
+      "descriptionEn": "330 ml",
+      "categoryId": "soft-drinks",
+      "descriptionTr": "330 ml",
+      "nameTr": "Sprite",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060375,
         "nanoseconds": 540000000
-      },
-      "imageUrl": "",
-      "descriptionTr": "330 ml",
-      "categoryId": "soft-drinks",
-      "nameTr": "Sprite",
-      "nameEn": "Sprite"
+      }
     },
     {
       "id": "WGBzjrilEf8AT8Y3IpDg",
+      "imageUrl": "",
+      "price": 80,
+      "nameEn": "Cappy Peach",
+      "descriptionTr": "Meyve Suyu",
+      "nameTr": "Cappy Şeftali",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060789,
         "nanoseconds": 701000000
       },
-      "categoryId": "soft-drinks",
-      "nameEn": "Cappy Peach",
       "descriptionEn": "Fruit Juice",
-      "nameTr": "Cappy Şeftali",
-      "descriptionTr": "Meyve Suyu",
-      "price": 80,
-      "imageUrl": ""
+      "categoryId": "soft-drinks"
+    },
+    {
+      "id": "ZIQcv2KFdQiSKmaMUWBK",
+      "nameEn": "White Chocolate Mocha",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069315/gvzwpxmno9oco8fri5vy.jpg",
+      "descriptionTr": "Beyaz çikolata ile kahvenin birleşimi",
+      "price": 140,
+      "nameTr": "White Chocolate Mocha",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771069279,
+        "nanoseconds": 255000000
+      },
+      "categoryId": "hot-coffee",
+      "descriptionEn": "A combination of white chocolate and coffee."
     },
     {
       "id": "Zm8agXXxxN3okR8jvVXm",
-      "nameTr": "Limonlu Soda",
+      "price": 40,
       "imageUrl": "",
+      "categoryId": "soft-drinks",
+      "descriptionEn": "Lemon flavored soda",
+      "descriptionTr": "Limon aromalı soda",
+      "nameTr": "Limonlu Soda",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060512,
         "nanoseconds": 193000000
       },
-      "descriptionTr": "Limon aromalı soda",
-      "descriptionEn": "Lemon flavored soda",
-      "categoryId": "soft-drinks",
-      "price": 40,
       "nameEn": "Lemon Soda"
     },
     {
       "id": "americano",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069920/y3asf4dau5almpugwapj.jpg",
       "price": 90,
-      "categoryId": "hot-coffee",
-      "nameEn": "Americano",
-      "descriptionTr": "Espresso ve sicak su",
-      "imageUrl": "",
-      "nameTr": "Americano",
-      "descriptionEn": "Espresso with hot water",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "nameEn": "Americano",
+      "nameTr": "Americano",
+      "descriptionTr": "Espresso ve sicak su",
+      "categoryId": "hot-coffee",
+      "descriptionEn": "Espresso with hot water"
     },
     {
       "id": "atom",
-      "nameEn": "Atom",
-      "descriptionTr": "Karisik meyve guclendirici",
-      "imageUrl": "",
       "categoryId": "fresh-juices",
       "nameTr": "Atom",
       "price": 100,
       "descriptionEn": "Energy boosting mixed fruit",
+      "imageUrl": "",
+      "descriptionTr": "Karisik meyve guclendirici",
+      "nameEn": "Atom",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -433,13 +493,13 @@
     },
     {
       "id": "begendili-kofte",
-      "price": 360,
+      "descriptionTr": "Koz patlican begendi ile",
       "nameTr": "Begendili Kofte",
       "descriptionEn": "With smoked eggplant puree",
       "categoryId": "mains",
       "imageUrl": "",
-      "descriptionTr": "Koz patlican begendi ile",
       "nameEn": "Meatballs with Eggplant Puree",
+      "price": 360,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -448,103 +508,178 @@
     },
     {
       "id": "bitki-caylari",
-      "categoryId": "teas",
-      "imageUrl": "",
-      "descriptionTr": "Ihlamur, kis cayi, kusburnu",
-      "descriptionEn": "Linden, winter tea, rosehip",
-      "nameTr": "Bitki Caylari",
+      "nameEn": "Herbal Teas",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "imageUrl": "",
       "price": 60,
-      "nameEn": "Herbal Teas"
+      "categoryId": "teas",
+      "nameTr": "Bitki Caylari",
+      "descriptionEn": "Linden, winter tea, rosehip",
+      "descriptionTr": "Ihlamur, kis cayi, kusburnu"
     },
     {
       "id": "bolonez-eriste",
-      "nameTr": "Bolonez Soslu Eriste",
+      "descriptionTr": "Bolonez sos ve yogurt",
+      "nameEn": "Bolognese Noodles",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "imageUrl": "",
-      "descriptionEn": "Bolognese sauce with yogurt",
-      "descriptionTr": "Bolonez sos ve yogurt",
-      "nameEn": "Bolognese Noodles",
       "categoryId": "pastas",
-      "price": 220
+      "imageUrl": "",
+      "price": 220,
+      "nameTr": "Bolonez Soslu Eriste",
+      "descriptionEn": "Bolognese sauce with yogurt"
     },
     {
       "id": "brownie",
-      "imageUrl": "",
+      "price": 150,
+      "descriptionEn": "Rich chocolate brownie",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "descriptionTr": "Yogun cikolata",
-      "nameTr": "Brownie",
-      "nameEn": "Brownie",
       "categoryId": "desserts",
-      "descriptionEn": "Rich chocolate brownie",
-      "price": 150
+      "imageUrl": "",
+      "nameEn": "Brownie",
+      "nameTr": "Brownie"
     },
     {
       "id": "cafe-bonbon",
+      "descriptionEn": "Espresso with dense milk base",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771070983/sae00evivpptcufiaqfe.jpg",
+      "nameTr": "Cafe Bombon",
       "descriptionTr": "Espresso ve yogun sut bazli",
-      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 140,
       "categoryId": "hot-coffee",
-      "nameEn": "Cafe Bonbon",
-      "nameTr": "Cafe Bonbon",
-      "descriptionEn": "Espresso with dense milk base"
+      "price": 140,
+      "nameEn": "Cafe Bombon"
     },
     {
       "id": "cafe-de-paris-tavuk",
-      "descriptionTr": "Sebze ve patates esliginde",
       "categoryId": "mains",
-      "nameEn": "Chicken with Cafe de Paris Sauce",
-      "nameTr": "Cafe de Paris Soslu Tavuk",
-      "price": 300,
-      "imageUrl": "",
+      "descriptionEn": "Served with vegetables and potatoes",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Served with vegetables and potatoes"
+      "imageUrl": "",
+      "descriptionTr": "Sebze ve patates esliginde",
+      "nameTr": "Cafe de Paris Soslu Tavuk",
+      "price": 300,
+      "nameEn": "Chicken with Cafe de Paris Sauce"
     },
     {
       "id": "cafe-latte",
-      "descriptionTr": "Espresso ve ipeksi sut kopugu",
-      "imageUrl": "",
+      "descriptionEn": "Espresso with silky milk foam",
+      "nameEn": "Cafe Latte",
       "price": 120,
-      "nameTr": "Cafe Latte",
-      "categoryId": "hot-coffee",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameEn": "Cafe Latte",
-      "descriptionEn": "Espresso with silky milk foam"
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771073157/hmuguwha9kjcrp4g6unh.jpg",
+      "categoryId": "hot-coffee",
+      "descriptionTr": "Espresso ve ipeksi sut kopugu",
+      "nameTr": "Cafe Latte"
     },
     {
       "id": "cappuchino",
-      "descriptionTr": "Bol kopuklu klasik cappuccino",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069833/epbr2lyhohhmhhwapm11.jpg",
       "nameEn": "Cappuccino",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
       "descriptionEn": "Classic cappuccino with rich foam",
-      "price": 110,
-      "imageUrl": "",
       "nameTr": "Cappuchino",
+      "descriptionTr": "Bol kopuklu klasik cappuccino",
       "categoryId": "hot-coffee",
+      "price": 110
+    },
+    {
+      "id": "caramel-latte",
+      "price": 140,
+      "nameTr": "Caramel Mocha",
+      "descriptionEn": "Latte with caramel sauce",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771072814/emvk99obcs6m5ztoyeo4.jpg",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
+      "descriptionTr": "Karamel soslu latte",
+      "nameEn": "Caramel Mocha",
+      "categoryId": "hot-coffee"
+    },
+    {
+      "id": "cay",
+      "price": 25,
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
+      "nameEn": "Tea",
+      "descriptionEn": "Fresh brewed Turkish tea",
+      "categoryId": "teas",
+      "descriptionTr": "Demleme ince belli cay",
+      "nameTr": "Cay",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771071428/ex8fh63yj24qroq9sdza.jpg"
+    },
+    {
+      "id": "cheesecake",
+      "descriptionTr": "Gunluk cheesecake",
+      "nameEn": "Cheesecake",
+      "categoryId": "desserts",
+      "imageUrl": "",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
+      "price": 170,
+      "nameTr": "Cheesecake",
+      "descriptionEn": "Daily cheesecake slice"
+    },
+    {
+      "id": "citir-tavuk-burger",
+      "nameTr": "Citir Tavuklu Burger",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
+      "descriptionTr": "Citir tavuk burger",
+      "nameEn": "Crispy Chicken Burger",
+      "price": 210,
+      "descriptionEn": "Crispy chicken burger",
+      "categoryId": "burgers",
+      "imageUrl": ""
+    },
+    {
+      "id": "cookie-latte",
+      "descriptionEn": "Latte with cookie flavor",
+      "nameEn": "Cookie Latte",
+      "descriptionTr": "Kurabiye aromali latte",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771072650/whkykv6p3ioq8btlce5t.jpg",
+      "categoryId": "hot-coffee",
+      "price": 140,
+      "nameTr": "Cookie Latte",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -552,89 +687,14 @@
       }
     },
     {
-      "id": "caramel-latte",
-      "descriptionTr": "Karamel soslu latte",
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
-      "descriptionEn": "Latte with caramel sauce",
-      "categoryId": "hot-coffee",
-      "nameEn": "Caramel Mocha",
-      "price": 140,
-      "nameTr": "Caramel Mocha",
-      "imageUrl": ""
-    },
-    {
-      "id": "cay",
-      "descriptionEn": "Fresh brewed Turkish tea",
-      "descriptionTr": "Demleme ince belli cay",
-      "nameTr": "Cay",
-      "categoryId": "teas",
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
-      "imageUrl": "",
-      "nameEn": "Tea",
-      "price": 25
-    },
-    {
-      "id": "cheesecake",
-      "descriptionEn": "Daily cheesecake slice",
-      "descriptionTr": "Gunluk cheesecake",
-      "price": 170,
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
-      "nameTr": "Cheesecake",
-      "nameEn": "Cheesecake",
-      "imageUrl": "",
-      "categoryId": "desserts"
-    },
-    {
-      "id": "citir-tavuk-burger",
-      "imageUrl": "",
-      "nameTr": "Citir Tavuklu Burger",
-      "descriptionEn": "Crispy chicken burger",
-      "price": 210,
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
-      "categoryId": "burgers",
-      "descriptionTr": "Citir tavuk burger",
-      "nameEn": "Crispy Chicken Burger"
-    },
-    {
-      "id": "cookie-latte",
-      "categoryId": "hot-coffee",
-      "imageUrl": "",
-      "nameTr": "Cookie Latte",
-      "descriptionEn": "Latte with cookie flavor",
-      "nameEn": "Cookie Latte",
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
-      "price": 140,
-      "descriptionTr": "Kurabiye aromali latte"
-    },
-    {
       "id": "cortudo",
-      "price": 100,
-      "nameEn": "Cortudo",
-      "descriptionEn": "Balanced espresso with milk touch",
-      "nameTr": "Cortudo",
-      "imageUrl": "",
       "descriptionTr": "Dengeli espresso sut dokunusu",
+      "nameTr": "Cortado",
+      "descriptionEn": "Balanced espresso with milk touch",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771072877/x8nylf0jsaluspejxxff.jpg",
+      "nameEn": "Cortado",
       "categoryId": "hot-coffee",
+      "price": 100,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -643,21 +703,25 @@
     },
     {
       "id": "cremore-antrikot-wrap",
-      "nameTr": "Cremore Antrikot Wrap",
       "descriptionTr": "Barbeku soslu antrikot wrap",
+      "categoryId": "wraps",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "nameTr": "Cremore Antrikot Wrap",
       "nameEn": "Cremore Steak Wrap",
-      "descriptionEn": "BBQ steak wrap",
-      "categoryId": "wraps",
       "imageUrl": "",
-      "price": 350
+      "price": 350,
+      "descriptionEn": "BBQ steak wrap"
     },
     {
       "id": "cremore-bazlama-tost",
+      "descriptionEn": "Bazlama toast with roasted beef",
+      "descriptionTr": "Kavurmali bazlama tost",
+      "nameEn": "Cremore Bazlama Toast",
+      "categoryId": "toasts",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -665,966 +729,992 @@
       },
       "nameTr": "Cremore Bazlama Tost",
       "imageUrl": "",
-      "categoryId": "toasts",
-      "price": 180,
-      "descriptionTr": "Kavurmali bazlama tost",
-      "nameEn": "Cremore Bazlama Toast",
-      "descriptionEn": "Bazlama toast with roasted beef"
+      "price": 180
     },
     {
       "id": "cremore-burger",
-      "nameEn": "Cremore Burger",
-      "nameTr": "Cremore Burger",
+      "descriptionEn": "Signature burger with caramelized onions",
+      "categoryId": "burgers",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "burgers",
-      "price": 320,
       "imageUrl": "",
-      "descriptionEn": "Signature burger with caramelized onions",
-      "descriptionTr": "Karamelize soganli ozel burger"
+      "descriptionTr": "Karamelize soganli ozel burger",
+      "nameTr": "Cremore Burger",
+      "nameEn": "Cremore Burger",
+      "price": 320
     },
     {
       "id": "cremore-kahvalti",
-      "descriptionTr": "Serpme kahvalti tabagi",
-      "price": 360,
-      "imageUrl": "",
-      "nameEn": "Cremore Breakfast",
+      "nameTr": "Cremore Kahvalti",
+      "categoryId": "breakfast",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "descriptionEn": "Rich Turkish breakfast platter",
-      "categoryId": "breakfast",
-      "nameTr": "Cremore Kahvalti"
+      "price": 360,
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771066763/k8kgylyeyyf44yil6reu.jpg",
+      "descriptionTr": "Serpme kahvalti tabagi",
+      "nameEn": "Cremore Breakfast"
     },
     {
       "id": "cremore-kebap",
-      "nameEn": "Cremore Kebab",
-      "price": 500,
-      "imageUrl": "",
-      "categoryId": "mains",
-      "descriptionTr": "Bonfile ve espanyol sos",
       "descriptionEn": "Tenderloin with espagnole sauce",
+      "descriptionTr": "Bonfile ve espanyol sos",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameTr": "Cremore Kebap"
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771067355/z8orsqbadkhnlp7gdxft.jpg",
+      "categoryId": "mains",
+      "nameTr": "Cremore Kebap",
+      "nameEn": "Cremore Kebab",
+      "price": 500
     },
     {
       "id": "cremore-kokteyl",
-      "price": 140,
       "descriptionEn": "House signature recipe",
-      "nameEn": "Cremore Cocktail",
-      "nameTr": "Cremore Kokteyl",
-      "descriptionTr": "Evin imza tarifi",
+      "categoryId": "cocktails",
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "cocktails",
-      "imageUrl": ""
+      "nameEn": "Cremore Cocktail",
+      "price": 140,
+      "descriptionTr": "Evin imza tarifi",
+      "nameTr": "Cremore Kokteyl"
     },
     {
       "id": "cremore-mojito",
-      "nameTr": "Cremore Mojito",
-      "imageUrl": "",
-      "nameEn": "Cremore Mojito",
-      "price": 140,
-      "descriptionTr": "Cremore usulu mojito",
       "descriptionEn": "Cremore style mojito",
       "categoryId": "cocktails",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "descriptionTr": "Cremore usulu mojito",
+      "imageUrl": "",
+      "nameTr": "Cremore Mojito",
+      "price": 140,
+      "nameEn": "Cremore Mojito"
     },
     {
       "id": "cremore-pizza-buyuk",
+      "descriptionTr": "Karışik malzemeli",
+      "nameTr": "Cremore Pizza Buyuk Boy",
+      "categoryId": "pizzas",
+      "descriptionEn": "Loaded mixed toppings",
+      "price": 320,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 320,
       "imageUrl": "",
-      "descriptionEn": "Loaded mixed toppings",
-      "nameTr": "Cremore Pizza Buyuk Boy",
-      "nameEn": "Cremore Pizza Large",
-      "descriptionTr": "Karışik malzemeli",
-      "categoryId": "pizzas"
+      "nameEn": "Cremore Pizza Large"
     },
     {
       "id": "cremore-pizza-orta",
-      "price": 280,
-      "nameEn": "Cremore Pizza Medium",
-      "nameTr": "Cremore Pizza Orta Boy",
-      "descriptionEn": "Loaded mixed toppings",
-      "categoryId": "pizzas",
-      "imageUrl": "",
-      "descriptionTr": "Karışik malzemeli",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "price": 280,
+      "descriptionEn": "Loaded mixed toppings",
+      "nameEn": "Cremore Pizza Medium",
+      "imageUrl": "",
+      "nameTr": "Cremore Pizza Orta Boy",
+      "categoryId": "pizzas",
+      "descriptionTr": "Karışik malzemeli"
     },
     {
       "id": "cremore-sepeti",
       "price": 280,
-      "nameTr": "Cremore Sepeti",
-      "descriptionEn": "Mixed snack basket",
-      "categoryId": "appetizers",
-      "imageUrl": "",
       "descriptionTr": "Karisik atistirmalik sepeti",
       "nameEn": "Cremore Basket",
+      "nameTr": "Cremore Sepeti",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "imageUrl": "",
+      "categoryId": "appetizers",
+      "descriptionEn": "Mixed snack basket"
     },
     {
       "id": "cremore-tavuk-wrap",
-      "categoryId": "wraps",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771066964/l09afw9xjl7t5b5uaezk.jpg",
+      "nameEn": "Cremore Chicken Wrap",
+      "descriptionTr": "Barbeku soslu tavuk wrap",
+      "descriptionEn": "BBQ chicken wrap",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Barbeku soslu tavuk wrap",
-      "imageUrl": "",
+      "categoryId": "wraps",
       "nameTr": "Cremore Tavuklu Wrap",
-      "nameEn": "Cremore Chicken Wrap",
-      "price": 240,
-      "descriptionEn": "BBQ chicken wrap"
+      "price": 240
     },
     {
       "id": "ekmek-arasi-kofte",
+      "imageUrl": "",
       "price": 280,
       "categoryId": "mains",
+      "nameEn": "Meatball Sandwich",
+      "nameTr": "Ekmek Arasi Kofte",
+      "descriptionTr": "Klasik kofte ekmek",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Klasik kofte ekmek",
-      "nameEn": "Meatball Sandwich",
-      "descriptionEn": "Classic meatball sandwich",
-      "imageUrl": "",
-      "nameTr": "Ekmek Arasi Kofte"
+      "descriptionEn": "Classic meatball sandwich"
     },
     {
       "id": "espresso-double",
-      "imageUrl": "",
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
-      "descriptionEn": "Intense double shot espresso",
-      "categoryId": "hot-coffee",
       "price": 80,
       "nameEn": "Espresso Double",
       "descriptionTr": "Yogun cift shot espresso",
-      "nameTr": "Espresso Double"
-    },
-    {
-      "id": "espresso-single",
-      "imageUrl": "",
-      "price": 60,
-      "nameTr": "Espresso Single",
-      "descriptionTr": "Tek shot klasik espresso",
+      "nameTr": "Espresso Double",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "categoryId": "hot-coffee",
+      "descriptionEn": "Intense double shot espresso",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771068602/l9wreozqycdugagaqydr.jpg"
+    },
+    {
+      "id": "espresso-single",
       "nameEn": "Espresso Single",
-      "descriptionEn": "Single shot classic espresso"
+      "price": 60,
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069781/ujtkl0tsaqjmkggipwtz.jpg",
+      "descriptionEn": "Single shot classic espresso",
+      "categoryId": "hot-coffee",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
+      "nameTr": "Espresso Single",
+      "descriptionTr": "Tek shot klasik espresso"
+    },
+    {
+      "id": "fXAP0SOrj4Xk0C9qgVd3",
+      "categoryId": "cocktails",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771074621/osn4dsqa12t94miqqhmj.png",
+      "nameEn": "İce Tea Mango",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771074283,
+        "nanoseconds": 216000000
+      },
+      "descriptionEn": "Handmade İce Tea",
+      "price": 80,
+      "descriptionTr": "El Yapımı İce Tea",
+      "nameTr": "İce Tea Mango"
     },
     {
       "id": "filtre-kahve",
+      "descriptionTr": "Gunluk taze demlenmis",
+      "price": 80,
+      "categoryId": "hot-coffee",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "nameEn": "Filter Coffee",
-      "categoryId": "hot-coffee",
-      "imageUrl": "",
-      "nameTr": "Filtre Kahve",
       "descriptionEn": "Freshly brewed daily",
-      "price": 80,
-      "descriptionTr": "Gunluk taze demlenmis"
+      "nameTr": "Filtre Kahve",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771070861/gfu7ofzlnysaclgeksun.jpg"
     },
     {
       "id": "findik-latte",
-      "price": 140,
       "nameTr": "Findik Latte",
+      "price": 140,
+      "categoryId": "hot-coffee",
+      "descriptionEn": "Latte with hazelnut flavor",
       "nameEn": "Hazelnut Latte",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069705/hqjaznq86w16pz5pglgi.jpg",
       "descriptionTr": "Findik aromali latte",
-      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "categoryId": "hot-coffee",
-      "descriptionEn": "Latte with hazelnut flavor"
+      }
     },
     {
       "id": "fix-etli",
+      "descriptionTr": "Etli fix tabak",
+      "nameTr": "Etli",
+      "categoryId": "fix",
+      "price": 350,
       "descriptionEn": "Beef fix plate",
       "nameEn": "Beef Fix",
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "imageUrl": "",
-      "price": 350,
-      "categoryId": "fix",
-      "nameTr": "Etli",
-      "descriptionTr": "Etli fix tabak"
+      }
     },
     {
       "id": "fix-sebzeli",
-      "price": 250,
-      "nameTr": "Sebzeli",
-      "imageUrl": "",
       "categoryId": "fix",
-      "descriptionEn": "Vegetable fix plate",
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "nameEn": "Vegetable Fix",
       "descriptionTr": "Sebzeli fix tabak",
-      "nameEn": "Vegetable Fix"
+      "nameTr": "Sebzeli",
+      "descriptionEn": "Vegetable fix plate",
+      "price": 250
     },
     {
       "id": "fix-tavuklu",
-      "nameEn": "Chicken Fix",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameTr": "Tavuklu",
+      "descriptionEn": "Chicken fix plate",
       "descriptionTr": "Tavuklu fix tabak",
+      "nameEn": "Chicken Fix",
       "price": 300,
-      "imageUrl": "",
       "categoryId": "fix",
-      "descriptionEn": "Chicken fix plate"
+      "imageUrl": "",
+      "nameTr": "Tavuklu"
     },
     {
       "id": "flat-white",
-      "imageUrl": "",
-      "descriptionEn": "Strong espresso with microfoam",
-      "nameTr": "Flat White",
+      "price": 120,
+      "categoryId": "hot-coffee",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 120,
+      "nameEn": "Flat White",
+      "nameTr": "Flat White",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771070433/doaldbwfkihg6lduugqv.jpg",
       "descriptionTr": "Kuvvetli espresso mikro kopuk",
-      "categoryId": "hot-coffee",
-      "nameEn": "Flat White"
+      "descriptionEn": "Strong espresso with microfoam"
     },
     {
       "id": "frozen-ananas",
       "nameTr": "Frozen Ananas",
+      "categoryId": "frozen",
+      "price": 150,
+      "imageUrl": "",
+      "nameEn": "Pineapple Frozen",
+      "descriptionEn": "Pineapple flavor",
+      "descriptionTr": "Ananas aromali",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "imageUrl": "",
-      "nameEn": "Pineapple Frozen",
-      "categoryId": "frozen",
-      "price": 150,
-      "descriptionTr": "Ananas aromali",
-      "descriptionEn": "Pineapple flavor"
+      }
     },
     {
       "id": "frozen-carkifelek",
-      "categoryId": "frozen",
-      "nameTr": "Frozen Carkifelek",
-      "price": 150,
       "nameEn": "Passion Fruit Frozen",
-      "descriptionTr": "Carkifelek aromali",
+      "nameTr": "Frozen Carkifelek",
+      "categoryId": "frozen",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "imageUrl": "",
+      "price": 150,
+      "descriptionTr": "Carkifelek aromali",
       "descriptionEn": "Passion fruit flavor"
     },
     {
       "id": "frozen-cilek",
-      "categoryId": "frozen",
-      "price": 150,
       "imageUrl": "",
+      "descriptionEn": "Strawberry flavor",
+      "nameTr": "Frozen Cilek",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Strawberry flavor",
-      "nameTr": "Frozen Cilek",
+      "price": 150,
       "nameEn": "Strawberry Frozen",
+      "categoryId": "frozen",
       "descriptionTr": "Cilek aromali"
     },
     {
       "id": "frozen-mango",
+      "categoryId": "frozen",
+      "price": 150,
+      "nameEn": "Mango Frozen",
       "imageUrl": "",
+      "descriptionEn": "Mango flavor",
+      "descriptionTr": "Mango aromali",
       "nameTr": "Frozen Mango",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "price": 150,
-      "nameEn": "Mango Frozen",
-      "descriptionEn": "Mango flavor",
-      "categoryId": "frozen",
-      "descriptionTr": "Mango aromali"
+      }
     },
     {
       "id": "frozen-mango-ananas",
-      "categoryId": "frozen",
-      "descriptionEn": "Mango and pineapple blend",
-      "nameEn": "Mango-Pineapple Frozen",
       "imageUrl": "",
+      "price": 150,
+      "nameTr": "Frozen Mango-Ananas",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Mango ve ananas karisimi",
-      "nameTr": "Frozen Mango-Ananas",
-      "price": 150
+      "nameEn": "Mango-Pineapple Frozen",
+      "descriptionEn": "Mango and pineapple blend",
+      "categoryId": "frozen",
+      "descriptionTr": "Mango ve ananas karisimi"
     },
     {
       "id": "gazoz",
+      "price": 15,
       "nameEn": "Water",
+      "nameTr": "Su",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameTr": "Su",
-      "categoryId": "soft-drinks",
       "descriptionEn": "Water",
-      "price": 15,
       "descriptionTr": "Su",
+      "categoryId": "soft-drinks",
       "imageUrl": ""
     },
     {
       "id": "gunun-corbasi",
-      "nameTr": "Gunun Corbasi",
-      "imageUrl": "",
-      "descriptionEn": "Chef's daily soup",
-      "descriptionTr": "Gunun ozel corbasi",
-      "price": 80,
       "nameEn": "Soup of the Day",
+      "categoryId": "soups",
+      "descriptionEn": "Chef's daily soup",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "soups"
+      "price": 80,
+      "nameTr": "Gunun Corbasi",
+      "descriptionTr": "Gunun ozel corbasi",
+      "imageUrl": ""
     },
     {
       "id": "hBj6wLKGdUaLaAMDBdHu",
-      "categoryId": "soft-drinks",
-      "nameTr": "Karpuz Çilek Soda",
-      "imageUrl": "",
-      "price": 40,
-      "descriptionTr": "Karpuz Çilek Aromalı Soda",
       "descriptionEn": "Watermelon Strawberry Flavored Soda",
       "nameEn": "Watermelon Strawberry Soda",
+      "descriptionTr": "Karpuz Çilek Aromalı Soda",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060613,
         "nanoseconds": 628000000
-      }
+      },
+      "nameTr": "Karpuz Çilek Soda",
+      "categoryId": "soft-drinks",
+      "price": 40,
+      "imageUrl": ""
     },
     {
       "id": "hPe4i9vy4PmMxihAYRN7",
+      "price": 80,
       "nameTr": "Cappy Vişne",
       "imageUrl": "",
+      "descriptionEn": "Fruit Juice",
+      "descriptionTr": "Meyve suyu",
+      "nameEn": "Cappy Cherry",
       "categoryId": "soft-drinks",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771060739,
         "nanoseconds": 984000000
-      },
-      "price": 80,
-      "descriptionTr": "Meyve suyu",
-      "nameEn": "Cappy Cherry",
-      "descriptionEn": "Fruit Juice"
+      }
     },
     {
       "id": "hellim-ton-salata",
+      "nameEn": "Tuna Salad with Grilled Halloumi",
       "descriptionEn": "With tuna and grilled halloumi",
-      "price": 200,
-      "categoryId": "salads-bowls",
-      "imageUrl": "",
-      "descriptionTr": "Ton baligi ve hellim ile",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameEn": "Tuna Salad with Grilled Halloumi",
+      "descriptionTr": "Ton baligi ve hellim ile",
+      "imageUrl": "",
+      "price": 200,
+      "categoryId": "salads-bowls",
       "nameTr": "Izgara Hellim Peynirli Ton Balikli Salata"
     },
     {
       "id": "hizli-ve-leziz",
-      "nameTr": "Hizli ve Leziz",
-      "categoryId": "breakfast",
       "nameEn": "Quick and Tasty",
+      "nameTr": "Hizli ve Leziz",
+      "descriptionTr": "Hafif kahvalti tabagi",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Hafif kahvalti tabagi",
-      "descriptionEn": "Light breakfast plate",
       "imageUrl": "",
-      "price": 180
+      "descriptionEn": "Light breakfast plate",
+      "price": 180,
+      "categoryId": "breakfast"
     },
     {
       "id": "ifOcjHQiZzsBGBb5zHAK",
+      "price": 40,
+      "categoryId": "teas",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771061249,
         "nanoseconds": 971000000
       },
-      "price": 40,
-      "descriptionEn": "Cup Tea",
-      "descriptionTr": "Büyük Bardakta Çay",
       "nameEn": "A Cup Of Tea",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771073067/ewwfhaqfxj1pg4vunwuw.jpg",
+      "descriptionTr": "Büyük Bardakta Çay",
       "nameTr": "Fincan Çay",
-      "categoryId": "teas",
-      "imageUrl": ""
+      "descriptionEn": "Cup Tea"
     },
     {
       "id": "ispanakli-gozleme",
-      "nameTr": "Ispanakli Gozleme",
-      "descriptionEn": "With spinach filling",
+      "price": 120,
       "imageUrl": "",
+      "nameEn": "Spinach Gozleme",
+      "descriptionEn": "With spinach filling",
+      "categoryId": "gozleme",
+      "descriptionTr": "Ispanak harci ile",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Ispanak harci ile",
-      "nameEn": "Spinach Gozleme",
-      "categoryId": "gozleme",
-      "price": 120
+      "nameTr": "Ispanakli Gozleme"
     },
     {
       "id": "izgara-kofte",
+      "categoryId": "mains",
+      "descriptionTr": "Pilav ve patates ile",
+      "price": 320,
+      "imageUrl": "",
+      "descriptionEn": "Served with rice and potatoes",
+      "nameTr": "Izgara Kofte",
+      "nameEn": "Grilled Meatballs",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
+      }
+    },
+    {
+      "id": "jZmtAcxafXsCccdm2oCJ",
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771074344,
+        "nanoseconds": 696000000
       },
-      "nameEn": "Grilled Meatballs",
-      "descriptionEn": "Served with rice and potatoes",
-      "imageUrl": "",
-      "descriptionTr": "Pilav ve patates ile",
-      "nameTr": "Izgara Kofte",
-      "price": 320,
-      "categoryId": "mains"
+      "descriptionTr": "El Yapımı Şeftalili Ice Tea",
+      "nameTr": "Ice Tea Şeftali",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771074663/mnbagvqdi1npxsxhaxqx.png",
+      "price": 80,
+      "descriptionEn": "Handmade Peach Ice Tea",
+      "categoryId": "cocktails",
+      "nameEn": "Ice Tea Peach"
     },
     {
       "id": "kajun-salata",
-      "descriptionTr": "Kajun tavuklu salata",
       "imageUrl": "",
       "nameEn": "Cajun Salad",
+      "descriptionEn": "Salad with cajun chicken",
       "categoryId": "salads-bowls",
+      "descriptionTr": "Kajun tavuklu salata",
+      "price": 160,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 160,
-      "nameTr": "Kajun Salata",
-      "descriptionEn": "Salad with cajun chicken"
+      "nameTr": "Kajun Salata"
     },
     {
       "id": "karamelize-biskuvi-latte",
-      "imageUrl": "",
-      "nameTr": "Karamelize Biskuvili Latte",
-      "descriptionEn": "Biscuit notes blended with latte",
-      "descriptionTr": "Biskuvi aromasi ve latte",
-      "nameEn": "Caramelized Biscuit Latte",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771070143/ned2vfbtlp961trvbctk.jpg",
+      "price": 150,
       "categoryId": "hot-coffee",
-      "price": 150
+      "nameTr": "Karamelize Biskuvili Latte",
+      "nameEn": "Caramelized Biscuit Latte",
+      "descriptionEn": "Biscuit notes blended with latte",
+      "descriptionTr": "Biskuvi aromasi ve latte"
     },
     {
       "id": "kis-salatasi",
-      "categoryId": "salads-bowls",
+      "nameTr": "Kis Salatasi",
+      "nameEn": "Winter Salad",
       "descriptionTr": "Beyaz peynirli mevsim salatasi",
+      "descriptionEn": "Seasonal salad with white cheese",
+      "price": 140,
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 140,
-      "nameTr": "Kis Salatasi",
-      "imageUrl": "",
-      "nameEn": "Winter Salad",
-      "descriptionEn": "Seasonal salad with white cheese"
+      "categoryId": "salads-bowls"
     },
     {
       "id": "klasik-burger",
-      "descriptionEn": "Classic beef burger",
+      "descriptionTr": "Dana kofte burger",
+      "nameTr": "Klasik Burger",
+      "categoryId": "burgers",
+      "price": 260,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 260,
-      "categoryId": "burgers",
+      "imageUrl": "",
       "nameEn": "Classic Burger",
-      "nameTr": "Klasik Burger",
-      "descriptionTr": "Dana kofte burger",
-      "imageUrl": ""
+      "descriptionEn": "Classic beef burger"
     },
     {
       "id": "klasik-mojito",
+      "price": 130,
+      "categoryId": "cocktails",
+      "descriptionEn": "Mint and lime balance",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "imageUrl": "",
       "descriptionTr": "Nane ve lime aromasi",
       "nameTr": "Klasik Mojito",
-      "descriptionEn": "Mint and lime balance",
-      "price": 130,
-      "imageUrl": "",
-      "nameEn": "Classic Mojito",
-      "categoryId": "cocktails"
+      "nameEn": "Classic Mojito"
     },
     {
       "id": "klasik-tost",
+      "descriptionEn": "Sujuk and cheddar toast",
       "nameTr": "Klasik Tost",
-      "categoryId": "toasts",
-      "descriptionTr": "Sucuklu kasarli tost",
-      "price": 160,
       "nameEn": "Classic Toast",
       "imageUrl": "",
-      "descriptionEn": "Sujuk and cheddar toast",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "categoryId": "toasts",
+      "price": 160,
+      "descriptionTr": "Sucuklu kasarli tost"
     },
     {
       "id": "kola",
+      "price": 80,
       "categoryId": "soft-drinks",
-      "imageUrl": "",
       "descriptionEn": "330 ml",
       "descriptionTr": "330 ml",
-      "nameTr": "Kola",
-      "price": 80,
-      "nameEn": "Cola",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "nameTr": "Kola",
+      "nameEn": "Cola",
+      "imageUrl": ""
     },
     {
       "id": "korili-tavuk",
-      "price": 300,
-      "descriptionTr": "Mantarlı kori soslu",
-      "imageUrl": "",
-      "nameEn": "Curried Chicken",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
+      "imageUrl": "",
+      "nameEn": "Curried Chicken",
       "nameTr": "Korili Tavuk",
+      "price": 300,
+      "descriptionEn": "With mushroom curry sauce",
       "categoryId": "mains",
-      "descriptionEn": "With mushroom curry sauce"
+      "descriptionTr": "Mantarlı kori soslu"
     },
     {
       "id": "kumpir",
-      "descriptionTr": "Zengin malzemeli kumpir",
-      "imageUrl": "",
       "price": 220,
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "appetizers",
-      "nameEn": "Stuffed Baked Potato",
       "descriptionEn": "Loaded baked potato",
+      "nameEn": "Stuffed Baked Potato",
+      "categoryId": "appetizers",
+      "descriptionTr": "Zengin malzemeli kumpir",
       "nameTr": "Kumpir"
     },
     {
       "id": "linguine-alfredo",
-      "descriptionTr": "Tavuk, mantar, parmesan",
-      "price": 200,
+      "categoryId": "pastas",
       "imageUrl": "",
+      "nameTr": "Linguine Alfredo Classico",
+      "descriptionTr": "Tavuk, mantar, parmesan",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameEn": "Linguine Alfredo Classico",
-      "nameTr": "Linguine Alfredo Classico",
       "descriptionEn": "Chicken, mushroom, parmesan",
-      "categoryId": "pastas"
+      "price": 200,
+      "nameEn": "Linguine Alfredo Classico"
     },
     {
       "id": "manti",
-      "imageUrl": "",
       "descriptionTr": "Yogurt ve biber sos ile",
       "nameTr": "Manti",
+      "categoryId": "pastas",
       "price": 250,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "pastas",
+      "nameEn": "Turkish Dumplings",
       "descriptionEn": "With yogurt and pepper butter",
-      "nameEn": "Turkish Dumplings"
+      "imageUrl": ""
     },
     {
       "id": "margarita-buyuk",
       "categoryId": "pizzas",
+      "descriptionEn": "Mozzarella with special sauce",
+      "price": 240,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Mozzarella with special sauce",
-      "price": 240,
-      "imageUrl": "",
+      "nameEn": "Margherita Pizza Large",
       "nameTr": "Margarita Pizza Buyuk Boy",
       "descriptionTr": "Mozarella ve ozel sos",
-      "nameEn": "Margherita Pizza Large"
+      "imageUrl": ""
     },
     {
       "id": "margarita-orta",
+      "descriptionEn": "Mozzarella with special sauce",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Mozzarella with special sauce",
-      "nameEn": "Margherita Pizza Medium",
       "descriptionTr": "Mozarella ve ozel sos",
-      "imageUrl": "",
+      "nameTr": "Margarita Pizza Orta Boy",
       "price": 200,
-      "categoryId": "pizzas",
-      "nameTr": "Margarita Pizza Orta Boy"
+      "imageUrl": "",
+      "nameEn": "Margherita Pizza Medium",
+      "categoryId": "pizzas"
     },
     {
       "id": "menemen",
       "nameTr": "Menemen",
-      "price": 120,
-      "categoryId": "breakfast",
       "descriptionTr": "Domates, biber, yumurta",
+      "imageUrl": "",
+      "price": 120,
+      "nameEn": "Menemen",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameEn": "Menemen",
-      "descriptionEn": "Tomato, pepper and egg",
-      "imageUrl": ""
+      "categoryId": "breakfast",
+      "descriptionEn": "Tomato, pepper and egg"
     },
     {
       "id": "meyveli-bowl",
+      "descriptionEn": "Forest fruits and granola",
+      "nameTr": "Meyveli Bowl",
       "nameEn": "Fruit Bowl",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameTr": "Meyveli Bowl",
+      "categoryId": "salads-bowls",
       "descriptionTr": "Orman meyveli granolali",
-      "descriptionEn": "Forest fruits and granola",
-      "imageUrl": "",
       "price": 180,
-      "categoryId": "salads-bowls"
+      "imageUrl": ""
     },
     {
       "id": "milkshake-cilek",
+      "descriptionTr": "Yogun cilekli milkshake",
+      "nameEn": "Strawberry Milkshake",
+      "categoryId": "milkshake",
       "descriptionEn": "Creamy strawberry milkshake",
       "imageUrl": "",
-      "categoryId": "milkshake",
-      "descriptionTr": "Yogun cilekli milkshake",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "nameTr": "Milkshake Cilek",
-      "price": 150,
-      "nameEn": "Strawberry Milkshake"
+      "price": 150
     },
     {
       "id": "milkshake-karamel",
       "nameTr": "Milkshake Karamel",
-      "descriptionEn": "Milkshake with caramel sauce",
-      "nameEn": "Caramel Milkshake",
-      "categoryId": "milkshake",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "imageUrl": "",
+      "descriptionEn": "Milkshake with caramel sauce",
+      "descriptionTr": "Karamel soslu milkshake",
+      "nameEn": "Caramel Milkshake",
+      "categoryId": "milkshake",
       "price": 150,
-      "descriptionTr": "Karamel soslu milkshake"
+      "imageUrl": ""
     },
     {
       "id": "mocha",
-      "nameTr": "Mocha",
-      "nameEn": "Mocha",
-      "categoryId": "hot-coffee",
+      "descriptionTr": "Kahve ve cikolata uyumu",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Kahve ve cikolata uyumu",
-      "imageUrl": "",
       "descriptionEn": "Coffee and chocolate blend",
-      "price": 140
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771071182/tlixmrlvw6pnhtsbg5te.jpg",
+      "price": 140,
+      "nameEn": "Mocha",
+      "nameTr": "Mocha",
+      "categoryId": "hot-coffee"
     },
     {
       "id": "mozaik-pasta",
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      },
       "price": 125,
+      "imageUrl": "",
       "nameEn": "Mosaic Cake",
       "descriptionEn": "Classic mosaic cake",
       "categoryId": "desserts",
       "descriptionTr": "Klasik mozaik pasta",
-      "nameTr": "Mozaik Pasta",
-      "imageUrl": ""
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1771056334,
+        "nanoseconds": 278000000
+      },
+      "nameTr": "Mozaik Pasta"
     },
     {
       "id": "ocean-prime",
       "descriptionEn": "Refreshing ocean-inspired mix",
-      "categoryId": "cocktails",
+      "nameTr": "Ocean Prime",
+      "descriptionTr": "Ferah mavi kokteyl",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "nameEn": "Ocean Prime",
-      "price": 170,
-      "nameTr": "Ocean Prime",
+      "categoryId": "cocktails",
       "imageUrl": "",
-      "descriptionTr": "Ferah mavi kokteyl"
+      "price": 170
     },
     {
       "id": "patates-cipsi",
+      "price": 80,
+      "nameEn": "Potato Chips",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "imageUrl": "",
-      "nameTr": "Patates Cipsi",
       "descriptionEn": "Rustic sliced potatoes",
-      "nameEn": "Potato Chips",
+      "descriptionTr": "Odun dilim patates",
       "categoryId": "appetizers",
-      "price": 80,
-      "descriptionTr": "Odun dilim patates"
+      "nameTr": "Patates Cipsi"
     },
     {
       "id": "patatesli-gozleme",
-      "price": 120,
-      "descriptionEn": "With potato filling",
-      "nameTr": "Patatesli Gozleme",
+      "descriptionTr": "Patates harci ile",
       "categoryId": "gozleme",
+      "nameEn": "Potato Gozleme",
+      "price": 120,
       "imageUrl": "",
+      "nameTr": "Patatesli Gozleme",
+      "descriptionEn": "With potato filling",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "descriptionTr": "Patates harci ile",
-      "nameEn": "Potato Gozleme"
+      }
     },
     {
       "id": "peynirli-gozleme",
       "categoryId": "gozleme",
+      "imageUrl": "",
       "nameTr": "Peynirli Gozleme",
-      "nameEn": "Cheese Gozleme",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Peynir harci ile",
-      "imageUrl": "",
       "descriptionEn": "With cheese filling",
-      "price": 120
+      "descriptionTr": "Peynir harci ile",
+      "price": 120,
+      "nameEn": "Cheese Gozleme"
     },
     {
       "id": "peynirli-omlet",
-      "price": 100,
-      "imageUrl": "",
-      "descriptionEn": "Egg and cheese",
-      "descriptionTr": "Yumurta ve peynir",
+      "nameEn": "Cheese Omelet",
       "categoryId": "breakfast",
+      "price": 100,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "nameTr": "Peynirli Omlet",
-      "nameEn": "Cheese Omelet"
+      "descriptionTr": "Yumurta ve peynir",
+      "imageUrl": "",
+      "descriptionEn": "Egg and cheese"
     },
     {
       "id": "peynirli-tost",
+      "price": 140,
+      "nameTr": "Peynirli Tost",
+      "categoryId": "toasts",
       "imageUrl": "",
       "descriptionEn": "Toast with cheddar cheese",
-      "descriptionTr": "Kasar peynirli tost",
-      "nameTr": "Peynirli Tost",
-      "price": 140,
-      "categoryId": "toasts",
+      "nameEn": "Cheese Toast",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameEn": "Cheese Toast"
+      "descriptionTr": "Kasar peynirli tost"
     },
     {
       "id": "sade-omlet",
-      "descriptionTr": "Klasik omlet",
-      "nameEn": "Plain Omelet",
-      "descriptionEn": "Classic omelet",
-      "nameTr": "Sade Omlet",
+      "categoryId": "breakfast",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "breakfast",
+      "descriptionEn": "Classic omelet",
+      "descriptionTr": "Klasik omlet",
+      "imageUrl": "",
+      "nameTr": "Sade Omlet",
       "price": 80,
-      "imageUrl": ""
+      "nameEn": "Plain Omelet"
     },
     {
       "id": "sahanda-yumurta",
-      "descriptionTr": "Goz yumurta",
+      "nameEn": "Sunny Side Egg",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "imageUrl": "",
-      "price": 80,
-      "nameTr": "Sahanda Yumurta",
-      "nameEn": "Sunny Side Egg",
       "descriptionEn": "Pan-fried egg",
-      "categoryId": "breakfast"
+      "imageUrl": "",
+      "categoryId": "breakfast",
+      "price": 80,
+      "descriptionTr": "Goz yumurta",
+      "nameTr": "Sahanda Yumurta"
     },
     {
       "id": "sahlep",
-      "categoryId": "hot-drinks",
-      "imageUrl": "",
+      "price": 100,
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069608/lyefewf4fyuskllxrabt.jpg",
       "descriptionEn": "Served with cinnamon",
-      "nameTr": "Sahlep",
+      "nameTr": "Salep",
+      "nameEn": "Salep",
+      "categoryId": "hot-drinks",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionTr": "Tarcin ile servis edilir",
-      "nameEn": "Salep",
-      "price": 100
+      "descriptionTr": "Tarcin ile servis edilir"
     },
     {
       "id": "sebzeli-omlet",
-      "nameEn": "Vegetable Omelet",
-      "categoryId": "breakfast",
       "descriptionEn": "Egg, peppers, mushrooms",
       "price": 100,
-      "descriptionTr": "Yumurta, biber, mantar",
-      "nameTr": "Sebzeli Omlet",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "imageUrl": ""
+      "nameTr": "Sebzeli Omlet",
+      "categoryId": "breakfast",
+      "imageUrl": "",
+      "nameEn": "Vegetable Omelet",
+      "descriptionTr": "Yumurta, biber, mantar"
     },
     {
       "id": "sicak-cikolata",
+      "price": 100,
       "categoryId": "hot-drinks",
-      "descriptionEn": "Rich and creamy chocolate",
-      "imageUrl": "",
       "descriptionTr": "Yogun cikolata lezzeti",
-      "nameTr": "Sicak Cikolata",
-      "nameEn": "Hot Chocolate",
+      "imageUrl": "",
+      "descriptionEn": "Rich and creamy chocolate",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 100
+      "nameTr": "Sicak Cikolata",
+      "nameEn": "Hot Chocolate"
     },
     {
       "id": "sigara-boregi",
-      "descriptionTr": "6 adet",
-      "nameTr": "Sigara Boregi",
+      "categoryId": "appetizers",
+      "descriptionEn": "6 pieces",
+      "nameEn": "Sigara Borek",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "price": 80,
-      "categoryId": "appetizers",
+      "descriptionTr": "6 adet",
       "imageUrl": "",
-      "descriptionEn": "6 pieces",
-      "nameEn": "Sigara Borek"
+      "nameTr": "Sigara Boregi"
     },
     {
       "id": "soda",
       "nameEn": "Mineral Water",
       "categoryId": "soft-drinks",
       "descriptionEn": "Sparkling mineral water",
-      "price": 30,
-      "nameTr": "Soda",
-      "descriptionTr": "Maden suyu",
       "imageUrl": "",
+      "descriptionTr": "Maden suyu",
+      "nameTr": "Soda",
+      "price": 30,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -1633,40 +1723,39 @@
     },
     {
       "id": "soguk-cay",
+      "nameTr": "Soguk Cay",
+      "nameEn": "Iced Tea",
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "soft-drinks",
-      "nameEn": "Iced Tea",
       "descriptionTr": "Soguk servis",
-      "imageUrl": "",
-      "descriptionEn": "Served chilled",
-      "nameTr": "Soguk Cay",
-      "price": 80
+      "categoryId": "soft-drinks",
+      "price": 80,
+      "descriptionEn": "Served chilled"
     },
     {
       "id": "soguk-sandvic",
-      "nameEn": "Cold Sandwich",
-      "categoryId": "breakfast",
-      "descriptionTr": "Hindi fume ve peynirli",
       "descriptionEn": "Turkey and cheese sandwich",
-      "nameTr": "Soguk Sandvic",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "price": 150,
+      "nameTr": "Soguk Sandvic",
+      "categoryId": "breakfast",
+      "descriptionTr": "Hindi fume ve peynirli",
+      "nameEn": "Cold Sandwich",
       "imageUrl": ""
     },
     {
       "id": "sucuklu-yumurta",
+      "imageUrl": "",
       "categoryId": "breakfast",
-      "descriptionTr": "Yumurta ve sucuk",
       "nameTr": "Sucuklu Yumurta",
-      "price": 120,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -1674,167 +1763,168 @@
       },
       "descriptionEn": "Egg with Turkish sausage",
       "nameEn": "Egg with Sujuk",
-      "imageUrl": ""
+      "descriptionTr": "Yumurta ve sucuk",
+      "price": 120
     },
     {
       "id": "sufle",
-      "nameEn": "Souffle",
-      "descriptionTr": "Akiskan cikolatali",
-      "descriptionEn": "Warm molten chocolate",
-      "nameTr": "Sufle",
       "categoryId": "desserts",
+      "descriptionTr": "Akiskan cikolatali",
       "price": 150,
+      "nameTr": "Sufle",
+      "imageUrl": "",
+      "nameEn": "Souffle",
+      "descriptionEn": "Warm molten chocolate",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      },
-      "imageUrl": ""
+      }
     },
     {
       "id": "sutlac",
-      "nameTr": "Sutlac",
-      "descriptionTr": "Firinlanmis sutlac",
-      "imageUrl": "",
-      "nameEn": "Rice Pudding",
-      "price": 90,
       "descriptionEn": "Baked rice pudding",
+      "imageUrl": "",
+      "descriptionTr": "Firinlanmis sutlac",
+      "nameTr": "Sutlac",
+      "categoryId": "desserts",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "desserts"
+      "nameEn": "Rice Pudding",
+      "price": 90
     },
     {
       "id": "tavuk-izgara-ekmek",
-      "categoryId": "mains",
       "price": 210,
-      "descriptionEn": "Bread sandwich with grilled chicken",
+      "imageUrl": "",
+      "categoryId": "mains",
+      "descriptionTr": "Ekmek arasi tavuk izgara",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "nameEn": "Grilled Chicken Sandwich",
-      "imageUrl": "",
-      "nameTr": "Tavuk Izgara Ekmek Arasi",
-      "descriptionTr": "Ekmek arasi tavuk izgara"
+      "descriptionEn": "Bread sandwich with grilled chicken",
+      "nameTr": "Tavuk Izgara Ekmek Arasi"
     },
     {
       "id": "tavuk-izgara-servis",
-      "descriptionEn": "Served with rice and potatoes",
-      "imageUrl": "",
+      "nameTr": "Tavuk Izgara Servis",
       "categoryId": "mains",
       "descriptionTr": "Pilav ve patates ile",
-      "nameEn": "Grilled Chicken Plate",
-      "nameTr": "Tavuk Izgara Servis",
-      "price": 250,
+      "descriptionEn": "Served with rice and potatoes",
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
-      }
+      },
+      "price": 250,
+      "nameEn": "Grilled Chicken Plate"
     },
     {
       "id": "tavuklu-bowl",
-      "descriptionEn": "Thai chicken with basmati",
-      "categoryId": "salads-bowls",
       "descriptionTr": "Thai soslu tavuk ve basmati",
+      "descriptionEn": "Thai chicken with basmati",
+      "imageUrl": "",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "nameEn": "Chicken Bowl",
-      "nameTr": "Tavuklu Bowl",
-      "imageUrl": "",
-      "price": 200
+      "price": 200,
+      "categoryId": "salads-bowls",
+      "nameTr": "Tavuklu Bowl"
     },
     {
       "id": "tavuklu-noodl",
-      "descriptionTr": "Soya ve teriyaki soslu",
-      "nameTr": "Tavuklu Sebzeli Noodl",
-      "descriptionEn": "With soy and teriyaki sauce",
-      "categoryId": "pastas",
-      "nameEn": "Chicken Vegetable Noodles",
-      "imageUrl": "",
+      "price": 200,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "price": 200
+      "descriptionEn": "With soy and teriyaki sauce",
+      "descriptionTr": "Soya ve teriyaki soslu",
+      "imageUrl": "",
+      "nameEn": "Chicken Vegetable Noodles",
+      "categoryId": "pastas",
+      "nameTr": "Tavuklu Sebzeli Noodl"
     },
     {
       "id": "taze-portakal",
+      "nameEn": "Fresh Orange Juice",
+      "price": 80,
+      "descriptionTr": "Anlık sıkım",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "fresh-juices",
-      "descriptionTr": "Anlık sıkım",
-      "nameEn": "Fresh Orange Juice",
       "descriptionEn": "Freshly squeezed to order",
-      "price": 80,
       "nameTr": "Taze Sıkılmıs Portakal Suyu",
+      "categoryId": "fresh-juices",
       "imageUrl": ""
     },
     {
       "id": "turk-kahvesi",
-      "imageUrl": "",
-      "categoryId": "hot-coffee",
-      "descriptionTr": "Geleneksel pisirim",
-      "price": 70,
-      "nameEn": "Turkish Coffee",
+      "nameTr": "Turk Kahvesi",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
       "descriptionEn": "Traditional Turkish brew",
-      "nameTr": "Turk Kahvesi"
+      "nameEn": "Turkish Coffee",
+      "price": 70,
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771071552/sddbhvnlps5mzrc76fur.jpg",
+      "categoryId": "hot-coffee",
+      "descriptionTr": "Geleneksel pisirim"
     },
     {
       "id": "vanilya-latte",
+      "categoryId": "hot-coffee",
+      "descriptionTr": "Vanilya aromali latte",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "categoryId": "hot-coffee",
       "nameTr": "Vanilya Latte",
-      "nameEn": "Vanilla Latte",
       "descriptionEn": "Latte with vanilla flavor",
-      "descriptionTr": "Vanilya aromali latte",
-      "imageUrl": "",
-      "price": 140
+      "price": 140,
+      "nameEn": "Vanilla Latte",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771069852/ilff2dgckmvluvy4jtno.jpg"
     },
     {
       "id": "vejeteryan-buyuk",
+      "descriptionEn": "Fresh vegetables and light profile",
+      "nameEn": "Vegetarian Pizza Large",
       "imageUrl": "",
-      "price": 260,
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "nameTr": "Vejeteryan Pizza Buyuk Boy",
-      "categoryId": "pizzas",
+      "price": 260,
       "descriptionTr": "Sebzeli ve hafif",
-      "descriptionEn": "Fresh vegetables and light profile",
-      "nameEn": "Vegetarian Pizza Large"
+      "categoryId": "pizzas",
+      "nameTr": "Vejeteryan Pizza Buyuk Boy"
     },
     {
       "id": "vejeteryan-orta",
-      "price": 230,
+      "nameTr": "Vejeteryan Pizza Orta Boy",
       "nameEn": "Vegetarian Pizza Medium",
-      "descriptionTr": "Sebzeli ve hafif",
+      "descriptionEn": "Fresh vegetables and light profile",
       "imageUrl": "",
       "categoryId": "pizzas",
-      "nameTr": "Vejeteryan Pizza Orta Boy",
-      "descriptionEn": "Fresh vegetables and light profile",
+      "price": 230,
+      "descriptionTr": "Sebzeli ve hafif",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
@@ -1842,34 +1932,19 @@
       }
     },
     {
-      "id": "white-chocolate-mocha",
+      "id": "zebra",
       "categoryId": "hot-coffee",
-      "nameEn": "White Chocolate Mocha",
-      "descriptionTr": "Beyaz cikolatali mocha",
+      "nameEn": "Zebra Mocha",
       "price": 140,
-      "imageUrl": "",
+      "imageUrl": "https://res.cloudinary.com/dsxnw7ojd/image/upload/v1771071092/x2zx9oryavrxxmwr4rtu.jpg",
+      "descriptionTr": "Beyaz ve sutlu cikolata dengesi",
+      "nameTr": "Zebra Mocha",
       "createdAt": {
         "type": "firestore/timestamp/1.0",
         "seconds": 1771056334,
         "nanoseconds": 278000000
       },
-      "descriptionEn": "Mocha with white chocolate",
-      "nameTr": "White Chocolate Mocha"
-    },
-    {
-      "id": "zebra",
-      "nameTr": "Zebra",
-      "descriptionEn": "Dark and white chocolate harmony",
-      "imageUrl": "",
-      "nameEn": "Zebra",
-      "price": 140,
-      "descriptionTr": "Beyaz ve sutlu cikolata dengesi",
-      "categoryId": "hot-coffee",
-      "createdAt": {
-        "type": "firestore/timestamp/1.0",
-        "seconds": 1771056334,
-        "nanoseconds": 278000000
-      }
+      "descriptionEn": "Dark and white chocolate harmony"
     }
   ]
 }

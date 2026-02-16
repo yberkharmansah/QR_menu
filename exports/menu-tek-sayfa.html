@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cremore Tek Sayfa Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 6mm;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #fff;
+      color: #0f5a3a;
+      font-family: "Noto Sans", "Segoe UI", Arial, sans-serif;
+    }
+    .print-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+      border: 1px solid #0f5a3a;
+      background: #fff;
+      color: #0f5a3a;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+    .sheet {
+      width: 297mm;
+      height: 210mm;
+      margin: 0 auto;
+      padding: 6mm;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 4px;
+      overflow: hidden;
+    }
+    .header { text-align: center; }
+    .logo-wrap {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      margin: 0 auto 2px;
+      overflow: hidden;
+      border: 2px solid #0f5a3a;
+    }
+    .logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    h1 { margin: 0; font-size: 18px; letter-spacing: 0.3px; font-weight: 900; }
+    .subtitle { margin: 1px 0 0; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .col { min-width: 0; min-height: 0; }
+    .col-title {
+      margin: 0 0 2px;
+      padding-bottom: 1px;
+      border-bottom: 2px solid #0f5a3a;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .col-content {
+      column-count: 2;
+      column-gap: 4mm;
+      height: calc(100% - 16px);
+      overflow: hidden;
+    }
+    .category {
+      break-inside: avoid;
+      margin-bottom: 4px;
+      display: inline-block;
+      width: 100%;
+    }
+    .category h3 { margin: 0 0 2px; font-size: 9.2px; font-weight: 900; }
+    .category ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+    .category li { display: grid; grid-template-columns: auto 1fr auto; gap: 4px; align-items: baseline; font-size: 8.2px; line-height: 1.1; }
+    .item-name { font-weight: 700; }
+    .dots { border-bottom: 1px dotted #6ca88b; transform: translateY(-1px); }
+    .price { font-weight: 800; white-space: nowrap; }
+
+    @media print {
+      .print-btn { display: none; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Yazdır</button>
+
+  <main class="sheet">
+    <header class="header">
+      <div class="logo-wrap">
+        <img src="../src/assets/cremore-logo.jpg" alt="Cremore Logo" />
+      </div>
+      <h1>CREMORE MENU</h1>
+      <p class="subtitle">Tüm Ürünler ve Fiyatlar</p>
+    </header>
+
+    <section class="columns">
+      <article class="col">
+        <h2 class="col-title">İçecekler</h2>
+        <div class="col-content">
+          <section class="category"><h3>Caylar</h3><ul><li><span class="item-name">Bitki Caylari</span><span class="dots"></span><span class="price">60 TL</span></li><li><span class="item-name">Cay</span><span class="dots"></span><span class="price">25 TL</span></li><li><span class="item-name">Fincan Çay</span><span class="dots"></span><span class="price">40 TL</span></li></ul></section><section class="category"><h3>Frozen</h3><ul><li><span class="item-name">Frozen Ananas</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Frozen Carkifelek</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Frozen Cilek</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Frozen Mango</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Frozen Mango-Ananas</span><span class="dots"></span><span class="price">150 TL</span></li></ul></section><section class="category"><h3>Kokteyl</h3><ul><li><span class="item-name">Cremore Kokteyl</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Cremore Mojito</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Ice Tea Mango Ananas</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Ice Tea Şeftali</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">İce Tea Ananas</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">İce Tea Mango</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">İce Tea Çarkıfelek</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Klasik Mojito</span><span class="dots"></span><span class="price">130 TL</span></li><li><span class="item-name">Ocean Prime</span><span class="dots"></span><span class="price">170 TL</span></li></ul></section><section class="category"><h3>Mesrubatlar</h3><ul><li><span class="item-name">Ayran</span><span class="dots"></span><span class="price">25 TL</span></li><li><span class="item-name">Cappy Vişne</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Cappy Şeftali</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Coca Cola Zero</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Elmalı Soda</span><span class="dots"></span><span class="price">40 TL</span></li><li><span class="item-name">Fanta</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Karpuz Çilek Soda</span><span class="dots"></span><span class="price">40 TL</span></li><li><span class="item-name">Kola</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Limonlu Soda</span><span class="dots"></span><span class="price">40 TL</span></li><li><span class="item-name">Soda</span><span class="dots"></span><span class="price">30 TL</span></li><li><span class="item-name">Soguk Cay</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Sprite</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Su</span><span class="dots"></span><span class="price">15 TL</span></li></ul></section><section class="category"><h3>Milkshake</h3><ul><li><span class="item-name">Milkshake Cilek</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Milkshake Karamel</span><span class="dots"></span><span class="price">150 TL</span></li></ul></section><section class="category"><h3>Sıcak Icecekler</h3><ul><li><span class="item-name">Salep</span><span class="dots"></span><span class="price">100 TL</span></li><li><span class="item-name">Sicak Cikolata</span><span class="dots"></span><span class="price">100 TL</span></li></ul></section><section class="category"><h3>Sıcak Kahveler</h3><ul><li><span class="item-name">Americano</span><span class="dots"></span><span class="price">90 TL</span></li><li><span class="item-name">Cafe Bombon</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Cafe Latte</span><span class="dots"></span><span class="price">120 TL</span></li><li><span class="item-name">Cappuchino</span><span class="dots"></span><span class="price">110 TL</span></li><li><span class="item-name">Caramel Mocha</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Cookie Latte</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Cortado</span><span class="dots"></span><span class="price">100 TL</span></li><li><span class="item-name">Espresso Double</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Espresso Single</span><span class="dots"></span><span class="price">60 TL</span></li><li><span class="item-name">Filtre Kahve</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Findik Latte</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Flat White</span><span class="dots"></span><span class="price">120 TL</span></li><li><span class="item-name">Karamelize Biskuvili Latte</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Mocha</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Turk Kahvesi</span><span class="dots"></span><span class="price">70 TL</span></li><li><span class="item-name">Vanilya Latte</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">White Chocolate Mocha</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Zebra Mocha</span><span class="dots"></span><span class="price">140 TL</span></li></ul></section><section class="category"><h3>Sıkma Meyve Suları</h3><ul><li><span class="item-name">Atom</span><span class="dots"></span><span class="price">100 TL</span></li><li><span class="item-name">Taze Sıkılmıs Portakal Suyu</span><span class="dots"></span><span class="price">80 TL</span></li></ul></section>
+        </div>
+      </article>
+
+      <article class="col">
+        <h2 class="col-title">Yiyecekler</h2>
+        <div class="col-content">
+          <section class="category"><h3>Ana Yemekler</h3><ul><li><span class="item-name">Begendili Kofte</span><span class="dots"></span><span class="price">360 TL</span></li><li><span class="item-name">Cafe de Paris Soslu Tavuk</span><span class="dots"></span><span class="price">300 TL</span></li><li><span class="item-name">Cremore Kebap</span><span class="dots"></span><span class="price">500 TL</span></li><li><span class="item-name">Ekmek Arasi Kofte</span><span class="dots"></span><span class="price">280 TL</span></li><li><span class="item-name">Izgara Kofte</span><span class="dots"></span><span class="price">320 TL</span></li><li><span class="item-name">Korili Tavuk</span><span class="dots"></span><span class="price">300 TL</span></li><li><span class="item-name">Tavuk Izgara Ekmek Arasi</span><span class="dots"></span><span class="price">210 TL</span></li><li><span class="item-name">Tavuk Izgara Servis</span><span class="dots"></span><span class="price">250 TL</span></li></ul></section><section class="category"><h3>Aperatifler</h3><ul><li><span class="item-name">Cremore Sepeti</span><span class="dots"></span><span class="price">280 TL</span></li><li><span class="item-name">Kumpir</span><span class="dots"></span><span class="price">220 TL</span></li><li><span class="item-name">Patates Cipsi</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Sigara Boregi</span><span class="dots"></span><span class="price">80 TL</span></li></ul></section><section class="category"><h3>Corba</h3><ul><li><span class="item-name">Gunun Corbasi</span><span class="dots"></span><span class="price">80 TL</span></li></ul></section><section class="category"><h3>Fix</h3><ul><li><span class="item-name">Etli</span><span class="dots"></span><span class="price">350 TL</span></li><li><span class="item-name">Sebzeli</span><span class="dots"></span><span class="price">250 TL</span></li><li><span class="item-name">Tavuklu</span><span class="dots"></span><span class="price">300 TL</span></li></ul></section><section class="category"><h3>Gozlemeler</h3><ul><li><span class="item-name">Ispanakli Gozleme</span><span class="dots"></span><span class="price">120 TL</span></li><li><span class="item-name">Patatesli Gozleme</span><span class="dots"></span><span class="price">120 TL</span></li><li><span class="item-name">Peynirli Gozleme</span><span class="dots"></span><span class="price">120 TL</span></li></ul></section><section class="category"><h3>Hamburger</h3><ul><li><span class="item-name">Citir Tavuklu Burger</span><span class="dots"></span><span class="price">210 TL</span></li><li><span class="item-name">Cremore Burger</span><span class="dots"></span><span class="price">320 TL</span></li><li><span class="item-name">Klasik Burger</span><span class="dots"></span><span class="price">260 TL</span></li></ul></section><section class="category"><h3>Kahvalti</h3><ul><li><span class="item-name">Cremore Kahvalti</span><span class="dots"></span><span class="price">360 TL</span></li><li><span class="item-name">Hizli ve Leziz</span><span class="dots"></span><span class="price">180 TL</span></li><li><span class="item-name">Menemen</span><span class="dots"></span><span class="price">120 TL</span></li><li><span class="item-name">Peynirli Omlet</span><span class="dots"></span><span class="price">100 TL</span></li><li><span class="item-name">Sade Omlet</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Sahanda Yumurta</span><span class="dots"></span><span class="price">80 TL</span></li><li><span class="item-name">Sebzeli Omlet</span><span class="dots"></span><span class="price">100 TL</span></li><li><span class="item-name">Soguk Sandvic</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Sucuklu Yumurta</span><span class="dots"></span><span class="price">120 TL</span></li></ul></section><section class="category"><h3>Makarnalar</h3><ul><li><span class="item-name">Bolonez Soslu Eriste</span><span class="dots"></span><span class="price">220 TL</span></li><li><span class="item-name">Linguine Alfredo Classico</span><span class="dots"></span><span class="price">200 TL</span></li><li><span class="item-name">Manti</span><span class="dots"></span><span class="price">250 TL</span></li><li><span class="item-name">Tavuklu Sebzeli Noodl</span><span class="dots"></span><span class="price">200 TL</span></li></ul></section><section class="category"><h3>Pizzalar</h3><ul><li><span class="item-name">Cremore Pizza Buyuk Boy</span><span class="dots"></span><span class="price">320 TL</span></li><li><span class="item-name">Cremore Pizza Orta Boy</span><span class="dots"></span><span class="price">280 TL</span></li><li><span class="item-name">Margarita Pizza Buyuk Boy</span><span class="dots"></span><span class="price">240 TL</span></li><li><span class="item-name">Margarita Pizza Orta Boy</span><span class="dots"></span><span class="price">200 TL</span></li><li><span class="item-name">Vejeteryan Pizza Buyuk Boy</span><span class="dots"></span><span class="price">260 TL</span></li><li><span class="item-name">Vejeteryan Pizza Orta Boy</span><span class="dots"></span><span class="price">230 TL</span></li></ul></section><section class="category"><h3>Salatalar ve Bowl</h3><ul><li><span class="item-name">Izgara Hellim Peynirli Ton Balikli Salata</span><span class="dots"></span><span class="price">200 TL</span></li><li><span class="item-name">Kajun Salata</span><span class="dots"></span><span class="price">160 TL</span></li><li><span class="item-name">Kis Salatasi</span><span class="dots"></span><span class="price">140 TL</span></li><li><span class="item-name">Meyveli Bowl</span><span class="dots"></span><span class="price">180 TL</span></li><li><span class="item-name">Tavuklu Bowl</span><span class="dots"></span><span class="price">200 TL</span></li></ul></section><section class="category"><h3>Tatlilar</h3><ul><li><span class="item-name">Brownie</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Cheesecake</span><span class="dots"></span><span class="price">170 TL</span></li><li><span class="item-name">Mozaik Pasta</span><span class="dots"></span><span class="price">125 TL</span></li><li><span class="item-name">Sufle</span><span class="dots"></span><span class="price">150 TL</span></li><li><span class="item-name">Sutlac</span><span class="dots"></span><span class="price">90 TL</span></li></ul></section><section class="category"><h3>Tostlar</h3><ul><li><span class="item-name">Cremore Bazlama Tost</span><span class="dots"></span><span class="price">180 TL</span></li><li><span class="item-name">Klasik Tost</span><span class="dots"></span><span class="price">160 TL</span></li><li><span class="item-name">Peynirli Tost</span><span class="dots"></span><span class="price">140 TL</span></li></ul></section><section class="category"><h3>Wrap</h3><ul><li><span class="item-name">Cremore Antrikot Wrap</span><span class="dots"></span><span class="price">350 TL</span></li><li><span class="item-name">Cremore Tavuklu Wrap</span><span class="dots"></span><span class="price">240 TL</span></li></ul></section>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
