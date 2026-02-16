@@ -24,11 +24,9 @@
         <div class="socials">
             <a
               class="socialLink"
-              href="https://www.instagram.com/cremorecoffee"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="https://instagram.com/_u/cremorecoffee"
               aria-label="Instagram"
-          >
+            >
             <svg viewBox="0 0 24 24" class="socialSvg" aria-hidden="true">
               <rect x="3.5" y="3.5" width="17" height="17" rx="5.5" ry="5.5" />
               <circle cx="12" cy="12" r="4.1" />
