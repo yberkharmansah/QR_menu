@@ -1,5 +1,5 @@
 import { deleteDoc, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import { db, firebaseEnabled } from "../lib/firebase";
+import { auth, db, firebaseEnabled } from "../lib/firebase";
 
 export type TvSlug = "items" | "icecekler" | "yiyecekler";
 
@@ -15,7 +15,7 @@ function docRef(slug: TvSlug) {
 }
 
 export async function loadTvHtml(slug: TvSlug, fallbackPath: string) {
-  if (firebaseEnabled) {
+  if (firebaseEnabled && auth?.currentUser) {
     try {
       const ref = docRef(slug);
       if (ref) {
@@ -40,22 +40,31 @@ export async function loadTvHtml(slug: TvSlug, fallbackPath: string) {
 export async function saveTvHtmlOverride(slug: TvSlug, html: string) {
   localStorage.setItem(localKey(slug), html);
 
-  if (!firebaseEnabled) return;
+  if (!firebaseEnabled || !auth?.currentUser) return;
   const ref = docRef(slug);
   if (!ref) return;
 
-  await setDoc(ref, {
-    html,
-    updatedAt: serverTimestamp(),
-  });
+  try {
+    await setDoc(ref, {
+      html,
+      updatedAt: serverTimestamp(),
+      updatedBy: auth.currentUser.uid,
+    });
+  } catch {
+    // Firestore yetkisi yoksa local fallback ile devam et.
+  }
 }
 
 export async function clearTvHtmlOverride(slug: TvSlug) {
   localStorage.removeItem(localKey(slug));
 
-  if (!firebaseEnabled) return;
+  if (!firebaseEnabled || !auth?.currentUser) return;
   const ref = docRef(slug);
   if (!ref) return;
 
-  await deleteDoc(ref);
+  try {
+    await deleteDoc(ref);
+  } catch {
+    // Firestore yetkisi yoksa local fallback ile devam et.
+  }
 }

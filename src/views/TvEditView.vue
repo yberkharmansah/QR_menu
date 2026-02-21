@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" :class="{ embedded: embedded }">
     <header class="head">
       <h1>TV HTML Duzenleyici</h1>
       <div class="tabs">
@@ -47,6 +47,8 @@ const files: Array<{ slug: TvSlug; label: string; path: string }> = [
   { slug: "icecekler", label: "Icecekler", path: "/exports/menu-tv-icecekler.html" },
   { slug: "yiyecekler", label: "Yiyecekler", path: "/exports/menu-tv-yiyecekler.html" },
 ];
+const props = defineProps<{ embedded?: boolean }>();
+const embedded = computed(() => props.embedded ?? false);
 
 const activeSlug = ref<TvSlug>("icecekler");
 const htmlMap = reactive<Record<TvSlug, string>>({
@@ -147,6 +149,12 @@ loadFile(activeSlug.value);
   gap: 12px;
 }
 
+.page.embedded {
+  min-height: auto;
+  background: transparent;
+  padding: 0;
+}
+
 .head {
   display: grid;
   gap: 8px;
@@ -239,6 +247,14 @@ loadFile(activeSlug.value);
 .raw {
   min-height: 70dvh;
   resize: vertical;
+}
+
+.page.embedded .rows {
+  max-height: 58dvh;
+}
+
+.page.embedded .raw {
+  min-height: 56dvh;
 }
 
 @media (max-width: 720px) {
