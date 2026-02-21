@@ -26,6 +26,7 @@
           <div class="headRow">
             <h2 class="sectionTitle">Yonetim</h2>
             <div class="headActions">
+              <button class="pill" @click="activeTab = 'tv-edit'">TV Edit</button>
               <button class="pill" @click="signOutUser">Cikis</button>
             </div>
           </div>
@@ -1102,7 +1103,7 @@ async function applyBulkIncrease() {
 
 .tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 8px;
 }
 

@@ -15,7 +15,7 @@ function docRef(slug: TvSlug) {
 }
 
 export async function loadTvHtml(slug: TvSlug, fallbackPath: string) {
-  if (firebaseEnabled && auth?.currentUser) {
+  if (firebaseEnabled) {
     try {
       const ref = docRef(slug);
       if (ref) {
