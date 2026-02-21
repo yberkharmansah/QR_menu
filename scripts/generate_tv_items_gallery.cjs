@@ -36,7 +36,7 @@ if (files.length === 0) {
   throw new Error("exports/items klasorunde gosterilecek resim yok.");
 }
 
-const imagePaths = files.map((name) => `./items/${encodeURIComponent(name)}`);
+const imagePaths = files.map((name) => `/exports/items/${encodeURIComponent(name)}`);
 
 const html = `<!doctype html>
 <html lang="tr">
