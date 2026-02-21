@@ -236,7 +236,7 @@ const html = `<!doctype html>
     <header class="header">
       <div class="brand">
         <div class="logo">
-          <img src="../src/assets/cremore-logo.jpg" alt="Cremore Logo" />
+          <img src="/cremore-favicon.jpg" alt="Cremore Logo" />
         </div>
         <div class="headline">
           <p>Cremore</p>

@@ -344,7 +344,7 @@ function renderPage(groupId, page, index) {
 
       <header class="top">
         <div class="logoWrap">
-          <img src="../src/assets/cremore-logo.jpg" alt="Cremore Logo" />
+          <img src="/cremore-favicon.jpg" alt="Cremore Logo" />
         </div>
         <p class="brand">CREMORE COFFEE</p>
         <h1>${meta.title}</h1>
