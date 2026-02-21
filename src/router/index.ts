@@ -5,7 +5,8 @@ import GroupCategoriesView from "../views/GroupCategoriesView.vue";
 import ProductsView from "../views/ProductsView.vue";
 import ProductDetailView from "../views/ProductDetailView.vue";
 import AdminView from "../views/AdminView.vue";
-import TvRedirectView from "../views/TvRedirectView.vue";
+import TvHtmlView from "../views/TvHtmlView.vue";
+import TvEditView from "../views/TvEditView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -21,9 +22,10 @@ const router = createRouter({
     },
     { path: "/product/:productId", name: "productDetail", component: ProductDetailView, props: true },
     { path: "/admin", name: "admin", component: AdminView },
-    { path: "/tv/items", name: "tvItems", component: TvRedirectView, props: { target: "/exports/menu-tv-items.html" } },
-    { path: "/tv/icecekler", name: "tvDrinks", component: TvRedirectView, props: { target: "/exports/menu-tv-icecekler.html" } },
-    { path: "/tv/yiyecekler", name: "tvFoods", component: TvRedirectView, props: { target: "/exports/menu-tv-yiyecekler.html" } },
+    { path: "/tv/items", name: "tvItems", component: TvHtmlView, props: { slug: "items" } },
+    { path: "/tv/icecekler", name: "tvDrinks", component: TvHtmlView, props: { slug: "icecekler" } },
+    { path: "/tv/yiyecekler", name: "tvFoods", component: TvHtmlView, props: { slug: "yiyecekler" } },
+    { path: "/tv/edit", name: "tvEdit", component: TvEditView },
   ],
   scrollBehavior() {
     return { top: 0 };

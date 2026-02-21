@@ -165,21 +165,14 @@ const html = `<!doctype html>
       object-fit: cover;
     }
 
-    .headline p {
+    .brandText {
       margin: 0;
-      font-size: 12px;
-      letter-spacing: 2.2px;
+      font-size: 13px;
+      letter-spacing: 2.1px;
+      font-weight: 800;
       color: var(--accent);
-      font-weight: 800;
       text-transform: uppercase;
-    }
-
-    .headline h1 {
-      margin: 2px 0 0;
-      font-family: "Barlow", "Manrope", sans-serif;
-      font-size: clamp(34px, 3.8vw, 56px);
-      line-height: 1;
-      font-weight: 800;
+      white-space: nowrap;
     }
 
     .frame {
@@ -238,10 +231,7 @@ const html = `<!doctype html>
         <div class="logo">
           <img src="/cremore-favicon.jpg" alt="Cremore Logo" />
         </div>
-        <div class="headline">
-          <p>Cremore</p>
-          <h1>Lezzet Galerisi</h1>
-        </div>
+        <p class="brandText">CREMORE COFFEE</p>
       </div>
     </header>
 
