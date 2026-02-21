@@ -203,7 +203,7 @@
   </main>
 
   <script>
-    const images = ["./items/1.jpg","./items/2.png","./items/3.jpg","./items/4.jpg","./items/5.jpg","./items/6.jpg","./items/7.jpg","./items/8.jpg","./items/9.jpg","./items/10.jpg","./items/11.jpg","./items/12.jpg","./items/13.jpg","./items/14.jpg","./items/15.jpg","./items/16.jpg"];
+    const images = ["./items/1.jpg","./items/2.png","./items/3.jpg","./items/4.png","./items/5.jpg","./items/6.png","./items/7.jpg","./items/8.png","./items/9.jpg","./items/10.png","./items/11.jpg","./items/12.png","./items/13.jpg","./items/14.png","./items/15.jpg","./items/16.png"];
     const cycleMs = 5000;
     const inClasses = ["enter-fade", "enter-slide", "enter-rise", "enter-zoom"];
     const stage = document.querySelector(".stage");
@@ -244,6 +244,8 @@
         const d = imageData.data;
 
         // Remove near-white matte backgrounds for PNG assets.
+        let visiblePixelCount = 0;
+        const totalPixelCount = canvas.width * canvas.height;
         for (let i = 0; i < d.length; i += 4) {
           const r = d[i];
           const g = d[i + 1];
@@ -257,6 +259,15 @@
             const keep = Math.max(0, Math.min(255, (255 - ((r + g + b) / 3 - 235) * 12)));
             d[i + 3] = Math.min(a, keep);
           }
+
+          if (d[i + 3] > 24) visiblePixelCount += 1;
+        }
+
+        // If processing makes image nearly invisible, keep original PNG.
+        const visibleRatio = totalPixelCount > 0 ? visiblePixelCount / totalPixelCount : 1;
+        if (visibleRatio < 0.03) {
+          processedPngCache.set(src, src);
+          return src;
         }
 
         ctx.putImageData(imageData, 0, 0);

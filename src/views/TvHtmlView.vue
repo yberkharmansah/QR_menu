@@ -25,8 +25,14 @@ const loading = ref(true);
 onMounted(async () => {
   const target = fileMap[props.slug];
   try {
+    if (props.slug === "items") {
+      const response = await fetch(target);
+      html.value = response.ok ? await response.text() : "";
+      return;
+    }
+
     const loaded = await loadTvHtml(props.slug, target);
-    html.value = props.slug === "items" ? loaded : await applyCatalogPricesToTvHtml(loaded);
+    html.value = await applyCatalogPricesToTvHtml(loaded);
   } finally {
     loading.value = false;
   }

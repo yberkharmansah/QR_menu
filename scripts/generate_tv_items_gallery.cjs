@@ -284,6 +284,8 @@ const html = `<!doctype html>
         const d = imageData.data;
 
         // Remove near-white matte backgrounds for PNG assets.
+        let visiblePixelCount = 0;
+        const totalPixelCount = canvas.width * canvas.height;
         for (let i = 0; i < d.length; i += 4) {
           const r = d[i];
           const g = d[i + 1];
@@ -297,6 +299,15 @@ const html = `<!doctype html>
             const keep = Math.max(0, Math.min(255, (255 - ((r + g + b) / 3 - 235) * 12)));
             d[i + 3] = Math.min(a, keep);
           }
+
+          if (d[i + 3] > 24) visiblePixelCount += 1;
+        }
+
+        // If processing makes image nearly invisible, keep original PNG.
+        const visibleRatio = totalPixelCount > 0 ? visiblePixelCount / totalPixelCount : 1;
+        if (visibleRatio < 0.03) {
+          processedPngCache.set(src, src);
+          return src;
         }
 
         ctx.putImageData(imageData, 0, 0);

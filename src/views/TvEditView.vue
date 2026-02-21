@@ -68,8 +68,15 @@ const currentFile = computed(() => files.find((f) => f.slug === activeSlug.value
 async function loadFile(slug: TvSlug) {
   const file = files.find((f) => f.slug === slug);
   if (!file) return;
+  if (slug === "items") {
+    const response = await fetch(file.path);
+    htmlMap[slug] = response.ok ? await response.text() : "";
+    parseCurrent();
+    return;
+  }
+
   const loaded = await loadTvHtml(slug, file.path);
-  htmlMap[slug] = slug === "items" ? loaded : await applyCatalogPricesToTvHtml(loaded);
+  htmlMap[slug] = await applyCatalogPricesToTvHtml(loaded);
   parseCurrent();
 }
 
@@ -118,6 +125,12 @@ async function switchFile(slug: TvSlug) {
 async function saveOverride() {
   const nextHtml = rows.value.length > 0 ? buildHtmlFromRows() : rawHtml.value;
   htmlMap[activeSlug.value] = nextHtml;
+
+  if (activeSlug.value === "items") {
+    notice.value = "Items sayfasi static calisir. Bu sekmede cloud kaydi kapali.";
+    return;
+  }
+
   try {
     saving.value = true;
     await saveTvHtmlOverride(activeSlug.value, nextHtml);
@@ -130,6 +143,12 @@ async function saveOverride() {
 }
 
 async function resetOverride() {
+  if (activeSlug.value === "items") {
+    notice.value = "Items sayfasi static oldugu icin override temizleme yok.";
+    await loadFile(activeSlug.value);
+    return;
+  }
+
   try {
     saving.value = true;
     await clearTvHtmlOverride(activeSlug.value);
