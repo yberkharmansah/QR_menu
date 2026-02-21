@@ -187,7 +187,7 @@ const html = `<!doctype html>
       border-radius: 0;
       overflow: hidden;
       position: relative;
-      background: #000;
+      background: radial-gradient(circle at 20% 15%, #1e5f48 0%, #112f25 38%, #071510 100%);
       display: grid;
       place-items: center;
       padding-top: 120px;
@@ -249,6 +249,7 @@ const html = `<!doctype html>
     const stage = document.querySelector(".stage");
     const slide = document.getElementById("slide");
     const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const processedPngCache = new Map();
     let currentIndex = 0;
 
     function preload(src) {
@@ -256,12 +257,64 @@ const html = `<!doctype html>
       i.src = src;
     }
 
-    function showAt(index) {
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    async function getDisplaySource(src) {
+      const isPng = /\\.png(?:\\?|#|$)/i.test(src);
+      if (!isPng) return src;
+      if (processedPngCache.has(src)) return processedPngCache.get(src);
+
+      try {
+        const img = await loadImage(src);
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth || img.width;
+        canvas.height = img.naturalHeight || img.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return src;
+
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const d = imageData.data;
+
+        // Remove near-white matte backgrounds for PNG assets.
+        for (let i = 0; i < d.length; i += 4) {
+          const r = d[i];
+          const g = d[i + 1];
+          const b = d[i + 2];
+          const a = d[i + 3];
+          if (a === 0) continue;
+
+          if (r > 248 && g > 248 && b > 248) {
+            d[i + 3] = 0;
+          } else if (r > 235 && g > 235 && b > 235) {
+            const keep = Math.max(0, Math.min(255, (255 - ((r + g + b) / 3 - 235) * 12)));
+            d[i + 3] = Math.min(a, keep);
+          }
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+        const cleaned = canvas.toDataURL("image/png");
+        processedPngCache.set(src, cleaned);
+        return cleaned;
+      } catch {
+        return src;
+      }
+    }
+
+    async function showAt(index) {
       const src = images[index];
       const enter = inClasses[Math.floor(Math.random() * inClasses.length)];
       slide.classList.add(enter);
+      const displaySrc = await getDisplaySource(src);
       requestAnimationFrame(() => {
-        slide.src = src;
+        slide.src = displaySrc;
         requestAnimationFrame(() => {
           slide.classList.remove(enter);
         });
@@ -281,9 +334,9 @@ const html = `<!doctype html>
       next();
     });
 
-    function next() {
+    async function next() {
       currentIndex = (currentIndex + 1) % images.length;
-      showAt(currentIndex);
+      await showAt(currentIndex);
       const upcoming = (currentIndex + 1) % images.length;
       preload(images[upcoming]);
     }

@@ -14,8 +14,8 @@
         <div class="panelHead">
           <strong>{{ currentFile?.label }}</strong>
           <div class="actions">
-            <button class="btn" @click="resetOverride">Override Sil</button>
-            <button class="btn primary" @click="saveOverride">Kaydet</button>
+            <button class="btn" :disabled="saving" @click="resetOverride">Override Sil</button>
+            <button class="btn primary" :disabled="saving" @click="saveOverride">{{ saving ? "Kaydediliyor..." : "Kaydet" }}</button>
             <button class="btn" @click="openTvPage">/tv/{{ activeSlug }} Ac</button>
           </div>
         </div>
@@ -38,8 +38,8 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
+import { clearTvHtmlOverride, loadTvHtml, saveTvHtmlOverride, type TvSlug } from "../services/tvOverrideService";
 
-type TvSlug = "items" | "icecekler" | "yiyecekler";
 type EditorRow = { index: number; name: string; price: string };
 
 const files: Array<{ slug: TvSlug; label: string; path: string }> = [
@@ -56,23 +56,14 @@ const htmlMap = reactive<Record<TvSlug, string>>({
 });
 const rows = ref<EditorRow[]>([]);
 const rawHtml = ref("");
+const saving = ref(false);
 
 const currentFile = computed(() => files.find((f) => f.slug === activeSlug.value));
 
-function storageKey(slug: TvSlug) {
-  return `tvHtmlOverride:${slug}`;
-}
-
 async function loadFile(slug: TvSlug) {
-  const override = localStorage.getItem(storageKey(slug));
-  if (override) {
-    htmlMap[slug] = override;
-  } else {
-    const file = files.find((f) => f.slug === slug);
-    if (!file) return;
-    const response = await fetch(file.path);
-    htmlMap[slug] = response.ok ? await response.text() : "";
-  }
+  const file = files.find((f) => f.slug === slug);
+  if (!file) return;
+  htmlMap[slug] = await loadTvHtml(slug, file.path);
   parseCurrent();
 }
 
@@ -118,15 +109,25 @@ async function switchFile(slug: TvSlug) {
   await loadFile(slug);
 }
 
-function saveOverride() {
+async function saveOverride() {
   const nextHtml = rows.value.length > 0 ? buildHtmlFromRows() : rawHtml.value;
   htmlMap[activeSlug.value] = nextHtml;
-  localStorage.setItem(storageKey(activeSlug.value), nextHtml);
+  try {
+    saving.value = true;
+    await saveTvHtmlOverride(activeSlug.value, nextHtml);
+  } finally {
+    saving.value = false;
+  }
 }
 
-function resetOverride() {
-  localStorage.removeItem(storageKey(activeSlug.value));
-  loadFile(activeSlug.value);
+async function resetOverride() {
+  try {
+    saving.value = true;
+    await clearTvHtmlOverride(activeSlug.value);
+  } finally {
+    saving.value = false;
+  }
+  await loadFile(activeSlug.value);
 }
 
 function openTvPage() {

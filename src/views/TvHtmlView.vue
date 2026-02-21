@@ -7,8 +7,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { loadTvHtml, type TvSlug } from "../services/tvOverrideService";
 
-const props = defineProps<{ slug: "items" | "icecekler" | "yiyecekler" }>();
+const props = defineProps<{ slug: TvSlug }>();
 
 const fileMap = {
   items: "/exports/menu-tv-items.html",
@@ -19,16 +20,8 @@ const fileMap = {
 const html = ref("");
 
 onMounted(async () => {
-  const overrideKey = `tvHtmlOverride:${props.slug}`;
-  const override = localStorage.getItem(overrideKey);
-  if (override) {
-    html.value = override;
-    return;
-  }
-
   const target = fileMap[props.slug];
-  const response = await fetch(target);
-  html.value = response.ok ? await response.text() : "";
+  html.value = await loadTvHtml(props.slug, target);
 });
 </script>
 
