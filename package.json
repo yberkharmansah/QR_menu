@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "sync:exports": "node scripts/sync_exports_to_public.cjs",
+    "predev": "npm run sync:exports",
+    "prebuild": "npm run sync:exports",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
