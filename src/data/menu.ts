@@ -25,6 +25,7 @@ export type Category = {
   emoji: string;
   title: LocalizedText;
   description: LocalizedText;
+  sortOrder?: number;
 };
 
 export type Product = {
@@ -35,6 +36,7 @@ export type Product = {
   price: number;
   imageUrl?: string;
   tags?: LocalizedTags;
+  sortOrder?: number;
 };
 
 export type LocalizedGroup = {

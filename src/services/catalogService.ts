@@ -31,6 +31,7 @@ type ProductDocument = {
   descriptionEn: string;
   price: number;
   imageUrl: string;
+  sortOrder?: number;
 };
 
 type CategoryDocument = {
@@ -40,6 +41,7 @@ type CategoryDocument = {
   titleEn: string;
   descriptionTr: string;
   descriptionEn: string;
+  sortOrder?: number;
 };
 
 export type AdminProductInput = {
@@ -50,6 +52,7 @@ export type AdminProductInput = {
   descriptionEn: string;
   price: number;
   imageUrl: string;
+  sortOrder?: number;
 };
 
 export type AdminProductRow = AdminProductInput & { id: string };
@@ -74,6 +77,7 @@ function toMenuProduct(id: string, docData: ProductDocument): Product {
     },
     price: Number(docData.price) || 0,
     imageUrl: docData.imageUrl,
+    sortOrder: Number.isFinite(docData.sortOrder) ? Number(docData.sortOrder) : undefined,
   };
 }
 
@@ -90,6 +94,7 @@ function toMenuCategory(id: string, docData: CategoryDocument): Category {
       tr: docData.descriptionTr,
       en: docData.descriptionEn,
     },
+    sortOrder: Number.isFinite(docData.sortOrder) ? Number(docData.sortOrder) : undefined,
   };
 }
 
@@ -111,7 +116,16 @@ export function startCatalogSync() {
   const unsubscribeCategories = onSnapshot(
     categoriesQuery,
     (snapshot) => {
-      const rows = snapshot.docs.map((item) => toMenuCategory(item.id, item.data() as CategoryDocument));
+      const rows = snapshot.docs
+        .map((item, index) => {
+          const row = toMenuCategory(item.id, item.data() as CategoryDocument);
+          return {
+            ...row,
+            sortOrder: row.sortOrder ?? index,
+          };
+        })
+        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
       setCategories(rows);
     },
     () => {
@@ -122,7 +136,16 @@ export function startCatalogSync() {
   const unsubscribeProducts = onSnapshot(
     productsQuery,
     (snapshot) => {
-      const rows = snapshot.docs.map((item) => toMenuProduct(item.id, item.data() as ProductDocument));
+      const rows = snapshot.docs
+        .map((item, index) => {
+          const row = toMenuProduct(item.id, item.data() as ProductDocument);
+          return {
+            ...row,
+            sortOrder: row.sortOrder ?? index,
+          };
+        })
+        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
       setProducts(rows);
     },
     () => {
@@ -147,19 +170,23 @@ export function subscribeAdminProducts(listener: (rows: AdminProductRow[]) => vo
   const productsQuery = query(productsRef, orderBy("createdAt", "desc"));
 
   return onSnapshot(productsQuery, (snapshot) => {
-    const rows = snapshot.docs.map((item) => {
-      const data = item.data() as ProductDocument;
-      return {
-        id: item.id,
-        categoryId: data.categoryId,
-        nameTr: data.nameTr,
-        nameEn: data.nameEn,
-        descriptionTr: data.descriptionTr,
-        descriptionEn: data.descriptionEn,
-        price: Number(data.price) || 0,
-        imageUrl: data.imageUrl || "",
-      };
-    });
+    const rows = snapshot.docs
+      .map((item, index) => {
+        const data = item.data() as ProductDocument;
+        return {
+          id: item.id,
+          categoryId: data.categoryId,
+          nameTr: data.nameTr,
+          nameEn: data.nameEn,
+          descriptionTr: data.descriptionTr,
+          descriptionEn: data.descriptionEn,
+          price: Number(data.price) || 0,
+          imageUrl: data.imageUrl || "",
+          sortOrder: Number.isFinite(data.sortOrder) ? Number(data.sortOrder) : index,
+        };
+      })
+      .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
     listener(rows);
   });
 }
@@ -175,19 +202,21 @@ export function subscribeAdminCategories(groupId: MenuGroupId, listener: (rows: 
 
   return onSnapshot(categoriesQuery, (snapshot) => {
     const rows = snapshot.docs
-      .map((item) => {
+      .map((item, index) => {
         const data = item.data() as CategoryDocument;
         return {
           id: item.id,
           groupId: data.groupId,
-          emoji: data.emoji || "🍽",
+          emoji: data.emoji || "🍽️",
           titleTr: data.titleTr || "",
           titleEn: data.titleEn || "",
           descriptionTr: data.descriptionTr || "",
           descriptionEn: data.descriptionEn || "",
+          sortOrder: Number.isFinite(data.sortOrder) ? Number(data.sortOrder) : index,
         };
       })
-      .filter((item) => item.groupId === groupId);
+      .filter((item) => item.groupId === groupId)
+      .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
     listener(rows);
   });
@@ -201,6 +230,7 @@ export async function createAdminProduct(payload: AdminProductInput) {
   const productsRef = collection(db, productsCollectionName);
   await addDoc(productsRef, {
     ...payload,
+    sortOrder: Number.isFinite(payload.sortOrder) ? Number(payload.sortOrder) : Date.now(),
     createdAt: serverTimestamp(),
   });
 }
@@ -229,6 +259,7 @@ export async function createAdminCategory(payload: AdminCategoryInput) {
   const categoriesRef = collection(db, categoriesCollectionName);
   await addDoc(categoriesRef, {
     ...payload,
+    sortOrder: Number.isFinite(payload.sortOrder) ? Number(payload.sortOrder) : Date.now(),
     createdAt: serverTimestamp(),
   });
 }
@@ -256,7 +287,7 @@ export async function seedCatalogToDatabase() {
 
   const batch = writeBatch(db);
 
-  for (const category of seedCategories) {
+  for (const [index, category] of seedCategories.entries()) {
     const categoryRef = doc(db, categoriesCollectionName, category.id);
     batch.set(categoryRef, {
       groupId: category.groupId,
@@ -265,11 +296,12 @@ export async function seedCatalogToDatabase() {
       titleEn: category.title.en,
       descriptionTr: category.description.tr,
       descriptionEn: category.description.en,
+      sortOrder: index,
       createdAt: serverTimestamp(),
     });
   }
 
-  for (const product of seedProducts) {
+  for (const [index, product] of seedProducts.entries()) {
     const productRef = doc(db, productsCollectionName, product.id);
     batch.set(productRef, {
       categoryId: product.categoryId,
@@ -279,9 +311,51 @@ export async function seedCatalogToDatabase() {
       descriptionEn: product.description.en,
       price: Number(product.price) || 0,
       imageUrl: product.imageUrl || "",
+      sortOrder: index,
       createdAt: serverTimestamp(),
     });
   }
+
+  await batch.commit();
+}
+
+export async function reorderAdminCategories(orderedCategoryIds: string[]) {
+  if (!firebaseEnabled || !db) {
+    throw new Error("Firebase is not configured");
+  }
+
+  const batch = writeBatch(db);
+  orderedCategoryIds.forEach((categoryId, index) => {
+    batch.update(doc(db, categoriesCollectionName, categoryId), { sortOrder: index });
+  });
+
+  await batch.commit();
+}
+
+export async function reorderAdminProducts(orderedProductIds: string[]) {
+  if (!firebaseEnabled || !db) {
+    throw new Error("Firebase is not configured");
+  }
+
+  const batch = writeBatch(db);
+  orderedProductIds.forEach((productId, index) => {
+    batch.update(doc(db, productsCollectionName, productId), { sortOrder: index });
+  });
+
+  await batch.commit();
+}
+
+export async function bulkUpdateAdminProductPrices(priceUpdates: Array<{ productId: string; price: number }>) {
+  if (!firebaseEnabled || !db) {
+    throw new Error("Firebase is not configured");
+  }
+
+  if (priceUpdates.length === 0) return;
+
+  const batch = writeBatch(db);
+  priceUpdates.forEach((update) => {
+    batch.update(doc(db, productsCollectionName, update.productId), { price: update.price });
+  });
 
   await batch.commit();
 }
