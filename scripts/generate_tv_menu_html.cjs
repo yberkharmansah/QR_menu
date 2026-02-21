@@ -71,7 +71,10 @@ let products = data.products.map((product) => ({
   id: product.id,
   categoryId: product.categoryId,
   name: normalizeTr(product.nameTr),
-  price: Number(product.price) || 0,
+  price:
+    product.categoryId === 'cocktails' && /tea/i.test(normalizeTr(product.nameTr))
+      ? 130
+      : Number(product.price) || 0,
 })).filter(
   (product) =>
     product.name.toLowerCase() !== 'ayran' &&
@@ -343,12 +346,15 @@ function renderPage(groupId, page, index) {
       <div class="bg glowB"></div>
 
       <header class="top">
-        <div class="logoWrap">
-          <img src="/cremore-favicon.jpg" alt="Cremore Logo" />
+        <div class="brandRow">
+          <div class="logoWrap">
+            <img src="/cremore-favicon.jpg" alt="Cremore Logo" />
+          </div>
+          <div class="titleStack">
+            <p class="brand">CREMORE</p>
+            <h1>${meta.title}</h1>
+          </div>
         </div>
-        <p class="brand">CREMORE COFFEE</p>
-        <h1>${meta.title}</h1>
-        <p class="sub">${meta.subtitle}</p>
       </header>
 
       <main class="grid">
@@ -481,17 +487,23 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
     }
 
     .top {
-      text-align: center;
-      min-height: 172px;
+      min-height: 110px;
       display: grid;
-      justify-items: center;
+      place-items: center;
       align-content: center;
-      gap: 7px;
+    }
+
+    .brandRow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: left;
     }
 
     .logoWrap {
-      width: 80px;
-      height: 80px;
+      width: 74px;
+      height: 74px;
       border-radius: 22px;
       overflow: hidden;
       border: 2px solid rgba(255, 255, 255, 0.36);
@@ -505,10 +517,16 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
       object-fit: cover;
     }
 
+    .titleStack {
+      display: grid;
+      gap: 2px;
+      align-content: center;
+    }
+
     .brand {
       margin: 0;
-      font-size: 13px;
-      letter-spacing: 2.2px;
+      font-size: 11px;
+      letter-spacing: 2px;
       font-weight: 800;
       color: var(--accent);
     }
@@ -516,16 +534,9 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
     .top h1 {
       margin: 0;
       font-family: 'Barlow', 'Manrope', sans-serif;
-      font-size: clamp(40px, 4.6vw, 62px);
-      line-height: 1;
+      font-size: clamp(38px, 4.2vw, 56px);
+      line-height: 0.98;
       font-weight: 800;
-    }
-
-    .sub {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--muted);
     }
 
     .grid {
@@ -533,8 +544,8 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
       height: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-content: center;
+      gap: 12px;
+      align-content: start;
       align-items: start;
     }
 
@@ -543,21 +554,21 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      gap: 6px;
+      gap: 5px;
     }
 
     .categoryCard {
       border: 1px solid var(--stroke);
       background: var(--panel);
-      border-radius: 14px;
-      padding: 10px 12px;
+      border-radius: 13px;
+      padding: 8px 10px;
       backdrop-filter: blur(7px);
     }
 
     .categoryCard h3 {
-      margin: 0 0 6px;
+      margin: 0 0 4px;
       font-family: 'Barlow', 'Manrope', sans-serif;
-      font-size: 30px;
+      font-size: 26px;
       line-height: 1.02;
       color: var(--accent);
       font-weight: 700;
@@ -568,7 +579,7 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
       margin: 0;
       padding: 0;
       display: grid;
-      gap: 1px;
+      gap: 0;
     }
 
     .itemRow {
@@ -577,8 +588,8 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
       align-items: baseline;
       gap: 8px;
       min-width: 0;
-      font-size: 19px;
-      line-height: 1.14;
+      font-size: 17px;
+      line-height: 1.1;
     }
 
     .itemName {
@@ -602,12 +613,12 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
 
     @media (max-width: 1500px), (max-height: 860px) {
       .menuPage { padding: 20px 28px 20px; gap: 12px; }
-      .top { min-height: 142px; }
-      .logoWrap { width: 68px; height: 68px; border-radius: 18px; }
-      .brand { font-size: 12px; }
-      .sub { font-size: 13px; }
-      .categoryCard h3 { font-size: 24px; margin-bottom: 5px; }
-      .itemRow { font-size: 16px; line-height: 1.12; }
+      .top { min-height: 90px; }
+      .logoWrap { width: 62px; height: 62px; border-radius: 18px; }
+      .brand { font-size: 10px; }
+      .top h1 { font-size: clamp(30px, 3.6vw, 44px); }
+      .categoryCard h3 { font-size: 22px; margin-bottom: 4px; }
+      .itemRow { font-size: 15px; line-height: 1.08; }
       .col { gap: 5px; }
     }
   </style>
