@@ -394,6 +394,31 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
       font-family: 'Manrope', 'Segoe UI', sans-serif;
     }
 
+    .fullscreenBtn {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 50;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.46);
+      color: #eef6f2;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+    }
+
+    .fullscreenBtn:hover {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    :fullscreen .fullscreenBtn {
+      display: none;
+    }
+
     .deck {
       position: relative;
       width: 100vw;
@@ -588,10 +613,12 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
   </style>
 </head>
 <body>
+  <button id="fullscreenBtn" class="fullscreenBtn" type="button">Tam Ekran</button>
   <div class="deck">${renderedPages}</div>
 
   <script>
     const pages = Array.from(document.querySelectorAll('.menuPage'));
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
     let active = 0;
 
     function show(index) {
@@ -636,6 +663,14 @@ function htmlTemplate(groupId, pages, pageDurationMs) {
         toggleFullscreen();
       }
     });
+
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        await enterFullscreen();
+      });
+    }
   </script>
 </body>
 </html>`;
