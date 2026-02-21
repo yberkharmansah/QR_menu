@@ -26,7 +26,6 @@
           <div class="headRow">
             <h2 class="sectionTitle">Yonetim</h2>
             <div class="headActions">
-              <button class="pill" @click="activeTab = 'tv-edit'">TV Edit</button>
               <button class="pill" @click="signOutUser">Cikis</button>
             </div>
           </div>
@@ -355,7 +354,7 @@
             </div>
           </template>
 
-          <template v-else-if="activeTab === 'pricing'">
+          <template v-else>
             <h2 class="sectionTitle">Toplu Zam Araci</h2>
             <p class="sectionText">Kategori veya urun secip yuzde ya da tutar bazli zam uygulayabilirsin.</p>
 
@@ -416,10 +415,6 @@
               {{ loading ? "Uygulaniyor..." : "Zam Uygula" }}
             </UiButton>
           </template>
-
-          <template v-else>
-            <TvEditView :embedded="true" />
-          </template>
         </section>
 
         <section class="card">
@@ -446,7 +441,6 @@ import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue"
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from "firebase/auth";
 import AppHeader from "../components/AppHeader.vue";
 import UiButton from "../components/UiButton.vue";
-import TvEditView from "./TvEditView.vue";
 import type { MenuGroupId } from "../data/menu";
 import { auth, firebaseEnabled } from "../lib/firebase";
 import { uploadImageToCloudinary } from "../lib/cloudinary";
@@ -466,7 +460,7 @@ import {
   type AdminProductRow,
 } from "../services/catalogService";
 
-type AdminTabId = "product-create" | "product-edit" | "category-create" | "category-edit" | "order" | "pricing" | "tv-edit";
+type AdminTabId = "product-create" | "product-edit" | "category-create" | "category-edit" | "order" | "pricing";
 type PriceTargetType = "category" | "product";
 type PriceIncreaseType = "percent" | "fixed";
 
@@ -477,7 +471,6 @@ const adminTabs: { id: AdminTabId; label: string }[] = [
   { id: "category-edit", label: "Kategori Duzenle" },
   { id: "order", label: "Siralama" },
   { id: "pricing", label: "Toplu Zam" },
-  { id: "tv-edit", label: "TV Edit" },
 ];
 
 const activeTab = ref<AdminTabId>("product-create");
