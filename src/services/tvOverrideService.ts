@@ -30,9 +30,7 @@ export async function loadTvHtml(slug: TvSlug, fallbackPath: string) {
     }
   }
 
-  const local = localStorage.getItem(localKey(slug));
-  if (local) return local;
-
+  // Cloud kayit yoksa static HTML'e don.
   const response = await fetch(fallbackPath);
   return response.ok ? await response.text() : "";
 }
@@ -44,15 +42,11 @@ export async function saveTvHtmlOverride(slug: TvSlug, html: string) {
   const ref = docRef(slug);
   if (!ref) return;
 
-  try {
-    await setDoc(ref, {
-      html,
-      updatedAt: serverTimestamp(),
-      updatedBy: auth.currentUser.uid,
-    });
-  } catch {
-    // Firestore yetkisi yoksa local fallback ile devam et.
-  }
+  await setDoc(ref, {
+    html,
+    updatedAt: serverTimestamp(),
+    updatedBy: auth.currentUser.uid,
+  });
 }
 
 export async function clearTvHtmlOverride(slug: TvSlug) {
@@ -62,9 +56,5 @@ export async function clearTvHtmlOverride(slug: TvSlug) {
   const ref = docRef(slug);
   if (!ref) return;
 
-  try {
-    await deleteDoc(ref);
-  } catch {
-    // Firestore yetkisi yoksa local fallback ile devam et.
-  }
+  await deleteDoc(ref);
 }

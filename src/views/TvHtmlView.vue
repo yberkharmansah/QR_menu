@@ -1,7 +1,8 @@
 <template>
   <div class="page">
+    <div v-if="loading" class="fallback">TV sayfasi yukleniyor...</div>
     <iframe v-if="html" class="frame" :srcdoc="html" title="TV HTML Preview" />
-    <div v-else class="fallback">TV sayfasi yuklenemedi.</div>
+    <div v-else-if="!loading" class="fallback">TV sayfasi yuklenemedi.</div>
   </div>
 </template>
 
@@ -18,10 +19,15 @@ const fileMap = {
 } as const;
 
 const html = ref("");
+const loading = ref(true);
 
 onMounted(async () => {
   const target = fileMap[props.slug];
-  html.value = await loadTvHtml(props.slug, target);
+  try {
+    html.value = await loadTvHtml(props.slug, target);
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
 

@@ -19,6 +19,7 @@
             <button class="btn" @click="openTvPage">/tv/{{ activeSlug }} Ac</button>
           </div>
         </div>
+        <div v-if="notice" class="notice">{{ notice }}</div>
 
         <template v-if="rows.length > 0">
           <div class="rows">
@@ -59,6 +60,7 @@ const htmlMap = reactive<Record<TvSlug, string>>({
 const rows = ref<EditorRow[]>([]);
 const rawHtml = ref("");
 const saving = ref(false);
+const notice = ref("");
 
 const currentFile = computed(() => files.find((f) => f.slug === activeSlug.value));
 
@@ -117,6 +119,9 @@ async function saveOverride() {
   try {
     saving.value = true;
     await saveTvHtmlOverride(activeSlug.value, nextHtml);
+    notice.value = "Kayit tamamlandi (cloud + local).";
+  } catch {
+    notice.value = "Cloud kaydi basarisiz. Degisiklik bu cihazda local kaydedildi.";
   } finally {
     saving.value = false;
   }
@@ -126,6 +131,9 @@ async function resetOverride() {
   try {
     saving.value = true;
     await clearTvHtmlOverride(activeSlug.value);
+    notice.value = "Override temizlendi.";
+  } catch {
+    notice.value = "Cloud temizleme basarisiz. Local override temizlendi.";
   } finally {
     saving.value = false;
   }
@@ -220,6 +228,11 @@ loadFile(activeSlug.value);
 
 .btn.primary {
   border-color: #7ad6a8;
+}
+
+.notice {
+  font-size: 13px;
+  color: var(--muted);
 }
 
 .rows {
