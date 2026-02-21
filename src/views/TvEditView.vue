@@ -40,6 +40,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
 import { clearTvHtmlOverride, loadTvHtml, saveTvHtmlOverride, type TvSlug } from "../services/tvOverrideService";
+import { applyCatalogPricesToTvHtml } from "../services/tvCatalogPriceService";
 
 type EditorRow = { index: number; name: string; price: string };
 
@@ -67,7 +68,8 @@ const currentFile = computed(() => files.find((f) => f.slug === activeSlug.value
 async function loadFile(slug: TvSlug) {
   const file = files.find((f) => f.slug === slug);
   if (!file) return;
-  htmlMap[slug] = await loadTvHtml(slug, file.path);
+  const loaded = await loadTvHtml(slug, file.path);
+  htmlMap[slug] = slug === "items" ? loaded : await applyCatalogPricesToTvHtml(loaded);
   parseCurrent();
 }
 

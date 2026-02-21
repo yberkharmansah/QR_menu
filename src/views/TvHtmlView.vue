@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { loadTvHtml, type TvSlug } from "../services/tvOverrideService";
+import { applyCatalogPricesToTvHtml } from "../services/tvCatalogPriceService";
 
 const props = defineProps<{ slug: TvSlug }>();
 
@@ -24,7 +25,8 @@ const loading = ref(true);
 onMounted(async () => {
   const target = fileMap[props.slug];
   try {
-    html.value = await loadTvHtml(props.slug, target);
+    const loaded = await loadTvHtml(props.slug, target);
+    html.value = props.slug === "items" ? loaded : await applyCatalogPricesToTvHtml(loaded);
   } finally {
     loading.value = false;
   }
