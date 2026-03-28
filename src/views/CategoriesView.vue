@@ -33,19 +33,19 @@ import { useRouter } from "vue-router";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import CategoryCard from "../components/CategoryCard.vue";
-import { getLocalizedCategories } from "../data/menu";
+import { getLocalizedGroups, type MenuGroupId } from "../data/menu";
 
 const router = useRouter();
 const q = ref("");
-const categories = computed(() => getLocalizedCategories(appStore.locale));
+const groups = computed(() => getLocalizedGroups(appStore.locale));
 
 const filtered = computed(() => {
   const s = q.value.trim().toLowerCase();
-  if (!s) return categories.value;
-  return categories.value.filter((c) => c.title.toLowerCase().includes(s));
+  if (!s) return groups.value;
+  return groups.value.filter((g) => g.title.toLowerCase().includes(s));
 });
 
-function openCategory(id: string) {
+function openCategory(id: MenuGroupId) {
   router.push(`/categories/${id}`);
 }
 </script>
