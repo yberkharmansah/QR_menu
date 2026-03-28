@@ -90,11 +90,12 @@ if (!products.some((product) => product.id === 'magnolia')) {
   });
 }
 
-const bitkiCayi = products.find(
-  (product) =>
-    product.categoryId === 'teas' &&
-    /bitki/i.test(product.name),
-);
+const bitkiCayi = products.find((product) => product.id === 'bitki-caylari')
+  || products.find(
+    (product) =>
+      product.categoryId === 'teas' &&
+      /bitki/i.test(product.name),
+  );
 
 products = products.filter(
   (product) => !(product.categoryId === 'teas' && /bitki/i.test(product.name)),
@@ -103,7 +104,7 @@ products = products.filter(
 const herbalTeaPrice = bitkiCayi ? bitkiCayi.price : 60;
 products.push(
   { id: 'herbal-ihlamur', categoryId: 'teas', name: 'Ihlamur', price: herbalTeaPrice },
-  { id: 'herbal-kis-burnu', categoryId: 'teas', name: 'Kış Burnu', price: herbalTeaPrice },
+  { id: 'herbal-kis-burnu', categoryId: 'teas', name: 'Kuş Burnu', price: herbalTeaPrice },
   { id: 'herbal-kis-cayi', categoryId: 'teas', name: 'Kış Çayı', price: herbalTeaPrice },
   { id: 'herbal-nane-limon', categoryId: 'teas', name: 'Nane Limon', price: herbalTeaPrice },
 );
