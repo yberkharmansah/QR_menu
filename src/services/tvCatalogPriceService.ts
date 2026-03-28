@@ -1,6 +1,13 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db, firebaseEnabled } from "../lib/firebase";
 
+const herbalTeaAliases = new Set([
+  "ihlamur",
+  "kusburnu",
+  "kiscayi",
+  "nanelimon",
+]);
+
 function normalizeKey(value: string) {
   return value
     .toLocaleLowerCase("tr")
@@ -21,16 +28,24 @@ export async function applyCatalogPricesToTvHtml(html: string) {
   try {
     const snapshot = await getDocs(collection(db, "products"));
     const priceByName = new Map<string, number>();
+    let herbalTeaPrice: number | undefined;
 
     snapshot.forEach((doc) => {
       const data = doc.data() as { nameTr?: string; nameEn?: string; price?: number };
       const price = Number(data.price ?? 0);
+      const docIdKey = normalizeKey(doc.id);
+      const nameTrKey = data.nameTr ? normalizeKey(data.nameTr) : "";
+      const nameEnKey = data.nameEn ? normalizeKey(data.nameEn) : "";
 
       if (data.nameTr) {
-        priceByName.set(normalizeKey(data.nameTr), price);
+        priceByName.set(nameTrKey, price);
       }
       if (data.nameEn) {
-        priceByName.set(normalizeKey(data.nameEn), price);
+        priceByName.set(nameEnKey, price);
+      }
+
+      if (docIdKey === "bitkicaylari" || nameTrKey === "bitkicaylari" || nameEnKey === "herbalteas") {
+        herbalTeaPrice = price;
       }
     });
 
@@ -47,7 +62,7 @@ export async function applyCatalogPricesToTvHtml(html: string) {
       if (!nameEl || !priceEl) return;
 
       const key = normalizeKey(nameEl.textContent || "");
-      const next = priceByName.get(key);
+      const next = priceByName.get(key) ?? (herbalTeaAliases.has(key) ? herbalTeaPrice : undefined);
       if (typeof next === "number") {
         priceEl.textContent = formatPrice(next);
       }
