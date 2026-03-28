@@ -27,20 +27,22 @@
 </template>
 
 <script setup lang="ts">
-import { t } from "../store/appStore";
+import { appStore, t } from "../store/appStore";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import AppHeader from "../components/AppHeader.vue";
+import HeaderActions from "../components/HeaderActions.vue";
 import CategoryCard from "../components/CategoryCard.vue";
-import { categories } from "../data/menu";
+import { getLocalizedCategories } from "../data/menu";
 
 const router = useRouter();
 const q = ref("");
+const categories = computed(() => getLocalizedCategories(appStore.locale));
 
 const filtered = computed(() => {
   const s = q.value.trim().toLowerCase();
-  if (!s) return categories;
-  return categories.filter((c) => c.title.toLowerCase().includes(s));
+  if (!s) return categories.value;
+  return categories.value.filter((c) => c.title.toLowerCase().includes(s));
 });
 
 function openCategory(id: string) {
