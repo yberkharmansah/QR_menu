@@ -81,6 +81,34 @@ let products = data.products.map((product) => ({
     product.name.toLowerCase() !== 'zebra mocha',
 );
 
+const firinSutlacSource = products.find((product) => product.id === 'firinda-sutlac')
+  || products.find((product) => product.id === 'sutlac')
+  || products.find(
+    (product) =>
+      product.categoryId === 'desserts' &&
+      /firin|fırın/i.test(product.name) &&
+      /sutlac|sütlaç/i.test(product.name),
+  )
+  || products.find(
+    (product) =>
+      product.categoryId === 'desserts' &&
+      /sutlac|sütlaç/i.test(product.name),
+  );
+
+products = products.filter(
+  (product) =>
+    !(product.categoryId === 'desserts' && /sutlac|sütlaç/i.test(product.name)),
+);
+
+if (firinSutlacSource) {
+  products.push({
+    id: 'firinda-sutlac-tv',
+    categoryId: 'desserts',
+    name: 'Fırın Sütlaç',
+    price: firinSutlacSource.price,
+  });
+}
+
 if (!products.some((product) => product.id === 'magnolia')) {
   products.push({
     id: 'magnolia',
