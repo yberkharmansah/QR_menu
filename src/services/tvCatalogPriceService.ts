@@ -7,6 +7,14 @@ const herbalTeaAliases = new Set([
   "kiscayi",
   "nanelimon",
 ]);
+const sutlacAliases = new Set([
+  "sutlac",
+  "firinsutlac",
+  "firindasutlac",
+  "bakedricepudding",
+  "ricepudding",
+]);
+const sutlacDisplayName = "Fırın Sütlaç";
 
 function normalizeKey(value: string) {
   return value
@@ -29,6 +37,7 @@ export async function applyCatalogPricesToTvHtml(html: string) {
     const snapshot = await getDocs(collection(db, "products"));
     const priceByName = new Map<string, number>();
     let herbalTeaPrice: number | undefined;
+    let sutlacPrice: number | undefined;
 
     snapshot.forEach((doc) => {
       const data = doc.data() as { nameTr?: string; nameEn?: string; price?: number };
@@ -37,6 +46,7 @@ export async function applyCatalogPricesToTvHtml(html: string) {
       const nameTrKey = data.nameTr ? normalizeKey(data.nameTr) : "";
       const nameEnKey = data.nameEn ? normalizeKey(data.nameEn) : "";
 
+      priceByName.set(docIdKey, price);
       if (data.nameTr) {
         priceByName.set(nameTrKey, price);
       }
@@ -46,6 +56,9 @@ export async function applyCatalogPricesToTvHtml(html: string) {
 
       if (docIdKey === "bitkicaylari" || nameTrKey === "bitkicaylari" || nameEnKey === "herbalteas") {
         herbalTeaPrice = price;
+      }
+      if (docIdKey === "sutlac" || sutlacAliases.has(nameTrKey) || sutlacAliases.has(nameEnKey)) {
+        sutlacPrice = price;
       }
     });
 
@@ -62,7 +75,13 @@ export async function applyCatalogPricesToTvHtml(html: string) {
       if (!nameEl || !priceEl) return;
 
       const key = normalizeKey(nameEl.textContent || "");
-      const next = priceByName.get(key) ?? (herbalTeaAliases.has(key) ? herbalTeaPrice : undefined);
+      if (sutlacAliases.has(key)) {
+        nameEl.textContent = sutlacDisplayName;
+      }
+      const next =
+        priceByName.get(key) ??
+        (sutlacAliases.has(key) ? sutlacPrice : undefined) ??
+        (herbalTeaAliases.has(key) ? herbalTeaPrice : undefined);
       if (typeof next === "number") {
         priceEl.textContent = formatPrice(next);
       }
