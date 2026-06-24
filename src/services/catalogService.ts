@@ -68,8 +68,10 @@ const catalogMetaDocumentId = "catalog";
 const catalogCacheKey = "qr-menu.catalog-cache.v2";
 const catalogVersionPollMs = 60_000;
 const initialRetryDelaysMs = [0, 1_500, 4_000, 8_000];
+const errorRetryPollMs = 5_000;
 let syncStarted = false;
 let versionPollTimer: ReturnType<typeof setInterval> | null = null;
+let errorRetryTimer: ReturnType<typeof setInterval> | null = null;
 let lastVersionCheckAt = 0;
 let currentCatalogVersion: string | null = null;
 let currentCatalogSource: "live" | "cache" | "fallback" | null = null;
@@ -337,7 +339,7 @@ async function checkForCatalogUpdates(force = false) {
 }
 
 function startCatalogVersionMonitor() {
-  if (versionPollTimer) return;
+  if (versionPollTimer || errorRetryTimer) return;
 
   const handleVisibility = () => {
     if (document.visibilityState === "visible") {
@@ -359,6 +361,13 @@ function startCatalogVersionMonitor() {
     }
   }, catalogVersionPollMs);
 
+  errorRetryTimer = setInterval(() => {
+    if (document.visibilityState !== "visible") return;
+    if (!catalogSyncState.categoriesError && !catalogSyncState.productsError) return;
+    if (catalogSyncState.isRefreshing) return;
+    void refreshPublicCatalog({ force: true });
+  }, errorRetryPollMs);
+
   window.addEventListener("focus", handleFocus);
   window.addEventListener("online", handleOnline);
   document.addEventListener("visibilitychange", handleVisibility);
@@ -367,6 +376,11 @@ function startCatalogVersionMonitor() {
     if (versionPollTimer) {
       clearInterval(versionPollTimer);
       versionPollTimer = null;
+    }
+
+    if (errorRetryTimer) {
+      clearInterval(errorRetryTimer);
+      errorRetryTimer = null;
     }
 
     window.removeEventListener("focus", handleFocus);

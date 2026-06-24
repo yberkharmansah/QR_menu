@@ -83,7 +83,6 @@ const showEmptyState = computed(() => catalogSyncState.productsLoaded && filtere
 const shouldAutoRefresh = computed(() => {
   return (
     showEmptyState.value &&
-    !catalogSyncState.productsError &&
     !catalogSyncState.isRefreshing &&
     catalogSyncState.source !== "live"
   );

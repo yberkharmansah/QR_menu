@@ -68,7 +68,6 @@ const showEmptyState = computed(() => catalogSyncState.categoriesLoaded && filte
 const shouldAutoRefresh = computed(() => {
   return (
     showEmptyState.value &&
-    !catalogSyncState.categoriesError &&
     !catalogSyncState.isRefreshing &&
     catalogSyncState.source !== "live"
   );
