@@ -67,10 +67,12 @@ const catalogMetaCollectionName = "appMeta";
 const catalogMetaDocumentId = "catalog";
 const catalogCacheKey = "qr-menu.catalog-cache.v2";
 const catalogVersionPollMs = 60_000;
+const initialRetryDelaysMs = [0, 1_500, 4_000, 8_000];
 let syncStarted = false;
 let versionPollTimer: ReturnType<typeof setInterval> | null = null;
 let lastVersionCheckAt = 0;
 let currentCatalogVersion: string | null = null;
+let currentCatalogSource: "live" | "cache" | "fallback" | null = null;
 let refreshInFlight: Promise<void> | null = null;
 
 export const catalogSyncState = reactive({
@@ -78,6 +80,8 @@ export const catalogSyncState = reactive({
   productsLoaded: false,
   categoriesError: false,
   productsError: false,
+  source: "idle" as "idle" | "live" | "cache" | "fallback",
+  isRefreshing: false,
 });
 
 type CatalogCachePayload = {
@@ -140,10 +144,17 @@ function writeCatalogCache(payload: CatalogCachePayload) {
   localStorage.setItem(catalogCacheKey, JSON.stringify(payload));
 }
 
-function applyCatalogData(categories: Category[], products: Product[], version: string | null) {
+function applyCatalogData(
+  categories: Category[],
+  products: Product[],
+  version: string | null,
+  source: "live" | "cache" | "fallback"
+) {
   setCategories(categories);
   setProducts(products);
   currentCatalogVersion = version;
+  currentCatalogSource = source;
+  catalogSyncState.source = source;
 }
 
 function markCatalogLoaded(hasError: boolean) {
@@ -151,6 +162,10 @@ function markCatalogLoaded(hasError: boolean) {
   catalogSyncState.productsLoaded = true;
   catalogSyncState.categoriesError = hasError;
   catalogSyncState.productsError = hasError;
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function getCatalogMetaRef() {
@@ -216,55 +231,71 @@ async function refreshPublicCatalog(options?: { force?: boolean }) {
   if (!firebaseEnabled || !db) {
     resetCategoriesToFallback();
     resetProductsToFallback();
+    catalogSyncState.source = "fallback";
     markCatalogLoaded(true);
     return;
   }
 
   if (refreshInFlight) return refreshInFlight;
 
+  catalogSyncState.isRefreshing = true;
   refreshInFlight = (async () => {
     const cached = readCatalogCache();
+    let lastError: unknown = null;
 
-    try {
-      const remoteVersion = await fetchCatalogVersion();
-      const shouldUseCached =
-        !options?.force &&
-        cached &&
-        cached.version !== null &&
-        remoteVersion !== null &&
-        cached.version === remoteVersion;
+    for (const [attemptIndex, retryDelay] of initialRetryDelaysMs.entries()) {
+      if (attemptIndex > 0) {
+        await delay(retryDelay);
+      }
 
-      if (shouldUseCached) {
-        applyCatalogData(cached.categories, cached.products, remoteVersion);
+      try {
+        const remoteVersion = await fetchCatalogVersion();
+        const shouldUseCached =
+          !options?.force &&
+          cached &&
+          cached.version !== null &&
+          remoteVersion !== null &&
+          cached.version === remoteVersion &&
+          currentCatalogSource === "live";
+
+        if (shouldUseCached) {
+          applyCatalogData(cached.categories, cached.products, remoteVersion, "cache");
+          markCatalogLoaded(false);
+          return;
+        }
+
+        const { categories, products } = await fetchCatalogCollections();
+        applyCatalogData(categories, products, remoteVersion, "live");
+        writeCatalogCache({
+          version: remoteVersion,
+          categories,
+          products,
+          savedAt: Date.now(),
+        });
         markCatalogLoaded(false);
         return;
+      } catch (error) {
+        lastError = error;
       }
-
-      const { categories, products } = await fetchCatalogCollections();
-      applyCatalogData(categories, products, remoteVersion);
-      writeCatalogCache({
-        version: remoteVersion,
-        categories,
-        products,
-        savedAt: Date.now(),
-      });
-      markCatalogLoaded(false);
-    } catch (error) {
-      console.error("Catalog refresh failed.", error);
-
-      if (cached) {
-        applyCatalogData(cached.categories, cached.products, cached.version);
-      } else {
-        resetCategoriesToFallback();
-        resetProductsToFallback();
-        currentCatalogVersion = null;
-      }
-
-      markCatalogLoaded(true);
-    } finally {
-      refreshInFlight = null;
     }
-  })();
+
+    console.error("Catalog refresh failed after retries.", lastError);
+
+    if (cached) {
+      applyCatalogData(cached.categories, cached.products, cached.version, "cache");
+    } else {
+      resetCategoriesToFallback();
+      resetProductsToFallback();
+      currentCatalogVersion = null;
+      currentCatalogSource = "fallback";
+    }
+
+    markCatalogLoaded(true);
+  })()
+    .finally(() => {
+      catalogSyncState.isRefreshing = false;
+      refreshInFlight = null;
+    });
 
   return refreshInFlight;
 }
@@ -275,7 +306,7 @@ async function checkForCatalogUpdates(force = false) {
 
   try {
     const remoteVersion = await fetchCatalogVersion();
-    if (remoteVersion !== currentCatalogVersion) {
+    if (remoteVersion !== currentCatalogVersion || currentCatalogSource !== "live") {
       await refreshPublicCatalog({ force: true });
     }
   } catch (error) {
@@ -296,6 +327,10 @@ function startCatalogVersionMonitor() {
     void checkForCatalogUpdates(true);
   };
 
+  const handleOnline = () => {
+    void refreshPublicCatalog({ force: true });
+  };
+
   versionPollTimer = setInterval(() => {
     if (document.visibilityState === "visible") {
       void checkForCatalogUpdates();
@@ -303,6 +338,7 @@ function startCatalogVersionMonitor() {
   }, catalogVersionPollMs);
 
   window.addEventListener("focus", handleFocus);
+  window.addEventListener("online", handleOnline);
   document.addEventListener("visibilitychange", handleVisibility);
 
   return () => {
@@ -312,6 +348,7 @@ function startCatalogVersionMonitor() {
     }
 
     window.removeEventListener("focus", handleFocus);
+    window.removeEventListener("online", handleOnline);
     document.removeEventListener("visibilitychange", handleVisibility);
   };
 }
@@ -324,6 +361,8 @@ export function startCatalogSync() {
   catalogSyncState.productsLoaded = false;
   catalogSyncState.categoriesError = false;
   catalogSyncState.productsError = false;
+  catalogSyncState.source = "idle";
+  catalogSyncState.isRefreshing = false;
 
   if (!firebaseEnabled || !db) {
     resetCategoriesToFallback();
@@ -339,6 +378,15 @@ export function startCatalogSync() {
     stopVersionMonitor?.();
     syncStarted = false;
   };
+}
+
+export function ensureFreshCatalogForMenu() {
+  if (!firebaseEnabled || !db) return Promise.resolve();
+  if (currentCatalogSource === "live" && !catalogSyncState.categoriesError && !catalogSyncState.productsError) {
+    return Promise.resolve();
+  }
+
+  return refreshPublicCatalog({ force: true });
 }
 
 export function subscribeAdminProducts(listener: (rows: AdminProductRow[]) => void) {

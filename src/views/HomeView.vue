@@ -73,12 +73,13 @@ import UiButton from "../components/UiButton.vue";
 import logoUrl from "../assets/cremore-logo.jpg";
 import beanSplitIcon from "../assets/coffee-bean-split.svg";
 import { t } from "../store/appStore";
-import { catalogSyncState } from "../services/catalogService";
+import { catalogSyncState, ensureFreshCatalogForMenu } from "../services/catalogService";
 
 const router = useRouter();
 const isTransitioning = ref(false);
 const transitionStartedAt = ref(0);
 const isCatalogReady = computed(() => catalogSyncState.categoriesLoaded && catalogSyncState.productsLoaded);
+const canFinishTransition = computed(() => isCatalogReady.value && !catalogSyncState.isRefreshing);
 let minDelayTimer: ReturnType<typeof setTimeout> | null = null;
 let maxWaitTimer: ReturnType<typeof setTimeout> | null = null;
 const transitionMs = 950;
@@ -115,12 +116,13 @@ function goMenu() {
   if (isTransitioning.value) return;
   isTransitioning.value = true;
   transitionStartedAt.value = Date.now();
+  void ensureFreshCatalogForMenu();
 
   maxWaitTimer = setTimeout(() => {
     finishTransition();
   }, maxTransitionMs);
 
-  if (isCatalogReady.value) {
+  if (canFinishTransition.value) {
     scheduleNavigation();
   }
 }
@@ -169,7 +171,7 @@ onBeforeUnmount(() => {
   clearTransitionTimers();
 });
 
-watch(isCatalogReady, (ready) => {
+watch(canFinishTransition, (ready) => {
   if (!ready || !isTransitioning.value) return;
   scheduleNavigation();
 });
