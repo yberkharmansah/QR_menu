@@ -339,7 +339,9 @@ watch(isCatalogReady, (ready) => {
   width: 106px;
   display: grid;
   place-items: center;
-  animation: beanSpin 950ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation:
+    beanSpinIntro 950ms cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    beanSpinLoop 1200ms linear 950ms infinite;
 }
 
 .beanIcon {
@@ -389,7 +391,7 @@ watch(isCatalogReady, (ready) => {
   }
 }
 
-@keyframes beanSpin {
+@keyframes beanSpinIntro {
   0% {
     transform: rotate(-70deg) scale(0.45);
     opacity: 0;
@@ -401,6 +403,15 @@ watch(isCatalogReady, (ready) => {
   100% {
     transform: rotate(320deg) scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes beanSpinLoop {
+  0% {
+    transform: rotate(320deg) scale(1);
+  }
+  100% {
+    transform: rotate(680deg) scale(1);
   }
 }
 
