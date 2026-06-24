@@ -221,8 +221,8 @@ export const seedProducts: Product[] = [
   { id: "brownie", categoryId: "desserts", title: { tr: "Brownie", en: "Brownie" }, description: { tr: "Yogun cikolata", en: "Rich chocolate brownie" }, price: 150 },
 ];
 
-let runtimeCategories: Category[] = [...seedCategories];
-let runtimeProducts: Product[] = [...seedProducts];
+let runtimeCategories: Category[] = [];
+let runtimeProducts: Product[] = [];
 
 function localizeText(text: LocalizedText, locale: MenuLocale) {
   return text[locale];

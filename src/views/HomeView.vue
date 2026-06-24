@@ -59,12 +59,13 @@
       <div class="beanSpinner">
         <img :src="beanSplitIcon" alt="" class="beanIcon" />
       </div>
+      <div class="transitionLabel">{{ t("loadingMenu") }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from "vue";
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
@@ -72,18 +73,56 @@ import UiButton from "../components/UiButton.vue";
 import logoUrl from "../assets/cremore-logo.jpg";
 import beanSplitIcon from "../assets/coffee-bean-split.svg";
 import { t } from "../store/appStore";
+import { catalogSyncState } from "../services/catalogService";
 
 const router = useRouter();
 const isTransitioning = ref(false);
-let navigateTimer: ReturnType<typeof setTimeout> | null = null;
+const transitionStartedAt = ref(0);
+const isCatalogReady = computed(() => catalogSyncState.categoriesLoaded && catalogSyncState.productsLoaded);
+let minDelayTimer: ReturnType<typeof setTimeout> | null = null;
+let maxWaitTimer: ReturnType<typeof setTimeout> | null = null;
 const transitionMs = 950;
+const maxTransitionMs = 5000;
+
+function clearTransitionTimers() {
+  if (minDelayTimer) {
+    clearTimeout(minDelayTimer);
+    minDelayTimer = null;
+  }
+
+  if (maxWaitTimer) {
+    clearTimeout(maxWaitTimer);
+    maxWaitTimer = null;
+  }
+}
+
+function finishTransition() {
+  clearTransitionTimers();
+  router.push("/categories");
+}
+
+function scheduleNavigation() {
+  const elapsed = Date.now() - transitionStartedAt.value;
+  const remaining = Math.max(transitionMs - elapsed, 0);
+
+  clearTransitionTimers();
+  minDelayTimer = setTimeout(() => {
+    finishTransition();
+  }, remaining);
+}
 
 function goMenu() {
   if (isTransitioning.value) return;
   isTransitioning.value = true;
-  navigateTimer = setTimeout(() => {
-    router.push("/categories");
-  }, transitionMs);
+  transitionStartedAt.value = Date.now();
+
+  maxWaitTimer = setTimeout(() => {
+    finishTransition();
+  }, maxTransitionMs);
+
+  if (isCatalogReady.value) {
+    scheduleNavigation();
+  }
 }
 
 function openInstagram() {
@@ -127,7 +166,12 @@ function openInstagram() {
 }
 
 onBeforeUnmount(() => {
-  if (navigateTimer) clearTimeout(navigateTimer);
+  clearTransitionTimers();
+});
+
+watch(isCatalogReady, (ready) => {
+  if (!ready || !isTransitioning.value) return;
+  scheduleNavigation();
 });
 </script>
 
@@ -303,6 +347,22 @@ onBeforeUnmount(() => {
   width: 100%;
   filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.45));
   animation: beanRise 950ms ease-out forwards;
+}
+
+.transitionLabel {
+  position: absolute;
+  left: 50%;
+  bottom: calc(56px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(7, 17, 12, 0.68);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  backdrop-filter: blur(12px);
 }
 
 @keyframes sceneFade {

@@ -12,8 +12,6 @@ import {
 } from "firebase/firestore";
 import { db, firebaseEnabled } from "../lib/firebase";
 import {
-  seedCategories,
-  seedProducts,
   resetCategoriesToFallback,
   resetProductsToFallback,
   setCategories,
