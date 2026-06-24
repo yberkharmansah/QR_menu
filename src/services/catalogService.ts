@@ -74,6 +74,7 @@ let lastVersionCheckAt = 0;
 let currentCatalogVersion: string | null = null;
 let currentCatalogSource: "live" | "cache" | "fallback" | null = null;
 let refreshInFlight: Promise<void> | null = null;
+let canUseCatalogVersioning = true;
 
 export const catalogSyncState = reactive({
   categoriesLoaded: false,
@@ -176,23 +177,38 @@ async function touchCatalogVersion() {
   if (!firebaseEnabled || !db) return;
 
   const version = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-  await setDoc(
-    getCatalogMetaRef(),
-    {
-      version,
-      updatedAt: serverTimestamp(),
-    },
-    { merge: true }
-  );
+  try {
+    await setDoc(
+      getCatalogMetaRef(),
+      {
+        version,
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    canUseCatalogVersioning = true;
+  } catch (error) {
+    console.warn("Catalog version document could not be updated; continuing without versioning.", error);
+    canUseCatalogVersioning = false;
+  }
 }
 
 async function fetchCatalogVersion() {
   if (!firebaseEnabled || !db) return null;
+  if (!canUseCatalogVersioning) return null;
 
-  const snapshot = await getDoc(getCatalogMetaRef());
-  const version = snapshot.data()?.version;
-  lastVersionCheckAt = Date.now();
-  return typeof version === "string" ? version : null;
+  try {
+    const snapshot = await getDoc(getCatalogMetaRef());
+    const version = snapshot.data()?.version;
+    lastVersionCheckAt = Date.now();
+    canUseCatalogVersioning = true;
+    return typeof version === "string" ? version : null;
+  } catch (error) {
+    console.warn("Catalog version document is not readable; falling back to direct catalog fetch.", error);
+    canUseCatalogVersioning = false;
+    lastVersionCheckAt = Date.now();
+    return null;
+  }
 }
 
 async function fetchCatalogCollections() {
@@ -251,6 +267,7 @@ async function refreshPublicCatalog(options?: { force?: boolean }) {
       try {
         const remoteVersion = await fetchCatalogVersion();
         const shouldUseCached =
+          canUseCatalogVersioning &&
           !options?.force &&
           cached &&
           cached.version !== null &&
@@ -305,6 +322,11 @@ async function checkForCatalogUpdates(force = false) {
   if (!force && Date.now() - lastVersionCheckAt < catalogVersionPollMs) return;
 
   try {
+    if (!canUseCatalogVersioning) {
+      await refreshPublicCatalog({ force: true });
+      return;
+    }
+
     const remoteVersion = await fetchCatalogVersion();
     if (remoteVersion !== currentCatalogVersion || currentCatalogSource !== "live") {
       await refreshPublicCatalog({ force: true });
@@ -363,12 +385,19 @@ export function startCatalogSync() {
   catalogSyncState.productsError = false;
   catalogSyncState.source = "idle";
   catalogSyncState.isRefreshing = false;
+  canUseCatalogVersioning = true;
 
   if (!firebaseEnabled || !db) {
     resetCategoriesToFallback();
     resetProductsToFallback();
     markCatalogLoaded(true);
     return () => undefined;
+  }
+
+  const cached = readCatalogCache();
+  if (cached) {
+    applyCatalogData(cached.categories, cached.products, cached.version, "cache");
+    markCatalogLoaded(false);
   }
 
   void refreshPublicCatalog();
@@ -386,6 +415,11 @@ export function ensureFreshCatalogForMenu() {
     return Promise.resolve();
   }
 
+  return refreshPublicCatalog({ force: true });
+}
+
+export function forceCatalogRefresh() {
+  if (!firebaseEnabled || !db) return Promise.resolve();
   return refreshPublicCatalog({ force: true });
 }
 

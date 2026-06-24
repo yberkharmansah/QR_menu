@@ -79,7 +79,11 @@ const router = useRouter();
 const isTransitioning = ref(false);
 const transitionStartedAt = ref(0);
 const isCatalogReady = computed(() => catalogSyncState.categoriesLoaded && catalogSyncState.productsLoaded);
-const canFinishTransition = computed(() => isCatalogReady.value && !catalogSyncState.isRefreshing);
+const canFinishTransition = computed(() => {
+  if (!isCatalogReady.value) return false;
+  if (catalogSyncState.source === "live" || catalogSyncState.source === "cache") return true;
+  return !catalogSyncState.isRefreshing;
+});
 let minDelayTimer: ReturnType<typeof setTimeout> | null = null;
 let maxWaitTimer: ReturnType<typeof setTimeout> | null = null;
 const transitionMs = 950;

@@ -38,14 +38,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { appStore, t } from "../store/appStore";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import CategoryCard from "../components/CategoryCard.vue";
 import { getLocalizedCategoriesByGroup, getLocalizedGroupById, type MenuGroupId } from "../data/menu";
-import { catalogSyncState } from "../services/catalogService";
+import { catalogSyncState, forceCatalogRefresh } from "../services/catalogService";
 
 const props = defineProps<{ groupId: MenuGroupId }>();
 const router = useRouter();
@@ -65,10 +65,23 @@ const filtered = computed(() => {
   });
 });
 const showEmptyState = computed(() => catalogSyncState.categoriesLoaded && filtered.value.length === 0);
+const shouldAutoRefresh = computed(() => {
+  return (
+    showEmptyState.value &&
+    !catalogSyncState.categoriesError &&
+    !catalogSyncState.isRefreshing &&
+    catalogSyncState.source !== "live"
+  );
+});
 
 function openCategory(categoryId: string) {
   router.push(`/categories/${props.groupId}/${categoryId}`);
 }
+
+watch(shouldAutoRefresh, (shouldRefresh) => {
+  if (!shouldRefresh) return;
+  void forceCatalogRefresh();
+}, { immediate: true });
 </script>
 
 <style scoped>

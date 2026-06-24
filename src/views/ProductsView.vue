@@ -43,14 +43,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { appStore, t } from "../store/appStore";
 import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import ProductCard from "../components/ProductCard.vue";
 import { getLocalizedCategoryById, getLocalizedProductsByCategory } from "../data/menu";
-import { catalogSyncState } from "../services/catalogService";
+import { catalogSyncState, forceCatalogRefresh } from "../services/catalogService";
 
 const props = defineProps<{ groupId: string; categoryId: string }>();
 
@@ -80,10 +80,23 @@ const filtered = computed(() => {
   return [...searched].sort((a, b) => a.price - b.price);
 });
 const showEmptyState = computed(() => catalogSyncState.productsLoaded && filtered.value.length === 0);
+const shouldAutoRefresh = computed(() => {
+  return (
+    showEmptyState.value &&
+    !catalogSyncState.productsError &&
+    !catalogSyncState.isRefreshing &&
+    catalogSyncState.source !== "live"
+  );
+});
 
 function openProduct(id: string) {
   router.push(`/product/${id}`);
 }
+
+watch(shouldAutoRefresh, (shouldRefresh) => {
+  if (!shouldRefresh) return;
+  void forceCatalogRefresh();
+}, { immediate: true });
 </script>
 
 <style scoped>
