@@ -14,6 +14,18 @@
         </button>
       </div>
 
+      <div v-if="showLoading" class="stateCard">
+        {{ t("loadingMenu") }}
+      </div>
+
+      <div v-else-if="showFallbackNotice" class="stateCard warning">
+        {{ t("showingSavedMenu") }}
+      </div>
+
+      <div v-if="showEmptyState" class="stateCard">
+        {{ t("noProductsFound") }}
+      </div>
+
       <div class="list">
         <ProductCard
           v-for="product in filtered"
@@ -38,6 +50,7 @@ import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import ProductCard from "../components/ProductCard.vue";
 import { getLocalizedCategoryById, getLocalizedProductsByCategory } from "../data/menu";
+import { catalogSyncState } from "../services/catalogService";
 
 const props = defineProps<{ groupId: string; categoryId: string }>();
 
@@ -47,23 +60,26 @@ const sortByPrice = ref(false);
 
 const groupId = computed(() => props.groupId);
 const category = computed(() => getLocalizedCategoryById(props.categoryId, appStore.locale));
+const showLoading = computed(() => !catalogSyncState.productsLoaded);
+const baseProducts = computed(() => getLocalizedProductsByCategory(props.categoryId, appStore.locale));
+const showFallbackNotice = computed(() => catalogSyncState.productsError && baseProducts.value.length > 0);
 
 const filtered = computed(() => {
-  const base = getLocalizedProductsByCategory(props.categoryId, appStore.locale);
   const search = q.value.trim().toLowerCase();
 
   const searched = search
-    ? base.filter((product) => {
+    ? baseProducts.value.filter((product) => {
         return (
           product.title.toLowerCase().includes(search) ||
           product.description.toLowerCase().includes(search)
         );
       })
-    : base;
+    : baseProducts.value;
 
   if (!sortByPrice.value) return searched;
   return [...searched].sort((a, b) => a.price - b.price);
 });
+const showEmptyState = computed(() => catalogSyncState.productsLoaded && filtered.value.length === 0);
 
 function openProduct(id: string) {
   router.push(`/product/${id}`);
@@ -115,5 +131,21 @@ function openProduct(id: string) {
 .list {
   display: grid;
   gap: 10px;
+}
+
+.stateCard {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: var(--card);
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.45;
+}
+
+.warning {
+  color: var(--text);
+  border-color: rgba(214, 163, 74, 0.45);
+  background: rgba(214, 163, 74, 0.12);
 }
 </style>

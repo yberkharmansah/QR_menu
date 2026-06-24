@@ -22,6 +22,7 @@ import {
   type MenuGroupId,
   type Product,
 } from "../data/menu";
+import { reactive } from "vue";
 
 type ProductDocument = {
   categoryId: string;
@@ -63,6 +64,13 @@ const productsCollectionName = "products";
 const categoriesCollectionName = "categories";
 let syncStarted = false;
 
+export const catalogSyncState = reactive({
+  categoriesLoaded: false,
+  productsLoaded: false,
+  categoriesError: false,
+  productsError: false,
+});
+
 function toMenuProduct(id: string, docData: ProductDocument): Product {
   return {
     id,
@@ -102,9 +110,18 @@ export function startCatalogSync() {
   if (syncStarted) return () => undefined;
   syncStarted = true;
 
+  catalogSyncState.categoriesLoaded = false;
+  catalogSyncState.productsLoaded = false;
+  catalogSyncState.categoriesError = false;
+  catalogSyncState.productsError = false;
+
   if (!firebaseEnabled || !db) {
-    setCategories([]);
-    setProducts([]);
+    resetCategoriesToFallback();
+    resetProductsToFallback();
+    catalogSyncState.categoriesLoaded = true;
+    catalogSyncState.productsLoaded = true;
+    catalogSyncState.categoriesError = true;
+    catalogSyncState.productsError = true;
     return () => undefined;
   }
 
@@ -127,9 +144,14 @@ export function startCatalogSync() {
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
       setCategories(rows);
+      catalogSyncState.categoriesLoaded = true;
+      catalogSyncState.categoriesError = false;
     },
-    () => {
+    (error) => {
+      console.error("Category sync failed; showing fallback data.", error);
       resetCategoriesToFallback();
+      catalogSyncState.categoriesLoaded = true;
+      catalogSyncState.categoriesError = true;
     }
   );
 
@@ -147,9 +169,14 @@ export function startCatalogSync() {
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
       setProducts(rows);
+      catalogSyncState.productsLoaded = true;
+      catalogSyncState.productsError = false;
     },
-    () => {
+    (error) => {
+      console.error("Product sync failed; showing fallback data.", error);
       resetProductsToFallback();
+      catalogSyncState.productsLoaded = true;
+      catalogSyncState.productsError = true;
     }
   );
 

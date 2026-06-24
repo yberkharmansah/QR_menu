@@ -43,6 +43,10 @@ const dict = {
     themeRoyal: "Midnight Gold",
     themeRoyalDesc: "Luks gece hissi. Lacivert ve altin detaylar.",
     socialAccounts: "Sosyal Medya Hesaplarımız",
+    loadingMenu: "Menu yukleniyor...",
+    showingSavedMenu: "Canli veriye ulasilamadi. Kayitli menu gosteriliyor.",
+    noCategoriesFound: "Bu grupta gosterilecek kategori bulunamadi.",
+    noProductsFound: "Bu kategoride gosterilecek urun bulunamadi.",
   },
   en: {
     menu: "Menu",
@@ -78,6 +82,10 @@ const dict = {
     themeRoyal: "Midnight Gold",
     themeRoyalDesc: "Luxury night mode with navy and gold contrast.",
     socialAccounts: "Our Social Media Accounts",
+    loadingMenu: "Loading menu...",
+    showingSavedMenu: "Live data is unavailable. Showing the saved menu.",
+    noCategoriesFound: "No categories are available in this group.",
+    noProductsFound: "No products are available in this category.",
   },
 } as const;
 

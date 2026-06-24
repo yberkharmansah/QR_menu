@@ -11,6 +11,18 @@
         <input v-model="q" class="search" :placeholder="t('searchCategory')" />
       </div>
 
+      <div v-if="showLoading" class="stateCard">
+        {{ t("loadingMenu") }}
+      </div>
+
+      <div v-else-if="showFallbackNotice" class="stateCard warning">
+        {{ t("showingSavedMenu") }}
+      </div>
+
+      <div v-if="showEmptyState" class="stateCard">
+        {{ t("noCategoriesFound") }}
+      </div>
+
       <div class="grid">
         <CategoryCard
           v-for="category in filtered"
@@ -33,6 +45,7 @@ import AppHeader from "../components/AppHeader.vue";
 import HeaderActions from "../components/HeaderActions.vue";
 import CategoryCard from "../components/CategoryCard.vue";
 import { getLocalizedCategoriesByGroup, getLocalizedGroupById, type MenuGroupId } from "../data/menu";
+import { catalogSyncState } from "../services/catalogService";
 
 const props = defineProps<{ groupId: MenuGroupId }>();
 const router = useRouter();
@@ -40,6 +53,8 @@ const q = ref("");
 
 const group = computed(() => getLocalizedGroupById(props.groupId, appStore.locale));
 const categories = computed(() => getLocalizedCategoriesByGroup(props.groupId, appStore.locale));
+const showLoading = computed(() => !catalogSyncState.categoriesLoaded);
+const showFallbackNotice = computed(() => catalogSyncState.categoriesError && categories.value.length > 0);
 
 const filtered = computed(() => {
   const search = q.value.trim().toLowerCase();
@@ -49,6 +64,7 @@ const filtered = computed(() => {
     return category.title.toLowerCase().includes(search) || category.description.toLowerCase().includes(search);
   });
 });
+const showEmptyState = computed(() => catalogSyncState.categoriesLoaded && filtered.value.length === 0);
 
 function openCategory(categoryId: string) {
   router.push(`/categories/${props.groupId}/${categoryId}`);
@@ -90,5 +106,21 @@ function openCategory(categoryId: string) {
 .grid {
   display: grid;
   gap: 10px;
+}
+
+.stateCard {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: var(--card);
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.45;
+}
+
+.warning {
+  color: var(--text);
+  border-color: rgba(214, 163, 74, 0.45);
+  background: rgba(214, 163, 74, 0.12);
 }
 </style>

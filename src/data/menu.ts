@@ -221,8 +221,8 @@ export const seedProducts: Product[] = [
   { id: "brownie", categoryId: "desserts", title: { tr: "Brownie", en: "Brownie" }, description: { tr: "Yogun cikolata", en: "Rich chocolate brownie" }, price: 150 },
 ];
 
-let runtimeCategories: Category[] = [];
-let runtimeProducts: Product[] = [];
+let runtimeCategories: Category[] = [...seedCategories];
+let runtimeProducts: Product[] = [...seedProducts];
 
 function localizeText(text: LocalizedText, locale: MenuLocale) {
   return text[locale];
@@ -292,7 +292,7 @@ export function setProducts(products: Product[]) {
 }
 
 export function resetProductsToFallback() {
-  runtimeProducts = [];
+  runtimeProducts = [...seedProducts];
 }
 
 export function getLocalizedGroups(locale: MenuLocale) {
@@ -317,7 +317,7 @@ export function setCategories(categories: Category[]) {
 }
 
 export function resetCategoriesToFallback() {
-  runtimeCategories = [];
+  runtimeCategories = [...seedCategories];
 }
 
 export function getLocalizedCategoryById(id: string, locale: MenuLocale) {
