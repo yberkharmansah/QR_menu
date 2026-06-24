@@ -1,12 +1,12 @@
 ﻿import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import CategoriesView from "../views/CategoriesView.vue";
-import GroupCategoriesView from "../views/GroupCategoriesView.vue";
-import ProductsView from "../views/ProductsView.vue";
-import ProductDetailView from "../views/ProductDetailView.vue";
-import AdminView from "../views/AdminView.vue";
-import TvHtmlView from "../views/TvHtmlView.vue";
-import TvEditView from "../views/TvEditView.vue";
+const HomeView = () => import("../views/HomeView.vue");
+const CategoriesView = () => import("../views/CategoriesView.vue");
+const GroupCategoriesView = () => import("../views/GroupCategoriesView.vue");
+const ProductsView = () => import("../views/ProductsView.vue");
+const ProductDetailView = () => import("../views/ProductDetailView.vue");
+const AdminView = () => import("../views/AdminView.vue");
+const TvHtmlView = () => import("../views/TvHtmlView.vue");
+const TvEditView = () => import("../views/TvEditView.vue");
 
 const router = createRouter({
   history: createWebHashHistory(),

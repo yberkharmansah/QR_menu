@@ -1,7 +1,7 @@
 <template>
   <button class="card" @click="$emit('open')">
     <div class="thumbWrap" :class="{ empty: !optimizedImageUrl }">
-      <img v-if="optimizedImageUrl" :src="optimizedImageUrl" alt="" class="thumb" />
+      <img v-if="optimizedImageUrl" :src="optimizedImageUrl" alt="" class="thumb" loading="lazy" decoding="async" />
     </div>
 
     <div class="left">

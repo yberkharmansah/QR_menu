@@ -3,10 +3,13 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
   updateDoc,
   writeBatch,
 } from "firebase/firestore";
@@ -60,7 +63,15 @@ export type AdminCategoryRow = AdminCategoryInput & { id: string };
 
 const productsCollectionName = "products";
 const categoriesCollectionName = "categories";
+const catalogMetaCollectionName = "appMeta";
+const catalogMetaDocumentId = "catalog";
+const catalogCacheKey = "qr-menu.catalog-cache.v2";
+const catalogVersionPollMs = 60_000;
 let syncStarted = false;
+let versionPollTimer: ReturnType<typeof setInterval> | null = null;
+let lastVersionCheckAt = 0;
+let currentCatalogVersion: string | null = null;
+let refreshInFlight: Promise<void> | null = null;
 
 export const catalogSyncState = reactive({
   categoriesLoaded: false,
@@ -68,6 +79,13 @@ export const catalogSyncState = reactive({
   categoriesError: false,
   productsError: false,
 });
+
+type CatalogCachePayload = {
+  version: string | null;
+  categories: Category[];
+  products: Product[];
+  savedAt: number;
+};
 
 function toMenuProduct(id: string, docData: ProductDocument): Product {
   return {
@@ -104,6 +122,200 @@ function toMenuCategory(id: string, docData: CategoryDocument): Category {
   };
 }
 
+function readCatalogCache() {
+  try {
+    const raw = localStorage.getItem(catalogCacheKey);
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw) as CatalogCachePayload;
+    if (!Array.isArray(parsed.categories) || !Array.isArray(parsed.products)) return null;
+
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeCatalogCache(payload: CatalogCachePayload) {
+  localStorage.setItem(catalogCacheKey, JSON.stringify(payload));
+}
+
+function applyCatalogData(categories: Category[], products: Product[], version: string | null) {
+  setCategories(categories);
+  setProducts(products);
+  currentCatalogVersion = version;
+}
+
+function markCatalogLoaded(hasError: boolean) {
+  catalogSyncState.categoriesLoaded = true;
+  catalogSyncState.productsLoaded = true;
+  catalogSyncState.categoriesError = hasError;
+  catalogSyncState.productsError = hasError;
+}
+
+function getCatalogMetaRef() {
+  return doc(db!, catalogMetaCollectionName, catalogMetaDocumentId);
+}
+
+async function touchCatalogVersion() {
+  if (!firebaseEnabled || !db) return;
+
+  const version = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  await setDoc(
+    getCatalogMetaRef(),
+    {
+      version,
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
+}
+
+async function fetchCatalogVersion() {
+  if (!firebaseEnabled || !db) return null;
+
+  const snapshot = await getDoc(getCatalogMetaRef());
+  const version = snapshot.data()?.version;
+  lastVersionCheckAt = Date.now();
+  return typeof version === "string" ? version : null;
+}
+
+async function fetchCatalogCollections() {
+  const categoriesRef = collection(db!, categoriesCollectionName);
+  const productsRef = collection(db!, productsCollectionName);
+
+  const [categoriesSnapshot, productsSnapshot] = await Promise.all([
+    getDocs(query(categoriesRef, orderBy("createdAt", "asc"))),
+    getDocs(query(productsRef, orderBy("createdAt", "desc"))),
+  ]);
+
+  const categories = categoriesSnapshot.docs
+    .map((item, index) => {
+      const row = toMenuCategory(item.id, item.data() as CategoryDocument);
+      return {
+        ...row,
+        sortOrder: row.sortOrder ?? index,
+      };
+    })
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
+  const products = productsSnapshot.docs
+    .map((item, index) => {
+      const row = toMenuProduct(item.id, item.data() as ProductDocument);
+      return {
+        ...row,
+        sortOrder: row.sortOrder ?? index,
+      };
+    })
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
+  return { categories, products };
+}
+
+async function refreshPublicCatalog(options?: { force?: boolean }) {
+  if (!firebaseEnabled || !db) {
+    resetCategoriesToFallback();
+    resetProductsToFallback();
+    markCatalogLoaded(true);
+    return;
+  }
+
+  if (refreshInFlight) return refreshInFlight;
+
+  refreshInFlight = (async () => {
+    const cached = readCatalogCache();
+
+    try {
+      const remoteVersion = await fetchCatalogVersion();
+      const shouldUseCached =
+        !options?.force &&
+        cached &&
+        cached.version !== null &&
+        remoteVersion !== null &&
+        cached.version === remoteVersion;
+
+      if (shouldUseCached) {
+        applyCatalogData(cached.categories, cached.products, remoteVersion);
+        markCatalogLoaded(false);
+        return;
+      }
+
+      const { categories, products } = await fetchCatalogCollections();
+      applyCatalogData(categories, products, remoteVersion);
+      writeCatalogCache({
+        version: remoteVersion,
+        categories,
+        products,
+        savedAt: Date.now(),
+      });
+      markCatalogLoaded(false);
+    } catch (error) {
+      console.error("Catalog refresh failed.", error);
+
+      if (cached) {
+        applyCatalogData(cached.categories, cached.products, cached.version);
+      } else {
+        resetCategoriesToFallback();
+        resetProductsToFallback();
+        currentCatalogVersion = null;
+      }
+
+      markCatalogLoaded(true);
+    } finally {
+      refreshInFlight = null;
+    }
+  })();
+
+  return refreshInFlight;
+}
+
+async function checkForCatalogUpdates(force = false) {
+  if (!syncStarted || !firebaseEnabled || !db) return;
+  if (!force && Date.now() - lastVersionCheckAt < catalogVersionPollMs) return;
+
+  try {
+    const remoteVersion = await fetchCatalogVersion();
+    if (remoteVersion !== currentCatalogVersion) {
+      await refreshPublicCatalog({ force: true });
+    }
+  } catch (error) {
+    console.error("Catalog version check failed.", error);
+  }
+}
+
+function startCatalogVersionMonitor() {
+  if (versionPollTimer) return;
+
+  const handleVisibility = () => {
+    if (document.visibilityState === "visible") {
+      void checkForCatalogUpdates(true);
+    }
+  };
+
+  const handleFocus = () => {
+    void checkForCatalogUpdates(true);
+  };
+
+  versionPollTimer = setInterval(() => {
+    if (document.visibilityState === "visible") {
+      void checkForCatalogUpdates();
+    }
+  }, catalogVersionPollMs);
+
+  window.addEventListener("focus", handleFocus);
+  document.addEventListener("visibilitychange", handleVisibility);
+
+  return () => {
+    if (versionPollTimer) {
+      clearInterval(versionPollTimer);
+      versionPollTimer = null;
+    }
+
+    window.removeEventListener("focus", handleFocus);
+    document.removeEventListener("visibilitychange", handleVisibility);
+  };
+}
+
 export function startCatalogSync() {
   if (syncStarted) return () => undefined;
   syncStarted = true;
@@ -116,71 +328,15 @@ export function startCatalogSync() {
   if (!firebaseEnabled || !db) {
     resetCategoriesToFallback();
     resetProductsToFallback();
-    catalogSyncState.categoriesLoaded = true;
-    catalogSyncState.productsLoaded = true;
-    catalogSyncState.categoriesError = true;
-    catalogSyncState.productsError = true;
+    markCatalogLoaded(true);
     return () => undefined;
   }
 
-  const categoriesRef = collection(db, categoriesCollectionName);
-  const categoriesQuery = query(categoriesRef, orderBy("createdAt", "asc"));
-  const productsRef = collection(db, productsCollectionName);
-  const productsQuery = query(productsRef, orderBy("createdAt", "desc"));
-
-  const unsubscribeCategories = onSnapshot(
-    categoriesQuery,
-    (snapshot) => {
-      const rows = snapshot.docs
-        .map((item, index) => {
-          const row = toMenuCategory(item.id, item.data() as CategoryDocument);
-          return {
-            ...row,
-            sortOrder: row.sortOrder ?? index,
-          };
-        })
-        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-
-      setCategories(rows);
-      catalogSyncState.categoriesLoaded = true;
-      catalogSyncState.categoriesError = false;
-    },
-    (error) => {
-      console.error("Category sync failed; showing fallback data.", error);
-      resetCategoriesToFallback();
-      catalogSyncState.categoriesLoaded = true;
-      catalogSyncState.categoriesError = true;
-    }
-  );
-
-  const unsubscribeProducts = onSnapshot(
-    productsQuery,
-    (snapshot) => {
-      const rows = snapshot.docs
-        .map((item, index) => {
-          const row = toMenuProduct(item.id, item.data() as ProductDocument);
-          return {
-            ...row,
-            sortOrder: row.sortOrder ?? index,
-          };
-        })
-        .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-
-      setProducts(rows);
-      catalogSyncState.productsLoaded = true;
-      catalogSyncState.productsError = false;
-    },
-    (error) => {
-      console.error("Product sync failed; showing fallback data.", error);
-      resetProductsToFallback();
-      catalogSyncState.productsLoaded = true;
-      catalogSyncState.productsError = true;
-    }
-  );
+  void refreshPublicCatalog();
+  const stopVersionMonitor = startCatalogVersionMonitor();
 
   return () => {
-    unsubscribeCategories();
-    unsubscribeProducts();
+    stopVersionMonitor?.();
     syncStarted = false;
   };
 }
@@ -258,6 +414,7 @@ export async function createAdminProduct(payload: AdminProductInput) {
     sortOrder: Number.isFinite(payload.sortOrder) ? Number(payload.sortOrder) : Date.now(),
     createdAt: serverTimestamp(),
   });
+  await touchCatalogVersion();
 }
 
 export async function removeAdminProduct(productId: string) {
@@ -266,6 +423,7 @@ export async function removeAdminProduct(productId: string) {
   }
 
   await deleteDoc(doc(db, productsCollectionName, productId));
+  await touchCatalogVersion();
 }
 
 export async function updateAdminProduct(productId: string, payload: AdminProductInput) {
@@ -274,6 +432,7 @@ export async function updateAdminProduct(productId: string, payload: AdminProduc
   }
 
   await updateDoc(doc(db, productsCollectionName, productId), payload);
+  await touchCatalogVersion();
 }
 
 export async function createAdminCategory(payload: AdminCategoryInput) {
@@ -287,6 +446,7 @@ export async function createAdminCategory(payload: AdminCategoryInput) {
     sortOrder: Number.isFinite(payload.sortOrder) ? Number(payload.sortOrder) : Date.now(),
     createdAt: serverTimestamp(),
   });
+  await touchCatalogVersion();
 }
 
 export async function removeAdminCategory(categoryId: string) {
@@ -295,6 +455,7 @@ export async function removeAdminCategory(categoryId: string) {
   }
 
   await deleteDoc(doc(db, categoriesCollectionName, categoryId));
+  await touchCatalogVersion();
 }
 
 export async function updateAdminCategory(categoryId: string, payload: AdminCategoryInput) {
@@ -303,6 +464,7 @@ export async function updateAdminCategory(categoryId: string, payload: AdminCate
   }
 
   await updateDoc(doc(db, categoriesCollectionName, categoryId), payload);
+  await touchCatalogVersion();
 }
 
 export async function seedCatalogToDatabase() {
@@ -342,6 +504,7 @@ export async function seedCatalogToDatabase() {
   }
 
   await batch.commit();
+  await touchCatalogVersion();
 }
 
 export async function reorderAdminCategories(orderedCategoryIds: string[]) {
@@ -355,6 +518,7 @@ export async function reorderAdminCategories(orderedCategoryIds: string[]) {
   });
 
   await batch.commit();
+  await touchCatalogVersion();
 }
 
 export async function reorderAdminProducts(orderedProductIds: string[]) {
@@ -368,6 +532,7 @@ export async function reorderAdminProducts(orderedProductIds: string[]) {
   });
 
   await batch.commit();
+  await touchCatalogVersion();
 }
 
 export async function bulkUpdateAdminProductPrices(priceUpdates: Array<{ productId: string; price: number }>) {
@@ -383,4 +548,5 @@ export async function bulkUpdateAdminProductPrices(priceUpdates: Array<{ product
   });
 
   await batch.commit();
+  await touchCatalogVersion();
 }
